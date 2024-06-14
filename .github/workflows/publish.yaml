@@ -1,0 +1,27 @@
+name: Publish package to GitHub Packages
+on:
+  release:
+    branches: 'main'
+    types: [ published ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: 9.3.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.3.0'
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,99 @@
+{
+  "name": "payload-zitadel-plugin",
+  "version": "0.1.0",
+  "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "WALX Tech e.K.",
+    "email": "x@walx.tech",
+    "url": "https://walx.tech"
+  },
+  "contributors": [
+    {
+      "name": "Ш41%",
+      "email": "_@w41x.io",
+      "url": "https://w41x.io"
+    }
+  ],
+  "homepage": "https://github.com/w41x/payload-zitadel-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w41x/payload-zitadel-plugin.git"
+  },
+  "keywords": [
+    "payload",
+    "cms",
+    "plugin",
+    "zitadel"
+  ],
+  "bugs": {
+    "url": "https://github.com/w41x/payload-zitadel-plugin/issues"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm build:swc && pnpm build:types",
+    "build:swc": "swc src -d dist --config-file .swcrc --strip-leading-paths",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "clean": "rimraf {dist, tsconfig.tsbuildinfo}",
+    "prepublishOnly": "pnpm clean && pnpm build"
+  },
+  "dependencies": {
+    "@payloadcms/translations": "3.0.0-beta.47",
+    "@payloadcms/ui": "3.0.0-beta.47",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^15.0.0-rc.0",
+    "next-auth": "^4.24.7",
+    "payload": "3.0.0-beta.47",
+    "react": "^19.0.0-rc-dfd30974ab-20240613",
+    "react-dom": "^19.0.0-rc-dfd30974ab-20240613"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.5.29",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.6.0-dev.20240614"
+  },
+  "engines": {
+    "node": "^22.3.0"
+  },
+  "packageManager": "pnpm@9.3.0",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "require": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./types": {
+        "import": "./dist/types.js",
+        "require": "./dist/types.js",
+        "types": "./dist/types.d.ts"
+      }
+    },
+    "main": "./dist/index.js",
+    "registry": "https://registry.npmjs.org",
+    "types": "./dist/index.d.ts"
+  }
+}
