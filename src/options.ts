@@ -27,6 +27,11 @@ export const authOptions: ZitadelAuthOptionsType = ({internalProviderName, issue
                 loginName: profile.preferred_username,
                 image: profile.picture
             }),
+            userinfo: {
+                async request(context) {
+                    return await context.client.userinfo(context.tokens.access_token!)
+                }
+            },
             clientId
         }
     ],
@@ -34,8 +39,8 @@ export const authOptions: ZitadelAuthOptionsType = ({internalProviderName, issue
         session: async ({session, token}) => ({
             ...session,
             user: {
-                ...session.user,
-                id: token.sub
+                id: token.sub,
+                ...session.user
             }
         })
     }
