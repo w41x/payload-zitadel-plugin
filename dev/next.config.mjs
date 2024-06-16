@@ -6,7 +6,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'id.vmfk.eu',
+                hostname: 'idp.zitadel.url',
                 port: '',
                 pathname: '/assets/**',
             },
