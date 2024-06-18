@@ -1,8 +1,10 @@
 import {NextAuthOptions} from 'next-auth'
-import {AuthStrategy} from 'payload/auth'
-import {Config} from 'payload/config'
+import {AuthStrategy} from 'payload'
+import {Config} from 'payload'
+import {NextConfig} from 'next'
 
 export type ZitadelPluginProps = {
+    disableAvatar?: true | undefined
     disableLocalStrategy?: true | undefined
     disableDefaultLoginButton?: true | undefined
     defaultLoginButtonTitle?: string
@@ -11,6 +13,7 @@ export type ZitadelPluginProps = {
 
 export type ZitadelPluginProviderType = (props: ZitadelPluginProps) => {
     zitadelPlugin: (incomingConfig: Config) => Config,
+    withZitadel: (nextConfig?: NextConfig) => NextConfig,
     nextauthHandler: any
 }
 

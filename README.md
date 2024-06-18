@@ -17,10 +17,9 @@ pnpm add payload-zitadel-plugin@0.1.0
 
 Initialize the plugin in Payload Config File. Change the parameters to connect to your Zitadel Instance.
 
-#### payload.config.ts
+#### zitadel-plugin.ts
 
 ```typescript
-import {buildConfig} from 'payload/config'
 import {ZitadelPluginProvider} from 'payload-zitadel-plugin'
 
 export const {zitadelPlugin, nextauthHandler} = ZitadelPluginProvider({
@@ -31,6 +30,9 @@ export const {zitadelPlugin, nextauthHandler} = ZitadelPluginProvider({
     // interpolation text for the Login Button - "sign in with ..."
     // externalProviderName: 'ZITADEL',
 
+    // set to true if you do not want to use the IdP Profile as the Avatar
+    // disableAvatar: true
+    
     // set to true if you want to use your own custom login button
     // disableDefaultLoginButton: true
 
@@ -54,6 +56,13 @@ export const {zitadelPlugin, nextauthHandler} = ZitadelPluginProvider({
     // apiKeyId: process.env.ZITADEL_API_KEY_ID,
     // apiKey: process.env.ZITADEL_API_KEY
 })
+
+```
+
+#### payload.config.ts
+
+```typescript
+import {buildConfig} from 'payload/config'
 
 export default buildConfig({
     ...,
@@ -108,7 +117,7 @@ Unfortunately you need to manually create the following NextAuth.js route in you
 ### (nextauth)/api/auth/[...nextauth]/route.ts
 
 ```typescript
-import {nextauthHandler} from '@payload-config'
+import {nextauthHandler} from '@/config/zitadel-plugin'
 
 export {nextauthHandler as GET, nextauthHandler as POST}
 ```

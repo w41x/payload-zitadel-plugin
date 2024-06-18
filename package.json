@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
   "type": "module",
   "license": "MIT",
@@ -43,29 +43,29 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/translations": "3.0.0-beta.47",
-    "@payloadcms/ui": "3.0.0-beta.47",
+    "@payloadcms/translations": "3.0.0-beta.50",
+    "@payloadcms/ui": "3.0.0-beta.50",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.0-rc.0",
     "next-auth": "^4.24.7",
-    "payload": "3.0.0-beta.47",
-    "react": "^19.0.0-rc-fb9a90fa48-20240614",
-    "react-dom": "^19.0.0-rc-fb9a90fa48-20240614"
+    "payload": "3.0.0-beta.50",
+    "react": "^19.0.0-rc-107a2f8c3e-20240617",
+    "react-dom": "^19.0.0-rc-107a2f8c3e-20240617"
   },
   "devDependencies": {
     "@swc/cli": "^0.3.12",
     "@swc/core": "^1.6.1",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "rimraf": "^5.0.7",
-    "typescript": "^5.6.0-dev.20240616"
+    "typescript": "^5.6.0-dev.20240618"
   },
   "engines": {
     "node": "^22.3.0"
   },
-  "packageManager": "pnpm@9.3.0",
+  "packageManager": "pnpm@9.4.0",
   "exports": {
     ".": {
       "import": "./dist/index.js",

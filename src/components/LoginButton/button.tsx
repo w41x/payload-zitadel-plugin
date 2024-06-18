@@ -2,11 +2,11 @@
 
 import React from 'react'
 import {signIn} from 'next-auth/react'
-import {CustomComponent} from 'payload/config'
+import {CustomComponent} from 'payload'
 import {NestedKeysStripped} from '@payloadcms/translations'
-import {Button} from '@payloadcms/ui/elements'
+import {Button} from '@payloadcms/ui/client'
 import {useTranslation} from '@payloadcms/ui/providers/Translation'
-import {translations} from '../translations.js'
+import {translations} from '../../translations.js'
 
 export const _LoginButton: CustomComponent = ({internalProviderName, externalProviderName}: {
     internalProviderName: string,

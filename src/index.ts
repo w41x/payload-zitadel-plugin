@@ -1,17 +1,15 @@
-import NextAuth from 'next-auth'
+import NextAuth, {getServerSession} from 'next-auth'
 import {signOut} from 'next-auth/react'
-import {LoginButton} from './LoginButton/index.js'
 import {authOptions} from './options.js'
 import {zitadelStrategy} from './strategy.js'
 import {ZitadelAuthOptionsProps, ZitadelPluginProviderType} from './types.js'
 import {translations} from './translations.js'
-
-
-export {LoginButton}
+import {Avatar, LoginButton, Session} from './components/index.js'
 
 export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                                                                      authSlug = 'users',
                                                                      associatedIdFieldName = 'idp_id',
+                                                                     disableAvatar,
                                                                      disableLocalStrategy,
                                                                      disableDefaultLoginButton,
                                                                      internalProviderName = 'zitadel',
@@ -40,11 +38,13 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
         issuerUrl: issuerUrl!,
         clientId: clientId!
     }
+    const url = new URL(issuerUrl || 'http://localhost')
     return {
         zitadelPlugin: (incomingConfig) => ({
             ...incomingConfig,
             admin: {
                 ...incomingConfig.admin,
+                ...(disableAvatar ? {} : {avatar: Avatar}),
                 components: {
                     ...incomingConfig.admin?.components,
                     afterLogin: [
@@ -53,6 +53,9 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                             internalProviderName,
                             externalProviderName
                         })])
+                    ],
+                    providers: [
+                        Session
                     ]
                 }
             },
@@ -84,6 +87,32 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                             type: 'text',
                             unique: true,
                             required: true
+                        },
+                        {
+                            name: 'email',
+                            type: 'email',
+                            admin: {
+                                readOnly: true
+                            },
+                            access: {},
+                            hooks: {
+                                afterRead: [
+                                    async () => (await getServerSession())?.user?.email
+                                ]
+                            }
+                        },
+                        {
+                            name: 'name',
+                            type: 'text',
+                            admin: {
+                                readOnly: true
+                            },
+                            access: {},
+                            hooks: {
+                                afterRead: [
+                                    async () => (await getServerSession())?.user?.name
+                                ]
+                            }
                         }
                     ],
                     hooks: {
@@ -137,6 +166,21 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                         ...translations.en
                     }
                 }
+            }
+        }),
+        withZitadel: (nextConfig) => ({
+            ...nextConfig,
+            images: {
+                ...nextConfig?.images,
+                remotePatterns: [
+                    ...(nextConfig?.images?.remotePatterns || []),
+                    {
+                        protocol: url.protocol as 'http' | 'https',
+                        hostname: url.hostname,
+                        port: '',
+                        pathname: '/assets/**'
+                    }
+                ]
             }
         }),
         nextauthHandler: NextAuth.default(authOptions(authOptionsProps))
