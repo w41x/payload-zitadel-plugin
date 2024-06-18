@@ -38,7 +38,6 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
         issuerUrl: issuerUrl!,
         clientId: clientId!
     }
-    const url = new URL(issuerUrl || 'http://localhost')
     return {
         zitadelPlugin: (incomingConfig) => ({
             ...incomingConfig,
@@ -166,21 +165,6 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                         ...translations.en
                     }
                 }
-            }
-        }),
-        withZitadel: (nextConfig) => ({
-            ...nextConfig,
-            images: {
-                ...nextConfig?.images,
-                remotePatterns: [
-                    ...(nextConfig?.images?.remotePatterns || []),
-                    {
-                        protocol: url.protocol as 'http' | 'https',
-                        hostname: url.hostname,
-                        port: '',
-                        pathname: '/assets/**'
-                    }
-                ]
             }
         }),
         nextauthHandler: NextAuth.default(authOptions(authOptionsProps))

@@ -89,7 +89,7 @@ ZITADEL_API_KEY='-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY----
 
 or use the Next.js Config file:
 
-#### next.config.mjs
+#### next.config.js
 
 ```typescript
 import {withPayload} from '@payloadcms/next/withPayload'
@@ -120,6 +120,33 @@ Unfortunately you need to manually create the following NextAuth.js route in you
 import {nextauthHandler} from '@/config/zitadel-plugin'
 
 export {nextauthHandler as GET, nextauthHandler as POST}
+```
+
+### add profile picture url to accepted Next.js assets
+
+If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`), 
+you have to manually add the asset URL to the Next.js config file.
+
+#### next.config.js
+
+```typescript
+import {withPayload} from '@payloadcms/next/withPayload'
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                //protocol: new URL(process.env.ZITADEL_URL).protocol,
+                hostname: new URL(process.env.ZITADEL_URL).hostname,
+                //port: new URL(process.env.ZITADEL_URL).port,
+                pathname: '/assets/**'
+            }
+        ]
+    }
+}
+
+export default withPayload(nextConfig)
 ```
 
 ## For an example look in this repository at the `dev` directory!
