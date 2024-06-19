@@ -10,7 +10,7 @@ uses [NextAuth.js](https://next-auth.js.org) under the hood.
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.1.0
+pnpm add payload-zitadel-plugin@0.1.3
 ```
 
 ## Configuration
