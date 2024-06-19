@@ -42,16 +42,16 @@
     "generate:types": "payload generate:types"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.0.0-beta.51",
-    "@payloadcms/next": "3.0.0-beta.51",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.51",
-    "@payloadcms/translations": "3.0.0-beta.51",
-    "@payloadcms/ui": "3.0.0-beta.51",
+    "@payloadcms/db-mongodb": "3.0.0-beta.52",
+    "@payloadcms/next": "3.0.0-beta.52",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.52",
+    "@payloadcms/translations": "3.0.0-beta.52",
+    "@payloadcms/ui": "3.0.0-beta.52",
     "next": "^15.0.0-rc.0",
-    "payload": "3.0.0-beta.51",
+    "payload": "3.0.0-beta.52",
     "payload-zitadel-plugin": "file:..",
-    "react": "^19.0.0-rc-107a2f8c3e-20240617",
-    "react-dom": "^19.0.0-rc-107a2f8c3e-20240617"
+    "react": "^19.0.0-rc-1434af3d22-20240618",
+    "react-dom": "^19.0.0-rc-1434af3d22-20240618"
   },
   "devDependencies": {
     "@types/node": "^20.14.5",

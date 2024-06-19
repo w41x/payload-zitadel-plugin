@@ -156,12 +156,13 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
             i18n: {
                 ...incomingConfig.i18n,
                 translations: {
+                    ...incomingConfig.i18n?.translations,
                     de: {
-                        ...incomingConfig.i18n?.translations?.de ?? {},
+                        ...incomingConfig.i18n?.translations?.de,
                         ...translations.de
                     },
                     en: {
-                        ...incomingConfig.i18n?.translations?.en ?? {},
+                        ...incomingConfig.i18n?.translations?.en,
                         ...translations.en
                     }
                 }

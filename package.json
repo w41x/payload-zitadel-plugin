@@ -43,12 +43,12 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/translations": "3.0.0-beta.51",
-    "@payloadcms/ui": "3.0.0-beta.51",
+    "@payloadcms/translations": "3.0.0-beta.52",
+    "@payloadcms/ui": "3.0.0-beta.52",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.0-rc.0",
     "next-auth": "^4.24.7",
-    "payload": "3.0.0-beta.51",
+    "payload": "3.0.0-beta.52",
     "react": "^19.0.0-rc-1434af3d22-20240618",
     "react-dom": "^19.0.0-rc-1434af3d22-20240618"
   },
