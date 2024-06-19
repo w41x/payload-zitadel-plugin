@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin-dev",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "development environment for payload-zitadel-plugin",
   "license": "MIT",
   "type": "module",

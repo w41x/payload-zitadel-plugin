@@ -4,12 +4,12 @@ import {authOptions} from './options.js'
 import {zitadelStrategy} from './strategy.js'
 import {ZitadelAuthOptionsProps, ZitadelPluginProviderType} from './types.js'
 import {translations} from './translations.js'
-import {Avatar, LoginButton, Session} from './components/index.js'
+import {LoginButton, Session} from './components/index.js'
 
 export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                                                                      authSlug = 'users',
                                                                      associatedIdFieldName = 'idp_id',
-                                                                     disableAvatar,
+                                                                     //disableAvatar,
                                                                      disableLocalStrategy,
                                                                      disableDefaultLoginButton,
                                                                      internalProviderName = 'zitadel',
@@ -43,7 +43,8 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
             ...incomingConfig,
             admin: {
                 ...incomingConfig.admin,
-                ...(disableAvatar ? {} : {avatar: Avatar}),
+                // currently not working
+                //...(disableAvatar ? {} : {avatar: Avatar}),
                 components: {
                     ...incomingConfig.admin?.components,
                     afterLogin: [

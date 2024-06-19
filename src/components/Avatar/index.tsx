@@ -1,12 +1,13 @@
-'use client'
+/*'use client'
 
 import * as React from 'react'
-import Image from 'next/image.js'
-import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
 import {useSession} from 'next-auth/react'
+import {CustomComponent} from 'payload'
+import {Thumbnail} from '@payloadcms/ui/elements/Thumbnail'
+import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
 
 
-export const Avatar = (props: { active: boolean }) => {
+export const Avatar: CustomComponent = () => {
 
     const session = useSession()
 
@@ -14,7 +15,7 @@ export const Avatar = (props: { active: boolean }) => {
 
     return imageUrl ? (
         <div className="avatar">
-            <Image.default src={imageUrl} alt="Profile Picture" fill/>
+            <Thumbnail fileSrc={imageUrl} size="expand"/>
         </div>
-    ) : <DefaultAccountIcon active={props.active}/>
-}
+    ) : <DefaultAccountIcon active={false}/>
+}*/
