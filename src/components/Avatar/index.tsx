@@ -1,21 +1,43 @@
-/*'use client'
+'use client'
 
 import * as React from 'react'
+// https://github.com/vercel/next.js/issues/46078
+// import Image from 'next/image.js'
 import {useSession} from 'next-auth/react'
-import {CustomComponent} from 'payload'
-import {Thumbnail} from '@payloadcms/ui/elements/Thumbnail'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
+import {CustomComponent} from 'payload'
 
 
-export const Avatar: CustomComponent = () => {
+export const Avatar: CustomComponent<{ active: boolean }> = ({active}) => {
 
     const session = useSession()
 
     const imageUrl = session?.data?.user?.image
 
-    return imageUrl ? (
-        <div className="avatar">
-            <Thumbnail fileSrc={imageUrl} size="expand"/>
-        </div>
-    ) : <DefaultAccountIcon active={false}/>
-}*/
+    return (imageUrl ?
+            <>
+                <style>
+                    {`
+                            .avatar {
+                                height: 2rem;
+                                width: 2rem;
+                            }
+                            
+                            .avatar:hover {
+                                filter: brightness(.8);
+                            }
+                            
+                            .avatar img {
+                                object-fit: fill;
+                                border-radius: 100%;
+                            }
+                        `}
+                </style>
+                <div className="avatar">
+                    {/*<Image src={imageUrl} alt="Profile Picture" fill/>*/}
+                    {<img src={imageUrl} alt="Profile Picture"/>}
+                </div>
+            </> :
+            <DefaultAccountIcon active={active}/>
+    )
+}
