@@ -21,25 +21,27 @@ export const authOptions: ZitadelAuthOptionsType = ({internalProviderName, issue
             profile: async (profile) => ({
                 id: profile.sub,
                 name: profile.name,
-                firstName: profile.given_name,
-                lastName: profile.family_name,
                 email: profile.email,
                 loginName: profile.preferred_username,
-                image: profile.picture
+                image: profile.picture,
+                firstName: profile.given_name,
+                lastName: profile.family_name,
+                gender: profile.gender,
+                locale: profile.locale,
+                roles: profile['urn:zitadel:iam:org:project:roles'],
             }),
-            userinfo: {
-                async request(context) {
-                    return await context.client.userinfo(context.tokens.access_token!)
-                }
-            },
             clientId
         }
     ],
     callbacks: {
+        jwt: async ({user, token}) => ({
+            ...token,
+            ...(user ? {user} : {})
+        }),
         session: async ({session, token}) => ({
             ...session,
             user: {
-                id: token.sub,
+                ...token.user,
                 ...session.user
             }
         })

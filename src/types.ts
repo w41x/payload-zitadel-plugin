@@ -1,6 +1,7 @@
-import {NextAuthOptions} from 'next-auth'
+import {Awaitable, NextAuthOptions, Session} from 'next-auth'
 import {AuthStrategy} from 'payload'
 import {Config} from 'payload'
+import {JWT} from 'next-auth/jwt'
 
 export type ZitadelPluginProps = {
     disableAvatar?: true | undefined
@@ -21,7 +22,9 @@ export type ZitadelAuthOptionsProps = {
     clientId: string
 }
 
-export type ZitadelAuthOptionsType = (props: ZitadelAuthOptionsProps) => NextAuthOptions
+export type ZitadelAuthOptionsType = (props: ZitadelAuthOptionsProps) => NextAuthOptions & {
+    callbacks: { session: (props: { session: Session, token: JWT & { user: any } }) => Awaitable<Session> }
+}
 
 export type ZitadelAPIProps = {
     enableAPI: true
