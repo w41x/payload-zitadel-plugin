@@ -1,6 +1,6 @@
 import {ZitadelPluginProvider} from 'payload-zitadel-plugin'
 
-export const {zitadelPlugin, nextauthHandler} = ZitadelPluginProvider({
+export const {zitadelPlugin, handlers, auth} = ZitadelPluginProvider({
     externalProviderName: 'Test-IdP',
     disableLocalStrategy: true,
     issuerUrl: process.env.ZITADEL_URL,

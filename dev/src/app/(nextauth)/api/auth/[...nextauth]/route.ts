@@ -1,3 +1,3 @@
-import {nextauthHandler} from '@/config/zitadel-plugin'
+import {handlers} from '@/config/zitadel-plugin'
 
-export {nextauthHandler as GET, nextauthHandler as POST}
+export const {GET, POST} = handlers

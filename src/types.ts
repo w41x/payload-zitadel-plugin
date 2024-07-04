@@ -1,4 +1,4 @@
-import {Awaitable, NextAuthOptions, Session} from 'next-auth'
+import {NextAuthConfig, NextAuthResult, Session} from 'next-auth'
 import {AuthStrategy} from 'payload'
 import {Config} from 'payload'
 import {JWT} from 'next-auth/jwt'
@@ -12,9 +12,8 @@ export type ZitadelPluginProps = {
 } & Partial<ZitadelStrategyProps>
 
 export type ZitadelPluginProviderType = (props: ZitadelPluginProps) => {
-    zitadelPlugin: (incomingConfig: Config) => Config,
-    nextauthHandler: any
-}
+    zitadelPlugin: (incomingConfig: Config) => Config
+} & NextAuthResult
 
 export type ZitadelAuthOptionsProps = {
     internalProviderName: string,
@@ -22,8 +21,8 @@ export type ZitadelAuthOptionsProps = {
     clientId: string
 }
 
-export type ZitadelAuthOptionsType = (props: ZitadelAuthOptionsProps) => NextAuthOptions & {
-    callbacks: { session: (props: { session: Session, token: JWT & { user: any } }) => Awaitable<Session> }
+export type ZitadelAuthOptionsType = (props: ZitadelAuthOptionsProps) => NextAuthConfig & {
+    callbacks: { session: (props: { session: Session, token: JWT & { user: any } }) => Promise<Session> }
 }
 
 export type ZitadelAPIProps = {
@@ -34,6 +33,7 @@ export type ZitadelAPIProps = {
 }
 
 export type ZitadelStrategyProps = ZitadelAuthOptionsProps & {
+    auth: NextAuthResult['auth']
     authSlug: string,
     associatedIdFieldName: string,
 } & (ZitadelAPIProps | {

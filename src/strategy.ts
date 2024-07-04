@@ -1,14 +1,12 @@
-import {getServerSession, User} from 'next-auth'
-import {authOptions} from './options.js'
 import jwt from 'jsonwebtoken'
 import {ZitadelStrategyType} from './types.js'
 
 export const zitadelStrategy: ZitadelStrategyType = ({
+                                                         auth,
                                                          authSlug,
                                                          associatedIdFieldName,
                                                          internalProviderName,
                                                          issuerUrl,
-                                                         clientId,
                                                          enableAPI,
                                                          apiClientId,
                                                          apiKeyId,
@@ -51,9 +49,8 @@ export const zitadelStrategy: ZitadelStrategyType = ({
 
         // in case of normal browsing
         if (!idp_id) {
-            const session = await getServerSession(authOptions({internalProviderName, issuerUrl, clientId}))
-            if (session?.user)
-                idp_id = (session?.user as User & { id: string }).id
+            const session = await auth()
+            idp_id = session?.user?.id
         }
 
         // search for associated user; if not found, create one
@@ -73,13 +70,17 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                 }
             })).id
             return {
-                collection: authSlug,
-                id,
-                email: ''
+                user: {
+                    collection: authSlug,
+                    id,
+                    email: ''
+                }
             }
         }
 
         // Authentication failed
-        return null
+        return {
+            user: null
+        }
     }
 })

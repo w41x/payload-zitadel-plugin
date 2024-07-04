@@ -5,15 +5,13 @@ export const authOptions: ZitadelAuthOptionsType = ({internalProviderName, issue
         {
             id: internalProviderName,
             name: internalProviderName,
-            type: 'oauth',
-            version: '2',
-            wellKnown: issuerUrl,
+            type: 'oidc',
+            issuer: issuerUrl,
             authorization: {
                 params: {
                     scope: 'openid email profile'
                 }
             },
-            idToken: true,
             checks: ['pkce', 'state'],
             client: {
                 token_endpoint_auth_method: 'none'

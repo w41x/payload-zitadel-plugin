@@ -1,10 +1,9 @@
-import NextAuth, {getServerSession} from 'next-auth'
-import {signOut} from 'next-auth/react'
+import NextAuth from 'next-auth'
 import {authOptions} from './options.js'
 import {zitadelStrategy} from './strategy.js'
 import {ZitadelAuthOptionsProps, ZitadelPluginProviderType} from './types.js'
 import {translations} from './translations.js'
-import {Avatar, LoginButton, Session} from './components/index.js'
+import {Avatar, LoginButton} from './components/index.js'
 
 export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                                                                      authSlug = 'users',
@@ -38,23 +37,22 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
         issuerUrl: issuerUrl!,
         clientId: clientId!
     }
+    const nextAuth = NextAuth(authOptions(authOptionsProps))
+    const {auth, signIn, signOut} = nextAuth
     return {
         zitadelPlugin: (incomingConfig) => ({
             ...incomingConfig,
             admin: {
                 ...incomingConfig.admin,
-                ...(disableAvatar ? {} : {avatar: Avatar}),
+                ...(disableAvatar ? {} : {avatar: Avatar({auth})}),
                 components: {
                     ...incomingConfig.admin?.components,
                     afterLogin: [
                         ...incomingConfig.admin?.components?.afterLogin || [],
                         ...(disableDefaultLoginButton ? [] : [LoginButton({
-                            internalProviderName,
+                            signIn,
                             externalProviderName
                         })])
-                    ],
-                    providers: [
-                        Session
                     ]
                 }
             },
@@ -67,6 +65,7 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                         strategies: [
                             ...(typeof collection.auth == 'boolean' ? {} : collection.auth)?.strategies ?? [],
                             zitadelStrategy({
+                                auth,
                                 authSlug,
                                 associatedIdFieldName,
                                 ...authOptionsProps,
@@ -96,7 +95,7 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                             access: {},
                             hooks: {
                                 afterRead: [
-                                    async () => (await getServerSession())?.user?.email
+                                    async () => (await auth())?.user?.email
                                 ]
                             }
                         },
@@ -109,7 +108,7 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                             access: {},
                             hooks: {
                                 afterRead: [
-                                    async () => (await getServerSession())?.user?.name
+                                    async () => (await auth())?.user?.name
                                 ]
                             }
                         }
@@ -121,16 +120,13 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                     }
                 } : {}
             })),
-            //would be a more developer-friendly alternative
-            //currently not working, maybe in future update
-            /*endpoints: [
-                ...incomingConfig.endpoints || [],
-                ...['get', 'post'].map(method => ({
-                    handler: NextAuth.default(authOptions(authOptionsProps)),
-                    method: method as 'get' | 'post',
-                    path: 'api/auth/*'
-                }))
-            ],*/
+            endpoints: [
+                {
+                    path: 'xyz',
+                    method: 'get',
+                    handler: (req) => Response.json({xyz: ''})
+                }
+            ],
 
             //current work around on creating a non-functional first user
             async onInit(payload) {
@@ -153,6 +149,7 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                     })
                 }
             },
+
             i18n: {
                 ...incomingConfig.i18n,
                 translations: {
@@ -168,6 +165,6 @@ export const ZitadelPluginProvider: ZitadelPluginProviderType = ({
                 }
             }
         }),
-        nextauthHandler: NextAuth.default(authOptions(authOptionsProps))
+        ...nextAuth
     }
 }
