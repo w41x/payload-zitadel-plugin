@@ -5,7 +5,6 @@ import {Avatar, LoginButton} from './components/index.js'
 import {authorize, callback} from './handlers/index.js'
 import {cookies} from 'next/headers.js'
 
-export {useCurrentUser} from './hooks/index.js'
 export {getCurrentUser} from './utils/index.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({

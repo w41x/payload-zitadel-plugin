@@ -78,6 +78,11 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js",
+      "types": "./dist/hooks/index.d.ts"
+    },
     "./types": {
       "import": "./dist/types.js",
       "require": "./dist/types.js",
@@ -91,6 +96,11 @@
         "import": "./dist/index.js",
         "require": "./dist/index.js",
         "types": "./dist/index.d.ts"
+      },
+      "./hooks": {
+        "import": "./dist/hooks/index.js",
+        "require": "./dist/hooks/index.js",
+        "types": "./dist/hooks/index.d.ts"
       },
       "./types": {
         "import": "./dist/types.js",

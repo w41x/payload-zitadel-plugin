@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import Image from 'next/image.js'
-import {useCurrentUser} from 'payload-zitadel-plugin'
+import {useCurrentUser} from 'payload-zitadel-plugin/hooks'
 
 export default function Page() {
 

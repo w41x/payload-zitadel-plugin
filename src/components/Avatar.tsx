@@ -1,13 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import Image from 'next/image.js'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {CustomComponent} from 'payload'
+import {Image} from 'next/dist/client/image-component.js'
 import {useAuth} from '@payloadcms/ui'
 
 
-export const Avatar: CustomComponent<{ active: boolean }> = ({active}) => {
+export const Avatar = () => {
 
     const {user} = useAuth()
 
@@ -31,9 +30,9 @@ export const Avatar: CustomComponent<{ active: boolean }> = ({active}) => {
                         `}
                 </style>
                 <div className="avatar">
-                    <Image.default src={user.image} alt="Profile Picture" fill sizes="2rem 2rem"/>
+                    <Image src={user.image} alt="Profile Picture" fill sizes="2rem 2rem"/>
                 </div>
             </> :
-            <DefaultAccountIcon active={active}/>
+            <DefaultAccountIcon active={false}/>
     )
 }
