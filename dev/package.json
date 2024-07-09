@@ -38,8 +38,7 @@
     "*.d.ts"
   ],
   "scripts": {
-    "dev": "next dev",
-    "generate:types": "payload generate:types"
+    "dev": "next dev"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.0.0-beta.59",
