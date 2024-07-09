@@ -32,16 +32,16 @@ export default buildConfig({
         ZitadelPlugin({
             // URL of your Zitadel instance
             issuerUrl: process.env.ZITADEL_URL,
-            
+
             // in Zitadel create a new App->Web->PKCE, then copy the Client ID
             clientId: process.env.ZITADEL_CLIENT_ID,
 
             // interpolation text for the Login Button - "sign in with ..."
             label: 'Zitadel',
-            
+
             // set the name of the CustomStrategy in PayloadCMS - usually not necessary
             // strategyName: 'zitadel'
-            
+
             // set to true if you do not want to use the Zitadel Profile Picture as the Avatar
             // disableAvatar: true
 
@@ -101,10 +101,13 @@ const nextConfig = {
 export default withPayload(nextConfig)
 ```
 
-### add profile picture url to accepted Next.js assets
+### further configuration
 
 If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`),
 you have to manually add the asset URL to the Next.js config file.
+
+Also if you want to automatically redirect to Zitadel without asking the user to click on the login button,
+you have to add the redirect manually to the Next.js config file.
 
 #### next.config.js
 
@@ -113,6 +116,8 @@ import {withPayload} from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // if Avatar enabled:
+    // allow loading assets like profile pictures from Zitadel
     images: {
         remotePatterns: [
             {
@@ -122,7 +127,18 @@ const nextConfig = {
                 pathname: '/assets/**'
             }
         ]
+    },
+    // optional: enable auto-redirect to Zitadel login page if no logged in
+    async redirects() {
+        return [
+            {
+                source: '/admin/login',
+                destination: '/api/users/authorize',
+                permanent: true
+            }
+        ]
     }
+
 }
 
 export default withPayload(nextConfig)

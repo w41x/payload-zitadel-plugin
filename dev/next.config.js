@@ -12,6 +12,18 @@ const nextConfig = {
             }
         ]
     }
+    // optional: enable auto-redirect to Zitadel login page if no logged in
+    /*
+    async redirects() {
+        return [
+            {
+                source: '/admin/login',
+                destination: '/api/users/authorize',
+                permanent: true
+            }
+        ]
+    }
+    */
 }
 
 export default withPayload(nextConfig)
