@@ -9,7 +9,7 @@ export const LoginButton = () => {
 
     const {t} = useTranslation<typeof translations.en, NestedKeysStripped<typeof translations.en>>()
 
-    const {admin: {custom: {oidc: {label}}}} = useConfig()
+    const {admin: {custom: {zitadel: {label}}}} = useConfig()
 
     return (
         <div style={{display: 'flex', justifyContent: 'center'}}>
