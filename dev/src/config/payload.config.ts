@@ -8,7 +8,7 @@ import {lexicalEditor} from '@payloadcms/richtext-lexical'
 import {de} from '@payloadcms/translations/languages/de'
 import {en} from '@payloadcms/translations/languages/en'
 import {collections} from '@/collections'
-import {OidcPlugin} from 'payload-zitadel-plugin'
+import {ZitadelPlugin} from 'payload-zitadel-plugin'
 
 
 export default buildConfig({
@@ -19,7 +19,7 @@ export default buildConfig({
         supportedLanguages: {de, en}
     },
     plugins: [
-        OidcPlugin({
+        ZitadelPlugin({
             label: 'Test-IdP',
             disableLocalStrategy: true,
             issuerURL: process.env.ZITADEL_URL,
