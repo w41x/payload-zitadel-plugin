@@ -38,15 +38,15 @@ export default buildConfig({
 
             // interpolation text for the Login Button - "sign in with ..."
             label: 'Test-IdP',
-
+            
+            // set to true if you want users to only be able to sign in via Zitadel - recommended
+            disableLocalStrategy: true,
+            
             // set to true if you do not want to use the IdP Profile as the Avatar
             // disableAvatar: true
 
             // set to true if you want to use your own custom login button
             // disableDefaultLoginButton: true
-
-            // set to true if you want users to only be able to sign in via Zitadel - recommended
-            disableLocalStrategy: true,
 
             // if you want to specify the users collection slug
             // authSlug: 'users',
