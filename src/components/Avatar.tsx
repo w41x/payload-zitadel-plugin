@@ -1,25 +1,22 @@
 'use client'
 
 import * as React from 'react'
-// https://github.com/vercel/next.js/issues/46078
-// import Image from 'next/image.js'
 import Image from 'next/image.js'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
 import {CustomComponent} from 'payload'
-import {NextAuthResult} from 'next-auth'
+import {useAuth} from '@payloadcms/ui'
 
 
-export const _Avatar: CustomComponent<{ auth: NextAuthResult['auth'], active: boolean }> = async ({auth, active}) => {
+export const Avatar: CustomComponent<{ active: boolean }> = ({active}) => {
 
-    const session = await auth()
+    const {user} = useAuth()
 
-    const imageUrl = session?.user?.image
-
-    return (imageUrl ?
+    return (user?.image ?
             <>
                 <style>
                     {`
                             .avatar {
+                                position: relative;
                                 height: 2rem;
                                 width: 2rem;
                             }
@@ -29,14 +26,12 @@ export const _Avatar: CustomComponent<{ auth: NextAuthResult['auth'], active: bo
                             }
                             
                             .avatar img {
-                                object-fit: fill;
                                 border-radius: 100%;
                             }
                         `}
                 </style>
                 <div className="avatar">
-                    {/*<Image src={imageUrl} alt="Profile Picture" fill/>*/}
-                    {<img src={imageUrl} alt="Profile Picture"/>}
+                    <Image.default src={user.image} alt="Profile Picture" fill sizes="2rem 2rem"/>
                 </div>
             </> :
             <DefaultAccountIcon active={active}/>

@@ -1,26 +1,28 @@
+import {OidcIdToken, OidcStrategyType} from './types.js'
 import jwt from 'jsonwebtoken'
-import {ZitadelStrategyType} from './types.js'
+import {cookies} from 'next/headers.js'
 
-export const zitadelStrategy: ZitadelStrategyType = ({
-                                                         auth,
-                                                         authSlug,
-                                                         associatedIdFieldName,
-                                                         internalProviderName,
-                                                         issuerUrl,
-                                                         enableAPI,
-                                                         apiClientId,
-                                                         apiKeyId,
-                                                         apiKey
-                                                     }) => ({
-    name: internalProviderName,
+export const zitadelStrategy: OidcStrategyType = ({
+                                                      authSlug,
+                                                      associatedIdFieldName,
+                                                      strategyName,
+                                                      issuerURL,
+                                                      enableAPI,
+                                                      apiClientId,
+                                                      apiKeyId,
+                                                      apiKey
+                                                  }) => ({
+    name: strategyName,
     authenticate: async ({headers, payload}) => {
-        let idp_id
+        let id, idp_id, id_token
+
+        const cookieStore = cookies()
 
         if (enableAPI) {
             // in case of incoming API call from the app
             const authHeader = headers.get('Authorization')
             if (authHeader?.includes('Bearer')) {
-                const introspect = await fetch(`${process.env.ZITADEL_URL}/oauth/v2/introspect`, {
+                const introspect = await fetch(`${issuerURL}/oauth/v2/introspect`, {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -29,7 +31,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                         'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
                         'client_assertion': jwt.sign({}, apiKey, {
                             algorithm: 'RS256',
-                            audience: issuerUrl,
+                            audience: issuerURL,
                             expiresIn: '1h',
                             issuer: apiClientId,
                             keyid: apiKeyId,
@@ -48,9 +50,9 @@ export const zitadelStrategy: ZitadelStrategyType = ({
         }
 
         // in case of normal browsing
-        if (!idp_id) {
-            const session = await auth()
-            idp_id = session?.user?.id
+        if (!idp_id && cookieStore.has('id_token')) {
+            id_token = jwt.verify(cookieStore.get('id_token')?.value ?? '', payload.config.secret) as OidcIdToken
+            idp_id = id_token.sub
         }
 
         // search for associated user; if not found, create one
@@ -63,24 +65,33 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                     }
                 }
             })
-            const id = docs.length ? docs[0].id : (await payload.create({
+            id = docs.length ? docs[0].id : (await payload.create({
                 collection: authSlug,
                 data: {
                     [associatedIdFieldName]: idp_id
                 }
             })).id
-            return {
-                user: {
-                    collection: authSlug,
-                    id,
-                    email: ''
-                }
-            }
         }
 
-        // Authentication failed
-        return {
-            user: null
+        // update user information if possible
+        if (id && id_token) {
+            await payload.update({
+                collection: authSlug,
+                id,
+                data: {
+                    email: id_token.email,
+                    name: id_token.name,
+                    image: id_token.picture
+                }
+            })
         }
+
+        return {
+            user: id ? {
+                collection: authSlug,
+                id
+            } : null
+        }
+
     }
 })

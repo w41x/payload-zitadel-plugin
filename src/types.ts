@@ -1,43 +1,38 @@
-import {NextAuthConfig, NextAuthResult, Session} from 'next-auth'
-import {AuthStrategy} from 'payload'
-import {Config} from 'payload'
-import {JWT} from 'next-auth/jwt'
+import {AuthStrategy, Config} from 'payload'
 
-export type ZitadelPluginProps = {
+export type OidcPluginProps = {
     disableAvatar?: true | undefined
     disableLocalStrategy?: true | undefined
     disableDefaultLoginButton?: true | undefined
     defaultLoginButtonTitle?: string
-    externalProviderName?: string
-} & Partial<ZitadelStrategyProps>
+    label?: string
+} & Partial<OidcStrategyProps>
 
-export type ZitadelPluginProviderType = (props: ZitadelPluginProps) => {
-    zitadelPlugin: (incomingConfig: Config) => Config
-} & NextAuthResult
+export type OidcPluginType = (props: OidcPluginProps) => (config: Config) => Config
 
-export type ZitadelAuthOptionsProps = {
-    internalProviderName: string,
-    issuerUrl: string,
-    clientId: string
-}
-
-export type ZitadelAuthOptionsType = (props: ZitadelAuthOptionsProps) => NextAuthConfig & {
-    callbacks: { session: (props: { session: Session, token: JWT & { user: any } }) => Promise<Session> }
-}
-
-export type ZitadelAPIProps = {
+export type OidcAPIProps = {
     enableAPI: true
     apiClientId: string,
     apiKeyId: string,
     apiKey: string
 }
 
-export type ZitadelStrategyProps = ZitadelAuthOptionsProps & {
-    auth: NextAuthResult['auth']
+export type OidcStrategyProps = {
+    strategyName: string,
+    issuerURL: string,
+    clientId: string
+} & {
     authSlug: string,
     associatedIdFieldName: string,
-} & (ZitadelAPIProps | {
+} & (OidcAPIProps | {
     enableAPI?: undefined
-} & Partial<ZitadelAPIProps>)
+} & Partial<OidcAPIProps>)
 
-export type ZitadelStrategyType = (props: ZitadelStrategyProps) => AuthStrategy
+export type OidcStrategyType = (props: OidcStrategyProps) => AuthStrategy
+
+export type OidcIdToken = Partial<{
+    sub: string,
+    name: string,
+    email: string,
+    picture: string
+}>

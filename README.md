@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/payload-zitadel-plugin.png)](https://npmjs.org/package/payload-zitadel-plugin)
 
 plugin for [Payload CMS](https://payloadcms.com), which enables authentication via Zitadel IdP. It
-uses [NextAuth.js](https://next-auth.js.org) under the hood.
+uses [NextAuth.js](https://next-auth.js.org) v5 under the hood.
 
 :boom: :boom: :boom: &nbsp; works :100: with PayloadCMS version :three: &nbsp; :boom: :boom: :boom:
 
@@ -22,7 +22,7 @@ Initialize the plugin in Payload Config File. Change the parameters to connect t
 ```typescript
 import {ZitadelPluginProvider} from 'payload-zitadel-plugin'
 
-export const {zitadelPlugin, nextauthHandler} = ZitadelPluginProvider({
+export const {zitadelPlugin, handlers} = ZitadelPluginProvider({
     // in Zitadel create a new App->Web->PKCE
     issuerUrl: process.env.ZITADEL_URL,
     clientId: process.env.ZITADEL_CLIENT_ID,
@@ -117,9 +117,9 @@ Unfortunately you need to manually create the following NextAuth.js route in you
 ### (nextauth)/api/auth/[...nextauth]/route.ts
 
 ```typescript
-import {nextauthHandler} from '@/config/zitadel-plugin'
+import {handlers} from '@/config/zitadel-plugin'
 
-export {nextauthHandler as GET, nextauthHandler as POST}
+export const {GET, POST} = handlers
 ```
 
 ### add profile picture url to accepted Next.js assets

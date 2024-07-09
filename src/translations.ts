@@ -1,12 +1,12 @@
 export const translations = {
     de: {
-        zitadelPlugin: {
-            signIn: 'Mit {{externalProviderName}} anmelden'
+        oidcPlugin: {
+            signIn: 'Mit {{label}} anmelden'
         }
     },
     en: {
-        zitadelPlugin: {
-            signIn: 'sign in with {{externalProviderName}}'
+        oidcPlugin: {
+            signIn: 'sign in with {{label}}'
         }
     }
 }
