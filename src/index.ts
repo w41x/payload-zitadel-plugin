@@ -10,10 +10,9 @@ export {getCurrentUser} from './utils/index.js'
 export const ZitadelPlugin: ZitadelPluginType = ({
                                                      associatedIdFieldName = 'idp_id',
                                                      disableAvatar,
-                                                     disableLocalStrategy,
                                                      disableDefaultLoginButton,
-                                                     strategyName = 'idp',
-                                                     label = 'IdP',
+                                                     strategyName = 'zitadel',
+                                                     label = 'Zitadel',
                                                      issuerURL,
                                                      clientId,
                                                      enableAPI,
@@ -60,15 +59,15 @@ export const ZitadelPlugin: ZitadelPluginType = ({
             ...collection.slug == (incomingConfig.admin?.user ?? 'users') ? {
                 auth: {
                     ...(typeof collection.auth == 'boolean' ? {} : collection.auth),
-                    disableLocalStrategy: disableLocalStrategy ? disableLocalStrategy : (typeof collection.auth == 'boolean' ? {} : collection.auth)?.disableLocalStrategy,
+                    disableLocalStrategy: true,
                     strategies: [
                         ...(typeof collection.auth == 'boolean' ? {} : collection.auth)?.strategies ?? [],
                         zitadelStrategy({
                             authSlug: incomingConfig.admin?.user ?? 'users',
                             associatedIdFieldName,
                             strategyName: strategyName,
-                            issuerURL: issuerURL ?? '',
-                            clientId: clientId ?? '',
+                            issuerURL: issuerURL as string,
+                            clientId: clientId as string,
                             ...(enableAPI ? {
                                 enableAPI: true,
                                 apiClientId: apiClientId!,

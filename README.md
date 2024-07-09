@@ -37,21 +37,18 @@ export default buildConfig({
             clientId: process.env.ZITADEL_CLIENT_ID,
 
             // interpolation text for the Login Button - "sign in with ..."
-            label: 'Test-IdP',
+            label: 'Zitadel',
             
-            // set to true if you want users to only be able to sign in via Zitadel - recommended
-            disableLocalStrategy: true,
+            // set the name of the CustomStrategy in PayloadCMS - usually not necessary
+            // strategyName: 'zitadel'
             
-            // set to true if you do not want to use the IdP Profile as the Avatar
+            // set to true if you do not want to use the Zitadel Profile Picture as the Avatar
             // disableAvatar: true
 
             // set to true if you want to use your own custom login button
             // disableDefaultLoginButton: true
 
-            // if you want to specify the users collection slug
-            // authSlug: 'users',
-
-            // if you want to specify the field name for the IdP Id in the users collection
+            // if you want to specify the field name for the Zitadel User Id in the users collection
             // associatedIdFieldName: 'idp_id'
 
             // following properties are only needed if you want to authenticate clients for the API

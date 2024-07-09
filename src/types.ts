@@ -2,7 +2,6 @@ import {AuthStrategy, Config} from 'payload'
 
 export type ZitadelPluginProps = {
     disableAvatar?: true | undefined
-    disableLocalStrategy?: true | undefined
     disableDefaultLoginButton?: true | undefined
     defaultLoginButtonTitle?: string
     label?: string

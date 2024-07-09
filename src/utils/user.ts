@@ -5,8 +5,5 @@ import {SanitizedConfig} from 'payload'
 export const getCurrentUser = async ({config}: { config: Promise<SanitizedConfig> }) => {
     const payload = await getPayloadHMR({config})
     const {user} = await payload.auth({headers: headers()})
-    if (user) {
-        return await payload.findByID({...user})
-    }
-    return null
+    return user ? await payload.findByID({...user}) : null
 }
