@@ -1,17 +1,17 @@
-import {OidcIdToken, OidcStrategyType} from './types.js'
+import {ZitadelIdToken, ZitadelStrategyType} from './types.js'
 import jwt from 'jsonwebtoken'
 import {cookies} from 'next/headers.js'
 
-export const zitadelStrategy: OidcStrategyType = ({
-                                                      authSlug,
-                                                      associatedIdFieldName,
-                                                      strategyName,
-                                                      issuerURL,
-                                                      enableAPI,
-                                                      apiClientId,
-                                                      apiKeyId,
-                                                      apiKey
-                                                  }) => ({
+export const zitadelStrategy: ZitadelStrategyType = ({
+                                                         authSlug,
+                                                         associatedIdFieldName,
+                                                         strategyName,
+                                                         issuerURL,
+                                                         enableAPI,
+                                                         apiClientId,
+                                                         apiKeyId,
+                                                         apiKey
+                                                     }) => ({
     name: strategyName,
     authenticate: async ({headers, payload}) => {
         let id, idp_id, id_token
@@ -51,7 +51,7 @@ export const zitadelStrategy: OidcStrategyType = ({
 
         // in case of normal browsing
         if (!idp_id && cookieStore.has('id_token')) {
-            id_token = jwt.verify(cookieStore.get('id_token')?.value ?? '', payload.config.secret) as OidcIdToken
+            id_token = jwt.verify(cookieStore.get('id_token')?.value ?? '', payload.config.secret) as ZitadelIdToken
             idp_id = id_token.sub
         }
 

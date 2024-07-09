@@ -2,11 +2,11 @@ import {PayloadHandler} from 'payload'
 import {cookies} from 'next/headers.js'
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
-import {OidcIdToken} from '../types.js'
+import {ZitadelIdToken} from '../types.js'
 
 export const callback: PayloadHandler = async ({payload, query: {code}}) => {
 
-    const {secret, admin: {custom: {oidc: {issuerURL, clientId, redirectURL}}}} = payload.config
+    const {secret, admin: {custom: {zitadel: {issuerURL, clientId, redirectURL}}}} = payload.config
 
     const cookieStore = cookies()
 
@@ -31,7 +31,7 @@ export const callback: PayloadHandler = async ({payload, query: {code}}) => {
             if (id_token) {
                 cookieStore.set({
                     name: 'id_token',
-                    value: jwt.sign(jwt.decode(id_token) as OidcIdToken, secret),
+                    value: jwt.sign(jwt.decode(id_token) as ZitadelIdToken, secret),
                     httpOnly: true,
                     path: '/',
                     sameSite: 'strict',

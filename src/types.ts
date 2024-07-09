@@ -1,36 +1,36 @@
 import {AuthStrategy, Config} from 'payload'
 
-export type OidcPluginProps = {
+export type ZitadelPluginProps = {
     disableAvatar?: true | undefined
     disableLocalStrategy?: true | undefined
     disableDefaultLoginButton?: true | undefined
     defaultLoginButtonTitle?: string
     label?: string
-} & Partial<OidcStrategyProps>
+} & Partial<ZitadelStrategyProps>
 
-export type OidcPluginType = (props: OidcPluginProps) => (config: Config) => Config
+export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => Config
 
-export type OidcAPIProps = {
+export type ZitadelAPIProps = {
     enableAPI: true
     apiClientId: string,
     apiKeyId: string,
     apiKey: string
 }
 
-export type OidcStrategyProps = {
+export type ZitadelStrategyProps = {
     strategyName: string,
     issuerURL: string,
     clientId: string
 } & {
     authSlug: string,
     associatedIdFieldName: string,
-} & (OidcAPIProps | {
+} & (ZitadelAPIProps | {
     enableAPI?: undefined
-} & Partial<OidcAPIProps>)
+} & Partial<ZitadelAPIProps>)
 
-export type OidcStrategyType = (props: OidcStrategyProps) => AuthStrategy
+export type ZitadelStrategyType = (props: ZitadelStrategyProps) => AuthStrategy
 
-export type OidcIdToken = Partial<{
+export type ZitadelIdToken = Partial<{
     sub: string,
     name: string,
     email: string,

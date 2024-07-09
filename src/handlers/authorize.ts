@@ -31,7 +31,7 @@ export const authorize: PayloadHandler = async ({
                                                         config: {
                                                             admin: {
                                                                 custom: {
-                                                                    oidc: {
+                                                                    zitadel: {
                                                                         issuerURL,
                                                                         clientId,
                                                                         redirectURL

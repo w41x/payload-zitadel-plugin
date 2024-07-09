@@ -2,62 +2,19 @@
 
 [![NPM](https://nodei.co/npm/payload-zitadel-plugin.png)](https://npmjs.org/package/payload-zitadel-plugin)
 
-plugin for [Payload CMS](https://payloadcms.com), which enables authentication via Zitadel IdP. It
-uses [NextAuth.js](https://next-auth.js.org) v5 under the hood.
+plugin for [Payload CMS](https://payloadcms.com), which enables authentication via Zitadel IdP.
 
 :boom: :boom: :boom: &nbsp; works :100: with PayloadCMS version :three: &nbsp; :boom: :boom: :boom:
 
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.1.7
+pnpm add payload-zitadel-plugin@0.2.0
 ```
 
 ## Configuration
 
 Initialize the plugin in Payload Config File. Change the parameters to connect to your Zitadel Instance.
-
-#### zitadel-plugin.ts
-
-```typescript
-import {ZitadelPluginProvider} from 'payload-zitadel-plugin'
-
-export const {zitadelPlugin, handlers} = ZitadelPluginProvider({
-    // in Zitadel create a new App->Web->PKCE
-    issuerUrl: process.env.ZITADEL_URL,
-    clientId: process.env.ZITADEL_CLIENT_ID,
-
-    // interpolation text for the Login Button - "sign in with ..."
-    // externalProviderName: 'ZITADEL',
-
-    // set to true if you do not want to use the IdP Profile as the Avatar
-    // disableAvatar: true
-    
-    // set to true if you want to use your own custom login button
-    // disableDefaultLoginButton: true
-
-    // set to true if you want users to only be able to sign in via Zitadel
-    // disableLocalStrategy: true,
-
-    // if you want to specify the users collection slug
-    // authSlug: 'users',
-
-    // if you want to specify the field name for the IdP Id in the users collection
-    // associatedIdFieldName: 'idp_id'
-
-    // change the internal name, only if you know what you are doing!!!
-    // internalProviderName = 'zitadel',
-
-    // following properties are only needed if you want to authenticate clients for the API
-    // if you are just using the CMS you can ignore all of them
-    // in Zitadel create a new App->API->JWT
-    // enableAPI: true,
-    // apiClientId: process.env.ZITADEL_API_CLIENT_ID,
-    // apiKeyId: process.env.ZITADEL_API_KEY_ID,
-    // apiKey: process.env.ZITADEL_API_KEY
-})
-
-```
 
 #### payload.config.ts
 

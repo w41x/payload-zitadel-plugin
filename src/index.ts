@@ -1,5 +1,5 @@
 import {zitadelStrategy} from './strategy.js'
-import {OidcPluginType} from './types.js'
+import {ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
 import {Avatar, LoginButton} from './components/index.js'
 import {authorize, callback} from './handlers/index.js'
@@ -8,20 +8,20 @@ import {cookies} from 'next/headers.js'
 export {useCurrentUser} from './hooks/index.js'
 export {getCurrentUser} from './utils/index.js'
 
-export const OidcPlugin: OidcPluginType = ({
-                                               associatedIdFieldName = 'idp_id',
-                                               disableAvatar,
-                                               disableLocalStrategy,
-                                               disableDefaultLoginButton,
-                                               strategyName = 'idp',
-                                               label = 'IdP',
-                                               issuerURL,
-                                               clientId,
-                                               enableAPI,
-                                               apiClientId,
-                                               apiKeyId,
-                                               apiKey
-                                           }) => {
+export const ZitadelPlugin: ZitadelPluginType = ({
+                                                     associatedIdFieldName = 'idp_id',
+                                                     disableAvatar,
+                                                     disableLocalStrategy,
+                                                     disableDefaultLoginButton,
+                                                     strategyName = 'idp',
+                                                     label = 'IdP',
+                                                     issuerURL,
+                                                     clientId,
+                                                     enableAPI,
+                                                     apiClientId,
+                                                     apiKeyId,
+                                                     apiKey
+                                                 }) => {
     if ((issuerURL ?? '').length == 0)
         throw new Error('ZITADEL-PLUGIN: ISSUER-URL IS EMPTY')
     if ((clientId ?? '').length == 0)
@@ -48,7 +48,7 @@ export const OidcPlugin: OidcPluginType = ({
                 ]
             },
             custom: {
-                oidc: {
+                zitadel: {
                     issuerURL,
                     clientId,
                     redirectURL: `${incomingConfig.serverURL ?? 'http://localhost'}/api/${incomingConfig.admin?.user ?? 'users'}/callback`,
