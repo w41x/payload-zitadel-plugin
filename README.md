@@ -4,6 +4,9 @@
 
 plugin for [Payload CMS](https://payloadcms.com), which enables authentication via Zitadel IdP.
 
+The default use case is to fully replace PayloadCMS Auth with Zitadel.
+Thus the user collection in PayloadCMS becomes just a shadow of the information in Zitadel.
+
 :boom: :boom: :boom: &nbsp; works :100: with PayloadCMS version :three: &nbsp; :boom: :boom: :boom:
 
 ## Install
@@ -20,11 +23,45 @@ Initialize the plugin in Payload Config File. Change the parameters to connect t
 
 ```typescript
 import {buildConfig} from 'payload/config'
+import {ZitadelPlugin} from 'payload-zitadel-plugin'
+
 
 export default buildConfig({
     ...,
     plugins: [
-        zitadelPlugin
+        ZitadelPlugin({
+            // URL of your Zitadel instance
+            issuerUrl: process.env.ZITADEL_URL,
+            
+            // in Zitadel create a new App->Web->PKCE, then copy the Client ID
+            clientId: process.env.ZITADEL_CLIENT_ID,
+
+            // interpolation text for the Login Button - "sign in with ..."
+            label: 'Test-IdP',
+
+            // set to true if you do not want to use the IdP Profile as the Avatar
+            // disableAvatar: true
+
+            // set to true if you want to use your own custom login button
+            // disableDefaultLoginButton: true
+
+            // set to true if you want users to only be able to sign in via Zitadel - recommended
+            disableLocalStrategy: true,
+
+            // if you want to specify the users collection slug
+            // authSlug: 'users',
+
+            // if you want to specify the field name for the IdP Id in the users collection
+            // associatedIdFieldName: 'idp_id'
+
+            // following properties are only needed if you want to authenticate clients for the API
+            // if you are just using the CMS you can ignore all of them
+            // in Zitadel create a new App->API->JWT
+            // enableAPI: true,
+            // apiClientId: process.env.ZITADEL_API_CLIENT_ID,
+            // apiKeyId: process.env.ZITADEL_API_KEY_ID,
+            // apiKey: process.env.ZITADEL_API_KEY
+        })
     ],
     ...
 })
@@ -67,21 +104,9 @@ const nextConfig = {
 export default withPayload(nextConfig)
 ```
 
-### create route
-
-Unfortunately you need to manually create the following NextAuth.js route in your Next.js App (using App Router):
-
-### (nextauth)/api/auth/[...nextauth]/route.ts
-
-```typescript
-import {handlers} from '@/config/zitadel-plugin'
-
-export const {GET, POST} = handlers
-```
-
 ### add profile picture url to accepted Next.js assets
 
-If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`), 
+If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`),
 you have to manually add the asset URL to the Next.js config file.
 
 #### next.config.js
