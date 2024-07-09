@@ -21,7 +21,6 @@ export default buildConfig({
     plugins: [
         ZitadelPlugin({
             label: 'Test-IdP',
-            disableLocalStrategy: true,
             issuerURL: process.env.ZITADEL_URL,
             clientId: process.env.ZITADEL_CLIENT_ID,
             enableAPI: true,
