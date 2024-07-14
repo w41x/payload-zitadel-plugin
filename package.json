@@ -43,12 +43,12 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/next": "3.0.0-beta.59",
-    "@payloadcms/translations": "3.0.0-beta.59",
-    "@payloadcms/ui": "3.0.0-beta.59",
+    "@payloadcms/next": "3.0.0-beta.63",
+    "@payloadcms/translations": "3.0.0-beta.63",
+    "@payloadcms/ui": "3.0.0-beta.63",
     "jsonwebtoken": "^9.0.2",
-    "next": "^15.0.0-canary.59",
-    "payload": "3.0.0-beta.59",
+    "next": "^15.0.0-canary.66",
+    "payload": "3.0.0-beta.63",
     "react": "rc",
     "react-dom": "rc"
   },
@@ -59,7 +59,7 @@
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "rimraf": "^6.0.0",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.3"
   },
   "pnpm": {
