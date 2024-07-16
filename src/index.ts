@@ -1,10 +1,12 @@
 import {cookies} from 'next/headers.js'
 import {Avatar, LoginButton} from './components/index.js'
-import {COOKIE_ID_TOKEN, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES} from './constants.js'
+import {COOKIE_ID_TOKEN, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
-import {ZitadelPluginType} from './types.js'
+import {ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
+import {NextResponse} from 'next/server.js'
+
 export {getCurrentUser} from './utils/index.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
@@ -18,8 +20,10 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                                      enableAPI,
                                                      apiClientId,
                                                      apiKeyId,
-                                                     apiKey
+                                                     apiKey,
+                                                     onSuccess
                                                  }) => {
+
     if (!issuerURL)
         throw new Error(ERROR_MESSAGES.issuerURL)
     if (!clientId)
@@ -35,7 +39,14 @@ export const ZitadelPlugin: ZitadelPluginType = ({
 
     return (incomingConfig) => {
 
+        const serverURL = incomingConfig.serverURL ?? 'http://localhost'
+
         const authSlug = incomingConfig.admin?.user ?? 'users'
+
+        const authBaseURL = `${serverURL}/api/${authSlug}`
+
+        const defaultOnSuccess: ZitadelOnSuccess = (state) =>
+            NextResponse.redirect(state?.get('redirect') ?? serverURL)
 
         return {
             ...incomingConfig,
@@ -53,8 +64,9 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     zitadel: {
                         issuerURL,
                         clientId,
-                        redirectURL: `${incomingConfig.serverURL ?? 'http://localhost'}/api/${incomingConfig.admin?.user ?? 'users'}/callback`,
-                        label
+                        label,
+                        authorizeURL: `${authBaseURL}/${ROUTES.authorize}`,
+                        callbackURL: `${authBaseURL}/${ROUTES.callback}`
                     }
                 }
             },
@@ -108,14 +120,14 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                         },
                         endpoints: [
                             {
-                                path: '/authorize',
+                                path: ROUTES.authorize,
                                 method: 'get',
                                 handler: authorize
                             },
                             {
-                                path: '/callback',
+                                path: ROUTES.callback,
                                 method: 'get',
-                                handler: callback
+                                handler: callback(onSuccess ?? defaultOnSuccess)
                             }
                         ],
                         fields: [

@@ -51,6 +51,10 @@ export default buildConfig({
             // if you want to specify the field name for the Zitadel User Id in the users collection
             // associatedIdFieldName: 'idp_id'
 
+            // if you want to manually control what happen after a successful login
+            // state contains all URLSearchParams that were send to /authorize
+            // onSuccess: (state) => NextResponse.redirect(state?.get('redirect') ?? 'http://localhost')
+
             // following properties are only needed if you want to authenticate clients for the API
             // if you are just using the CMS you can ignore all of them
             // in Zitadel create a new App->API->JWT

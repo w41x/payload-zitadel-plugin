@@ -1,3 +1,8 @@
+export const ROUTES = {
+    authorize: '/authorize',
+    callback: '/callback'
+}
+
 export const COOKIE_ID_TOKEN = 'id_token'
 
 export const DEFAULT_CONFIG = {
@@ -11,7 +16,6 @@ export const DELETE_ME_USER = {
     password: 'password',
     associatedId: 'DELETE_ME'
 }
-
 
 export const ERROR_MESSAGES = {
     issuerURL: 'ZITADEL-PLUGIN: ISSUER-URL IS EMPTY',

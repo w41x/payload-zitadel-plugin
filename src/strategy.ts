@@ -14,6 +14,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                                                      }) => ({
     name: strategyName,
     authenticate: async ({headers, payload}) => {
+
         let id, idp_id, id_token
 
         const cookieStore = cookies()

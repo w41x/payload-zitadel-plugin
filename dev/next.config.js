@@ -18,7 +18,7 @@ const nextConfig = {
         return [
             {
                 source: '/admin/login',
-                destination: '/api/users/authorize',
+                destination: '/api/users/authorize?redirect=admin',
                 permanent: true
             }
         ]

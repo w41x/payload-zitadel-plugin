@@ -2,11 +2,14 @@ import {PayloadHandler} from 'payload'
 import {cookies} from 'next/headers.js'
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
-import {ZitadelIdToken} from '../types.js'
+import {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
 
-export const callback: PayloadHandler = async ({payload, query: {code}}) => {
+export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async ({payload, query: {code, state}}) => {
 
-    const {secret, admin: {custom: {zitadel: {issuerURL, clientId, redirectURL}}}} = payload.config
+    const {
+        secret,
+        admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}
+    } = payload.config as PayloadConfigWithZitadel
 
     const cookieStore = cookies()
 
@@ -19,13 +22,14 @@ export const callback: PayloadHandler = async ({payload, query: {code}}) => {
             body: new URLSearchParams({
                 grant_type: 'authorization_code',
                 code: code as string,
-                redirect_uri: redirectURL,
+                redirect_uri: callbackURL,
                 client_id: clientId,
                 code_verifier
             })
         })
 
         if (response.ok) {
+
             const {id_token} = await response.json()
 
             if (id_token) {
@@ -40,13 +44,15 @@ export const callback: PayloadHandler = async ({payload, query: {code}}) => {
                 })
                 cookieStore.delete('pkce_code_verifier')
 
-                return Response.redirect(new URL(redirectURL).origin)
+                return onSuccess(new URLSearchParams(decodeURIComponent(state as string ?? '')))
+
             }
 
             return Response.json({
                 status: 'error',
                 message: 'token could not be retrieved from the response'
             })
+
         }
 
         return Response.json({

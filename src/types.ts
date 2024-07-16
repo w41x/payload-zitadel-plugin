@@ -1,13 +1,14 @@
-import {AuthStrategy, Config} from 'payload'
+import {AuthStrategy, Config, PayloadHandler, SanitizedConfig} from 'payload'
 
-export type ZitadelPluginProps = {
-    disableAvatar?: true | undefined
-    disableDefaultLoginButton?: true | undefined
-    defaultLoginButtonTitle?: string
-    label?: string
-} & Partial<ZitadelStrategyProps>
+export type ZitadelPluginProps = Partial<{
+    disableAvatar: true
+    disableDefaultLoginButton: true
+    defaultLoginButtonTitle: string
+    label: string
+    onSuccess: ZitadelOnSuccess
+}> & Partial<ZitadelStrategyProps>
 
-export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => Config
+export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => PayloadConfigWithZitadel
 
 export type ZitadelAPIProps = {
     enableAPI: true
@@ -35,3 +36,19 @@ export type ZitadelIdToken = Partial<{
     email: string,
     picture: string
 }>
+
+export type ZitadelOnSuccess = (state?: URLSearchParams) => ReturnType<PayloadHandler>
+
+export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
+    admin: {
+        custom: {
+            zitadel: {
+                issuerURL: string
+                clientId: string
+                label: string
+                authorizeURL: string
+                callbackURL: string
+            }
+        }
+    }
+}
