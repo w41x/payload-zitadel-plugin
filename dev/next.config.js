@@ -11,19 +11,18 @@ const nextConfig = {
                 pathname: '/assets/**'
             }
         ]
-    }
+    },
     // optional: enable auto-redirect to Zitadel login page if no logged in
-    /*
+
     async redirects() {
         return [
             {
                 source: '/admin/login',
-                destination: '/api/users/authorize?redirect=admin',
+                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
                 permanent: true
             }
         ]
     }
-    */
 }
 
 export default withPayload(nextConfig)

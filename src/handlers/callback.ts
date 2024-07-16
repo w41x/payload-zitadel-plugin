@@ -44,7 +44,7 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
                 })
                 cookieStore.delete('pkce_code_verifier')
 
-                return onSuccess(new URLSearchParams(decodeURIComponent(state as string ?? '')))
+                return onSuccess(new URLSearchParams(atob(state as string ?? '')))
 
             }
 

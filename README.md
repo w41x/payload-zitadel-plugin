@@ -12,7 +12,7 @@ Thus the user collection in PayloadCMS becomes just a shadow of the information 
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.2.1
+pnpm add payload-zitadel-plugin@0.2.4
 ```
 
 ## Configuration
@@ -53,7 +53,7 @@ export default buildConfig({
 
             // if you want to manually control what happen after a successful login
             // state contains all URLSearchParams that were send to /authorize
-            // onSuccess: (state) => NextResponse.redirect(state?.get('redirect') ?? 'http://localhost')
+            // onSuccess: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
 
             // following properties are only needed if you want to authenticate clients for the API
             // if you are just using the CMS you can ignore all of them
@@ -137,7 +137,7 @@ const nextConfig = {
         return [
             {
                 source: '/admin/login',
-                destination: '/api/users/authorize',
+                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
                 permanent: true
             }
         ]

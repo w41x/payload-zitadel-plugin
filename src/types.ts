@@ -37,7 +37,7 @@ export type ZitadelIdToken = Partial<{
     picture: string
 }>
 
-export type ZitadelOnSuccess = (state?: URLSearchParams) => ReturnType<PayloadHandler>
+export type ZitadelOnSuccess = (state: URLSearchParams) => ReturnType<PayloadHandler>
 
 export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
     admin: {

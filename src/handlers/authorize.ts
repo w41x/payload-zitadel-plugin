@@ -33,9 +33,9 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
         redirect_uri: callbackURL,
         response_type: 'code',
         scope: 'openid email profile',
-        state: encodeURIComponent(searchParams.toString()),
+        state: btoa(searchParams.toString()),
         code_challenge: await genCodeChallenge(),
         code_challenge_method: 'S256'
-    }).toString()}`)
+    })}`)
 
 }

@@ -46,7 +46,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         const authBaseURL = `${serverURL}/api/${authSlug}`
 
         const defaultOnSuccess: ZitadelOnSuccess = (state) =>
-            NextResponse.redirect(state?.get('redirect') ?? serverURL)
+            NextResponse.redirect([serverURL, state.get('redirect')].join(''))
 
         return {
             ...incomingConfig,
@@ -65,8 +65,8 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                         issuerURL,
                         clientId,
                         label,
-                        authorizeURL: `${authBaseURL}/${ROUTES.authorize}`,
-                        callbackURL: `${authBaseURL}/${ROUTES.callback}`
+                        authorizeURL: authBaseURL + ROUTES.authorize,
+                        callbackURL: authBaseURL + ROUTES.callback
                     }
                 }
             },
