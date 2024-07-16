@@ -6,5 +6,11 @@ export const Users: CollectionConfig = {
         singular: 'User',
         plural: 'Users'
     },
-    fields: []
+    fields: [
+        {
+            name: 'custom-field',
+            label: 'some custom field',
+            type: 'text'
+        }
+    ]
 }
