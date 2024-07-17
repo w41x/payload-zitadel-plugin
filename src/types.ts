@@ -8,7 +8,7 @@ export type ZitadelPluginProps = Partial<{
     onSuccess: ZitadelOnSuccess
 }> & Partial<ZitadelStrategyProps>
 
-export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => PayloadConfigWithZitadel
+export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => Config
 
 export type ZitadelAPIProps = {
     enableAPI: true

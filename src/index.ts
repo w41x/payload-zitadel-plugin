@@ -3,9 +3,10 @@ import {Avatar, LoginButton} from './components/index.js'
 import {COOKIE_ID_TOKEN, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
-import {ZitadelOnSuccess, ZitadelPluginType} from './types.js'
+import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
 import {NextResponse} from 'next/server.js'
+import {Config} from 'payload'
 
 export {getCurrentUser} from './utils/index.js'
 
@@ -203,7 +204,8 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     }
                 }
             }
-        }
+        } satisfies PayloadConfigWithZitadel
+
     }
 
 }
