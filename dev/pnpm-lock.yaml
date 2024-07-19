@@ -1673,7 +1673,7 @@ packages:
 
   payload-zitadel-plugin@file:..:
     resolution: {directory: .., type: directory}
-    engines: {node: ^22.5.0}
+    engines: {node: ^22.4.1}
 
   payload@3.0.0-beta.67:
     resolution: {integrity: sha512-VXJTJ/VRZzIdjTzzRBake63NXNnSZRNJ4hcTwkZZ3ZfRN123jzfqMg0DtAtMHOArC/W8PIIfnCWiBhN1YgWS8A==}
