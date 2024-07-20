@@ -46,7 +46,7 @@
     "@payloadcms/richtext-lexical": "3.0.0-beta.67",
     "@payloadcms/translations": "3.0.0-beta.67",
     "@payloadcms/ui": "3.0.0-beta.67",
-    "next": "^15.0.0-canary.73",
+    "next": "^15.0.0-canary.74",
     "payload": "3.0.0-beta.67",
     "payload-zitadel-plugin": "file:..",
     "react": "rc",
@@ -65,7 +65,7 @@
     }
   },
   "engines": {
-    "node": "^22.4.1"
+    "node": "^22.5.1"
   },
   "packageManager": "pnpm@9.5.0",
   "private": true

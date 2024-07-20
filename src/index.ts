@@ -6,7 +6,6 @@ import {zitadelStrategy} from './strategy.js'
 import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
 import {NextResponse} from 'next/server.js'
-import {Config} from 'payload'
 
 export {getCurrentUser} from './utils/index.js'
 
