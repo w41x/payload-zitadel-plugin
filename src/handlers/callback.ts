@@ -2,18 +2,22 @@ import {PayloadHandler} from 'payload'
 import {cookies} from 'next/headers.js'
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
-import {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
+import {PayloadConfigWithZitadel, ZitadelIdToken} from '../types.js'
+import {NextResponse} from 'next/server.js'
+import {COOKIES} from '../constants.js'
 
-export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async ({payload, query: {code, state}}) => {
+export const callback: PayloadHandler = async ({
+                                                   payload: {config, secret},
+                                                   responseHeaders,
+                                                   origin,
+                                                   query: {code, state}
+                                               }) => {
 
-    const {
-        secret,
-        admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}
-    } = payload.config as PayloadConfigWithZitadel
+    const {admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}} = config as PayloadConfigWithZitadel
 
     const cookieStore = cookies()
 
-    const code_verifier = cookieStore.get('pkce_code_verifier')?.value
+    const code_verifier = cookieStore.get(COOKIES.pkce)?.value
 
     if (code_verifier) {
 
@@ -33,8 +37,9 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
             const {id_token} = await response.json()
 
             if (id_token) {
+
                 cookieStore.set({
-                    name: 'id_token',
+                    name: COOKIES.idToken,
                     value: jwt.sign(jwt.decode(id_token) as ZitadelIdToken, secret),
                     httpOnly: true,
                     path: '/',
@@ -44,7 +49,17 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
                 })
                 cookieStore.delete('pkce_code_verifier')
 
-                return onSuccess(new URLSearchParams(atob(state as string ?? '')))
+                const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
+                response.cookies.set({
+                    name: COOKIES.state,
+                    value: state as string ?? '',
+                    httpOnly: true,
+                    path: '/',
+                    sameSite: 'lax',
+                    maxAge: 300,
+                    secure: process.env.NODE_ENV == 'production'
+                })
+                return response
 
             }
 

@@ -1,7 +1,7 @@
 import {cookies} from 'next/headers.js'
 import {Avatar, LoginButton} from './components/index.js'
-import {COOKIE_ID_TOKEN, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
-import {authorize, callback} from './handlers/index.js'
+import {COOKIES, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
+import {authorize, callback, redirect} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
@@ -46,7 +46,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         const authBaseURL = `${serverURL}/api/${authSlug}`
 
         const defaultOnSuccess: ZitadelOnSuccess = (state) =>
-            NextResponse.redirect([serverURL, state.get('redirect')].join(''))
+            NextResponse.redirect(serverURL + (state.get('redirect') ?? ''))
 
         return {
             ...incomingConfig,
@@ -98,8 +98,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             ]
                         },
                         hooks: {
-
-                            afterLogout: [() => cookies().delete(COOKIE_ID_TOKEN)],
+                            afterLogout: [() => cookies().delete(COOKIES.idToken)],
 
                             // current work around (see onInit)
                             afterChange: [async ({req}) => {
@@ -127,7 +126,12 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             {
                                 path: ROUTES.callback,
                                 method: 'get',
-                                handler: callback(onSuccess ?? defaultOnSuccess)
+                                handler: callback
+                            },
+                            {
+                                path: ROUTES.redirect,
+                                method: 'get',
+                                handler: redirect(onSuccess ?? defaultOnSuccess)
                             }
                         ],
                         fields: [

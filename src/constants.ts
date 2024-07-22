@@ -1,9 +1,8 @@
-export const ROUTES = {
-    authorize: '/authorize',
-    callback: '/callback'
+export const COOKIES = {
+    pkce: 'zitadel_pkce_code_verifier',
+    idToken: 'zitadel_id_token',
+    state: 'zitadel_state'
 }
-
-export const COOKIE_ID_TOKEN = 'id_token'
 
 export const DEFAULT_CONFIG = {
     associatedIdFieldName: 'idp_id',
@@ -24,3 +23,9 @@ export const ERROR_MESSAGES = {
     apiKeyId: 'ZITADEL-PLUGIN: API ENABLED, BUT API-KEY-ID IS EMPTY',
     apiKey: 'ZITADEL-PLUGIN: API ENABLED, BUT API-KEY IS EMPTY'
 }
+export const ROUTES = {
+    authorize: '/authorize',
+    callback: '/callback',
+    redirect: '/redirect'
+}
+

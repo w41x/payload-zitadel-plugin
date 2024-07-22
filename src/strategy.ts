@@ -1,6 +1,7 @@
 import {ZitadelIdToken, ZitadelStrategyType} from './types.js'
 import jwt from 'jsonwebtoken'
 import {cookies} from 'next/headers.js'
+import {COOKIES} from './constants.js'
 
 export const zitadelStrategy: ZitadelStrategyType = ({
                                                          authSlug,
@@ -51,8 +52,8 @@ export const zitadelStrategy: ZitadelStrategyType = ({
         }
 
         // in case of normal browsing
-        if (!idp_id && cookieStore.has('id_token')) {
-            id_token = jwt.verify(cookieStore.get('id_token')?.value ?? '', payload.config.secret) as ZitadelIdToken
+        if (!idp_id && cookieStore.has(COOKIES.idToken)) {
+            id_token = jwt.verify(cookieStore.get(COOKIES.idToken)?.value ?? '', payload.secret) as ZitadelIdToken
             idp_id = id_token.sub
         }
 

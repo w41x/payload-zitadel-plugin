@@ -12,14 +12,38 @@ const nextConfig = {
             }
         ]
     },
-    // optional: enable auto-redirect to Zitadel login page if no logged in
 
+    // optional: enable auto-redirect to Zitadel login page if not logged in
     async redirects() {
         return [
             {
                 source: '/admin/login',
                 destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
-                permanent: true
+                missing: [
+                    // not logged in
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_id_token'
+                    },
+                    // not logging in
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_state'
+                    }
+                ],
+                permanent: false
+            },
+            {
+                source: '/admin/login',
+                destination: `/api/users/redirect`,
+                has: [
+                    // logging in
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_state'
+                    }
+                ],
+                permanent: false
             }
         ]
     }

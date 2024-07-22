@@ -5,13 +5,14 @@ import process from 'node:process'
 import {PayloadHandler} from 'payload'
 import {NextResponse} from 'next/server.js'
 import {PayloadConfigWithZitadel} from '../types.js'
+import {COOKIES} from '../constants.js'
 
 const genCodeChallenge = async () => {
 
     const code_verifier = Buffer.from(crypto.getRandomValues(new Uint8Array(24))).toString('base64url')
 
     cookies().set({
-        name: 'pkce_code_verifier',
+        name: COOKIES.pkce,
         value: code_verifier,
         httpOnly: true,
         sameSite: 'lax',
