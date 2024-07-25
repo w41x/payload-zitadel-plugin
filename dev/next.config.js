@@ -35,7 +35,7 @@ const nextConfig = {
             },
             {
                 source: '/admin/login',
-                destination: `/api/users/redirect`,
+                destination: '/api/users/redirect',
                 has: [
                     // logging in
                     {

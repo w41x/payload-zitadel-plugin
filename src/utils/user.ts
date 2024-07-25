@@ -1,13 +1,13 @@
 import {getPayloadHMR} from '@payloadcms/next/utilities'
 import {headers} from 'next/headers.js'
-import {SanitizedConfig} from 'payload'
+import {SanitizedConfig, User} from 'payload'
 
-export const getCurrentUser = async ({config}: { config: Promise<SanitizedConfig> }) => {
+export const getCurrentUser = async <T extends User>({config}: { config: Promise<SanitizedConfig> }) => {
 
     const payload = await getPayloadHMR({config})
 
     const {user} = await payload.auth({headers: headers()})
 
-    return user ? await payload.findByID({...user}) : null
+    return user ? (await payload.findByID({...user})) as T : null
 
 }
