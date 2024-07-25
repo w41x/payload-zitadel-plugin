@@ -2,10 +2,11 @@ import * as React from 'react'
 import Image from 'next/image.js'
 import config from '@payload-config'
 import {getCurrentUser} from 'payload-zitadel-plugin'
+import {User} from '@payload-types'
 
 export default async function Page() {
 
-    const user = await getCurrentUser({config})
+    const user = await getCurrentUser<User>({config})
     const imageUrl = user?.image as string
 
     return <>

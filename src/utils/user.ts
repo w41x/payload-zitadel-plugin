@@ -1,8 +1,9 @@
 import {getPayloadHMR} from '@payloadcms/next/utilities'
 import {headers} from 'next/headers.js'
-import {SanitizedConfig, User} from 'payload'
+import {SanitizedConfig} from 'payload'
+import {ZitadelUser} from '../types.js'
 
-export const getCurrentUser = async <T extends User>({config}: { config: Promise<SanitizedConfig> }) => {
+export const getCurrentUser = async <T extends ZitadelUser>({config}: { config: Promise<SanitizedConfig> }) => {
 
     const payload = await getPayloadHMR({config})
 

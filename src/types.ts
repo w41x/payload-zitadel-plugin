@@ -1,4 +1,4 @@
-import {AuthStrategy, Config, PayloadHandler, SanitizedConfig} from 'payload'
+import {AuthStrategy, Config, PayloadHandler, SanitizedConfig, TypeWithID} from 'payload'
 
 export type ZitadelPluginProps = Partial<{
     disableAvatar: true
@@ -35,6 +35,12 @@ export type ZitadelIdToken = Partial<{
     name: string,
     email: string,
     picture: string
+}>
+
+export type ZitadelUser = TypeWithID & Partial<{
+    email: string | null,
+    name: string | null,
+    image: string | null,
 }>
 
 export type ZitadelOnSuccess = (state: URLSearchParams) => ReturnType<PayloadHandler>

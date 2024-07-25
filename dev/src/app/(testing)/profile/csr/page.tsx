@@ -3,10 +3,11 @@
 import * as React from 'react'
 import Image from 'next/image.js'
 import {useCurrentUser} from 'payload-zitadel-plugin/hooks'
+import {User} from '@payload-types'
 
 export default function Page() {
 
-    const {user, isLoading} = useCurrentUser()
+    const {user, isLoading} = useCurrentUser<User>()
 
     const imageUrl = user?.image
 
