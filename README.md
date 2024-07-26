@@ -84,7 +84,7 @@ ZITADEL_API_KEY='-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY----
 
 or use the Next.js Config file:
 
-#### next.config.js
+#### next.config.ts
 
 ```typescript
 import {withPayload} from '@payloadcms/next/withPayload'
@@ -113,7 +113,7 @@ you have to manually add the asset URL to the Next.js config file.
 Also if you want to automatically redirect to Zitadel without asking the user to click on the login button,
 you have to add the redirect manually to the Next.js config file.
 
-#### next.config.js
+#### next.config.ts
 
 ```typescript
 import {withPayload} from '@payloadcms/next/withPayload'
