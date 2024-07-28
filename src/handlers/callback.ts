@@ -36,7 +36,11 @@ export const callback: PayloadHandler = async ({
 
             if (id_token) {
 
-                cookieStore.set({
+                const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
+
+                response.cookies.delete(COOKIES.pkce)
+
+                response.cookies.set({
                     name: COOKIES.idToken,
                     value: jwt.sign(jwt.decode(id_token) as ZitadelIdToken, secret),
                     httpOnly: true,
@@ -45,9 +49,7 @@ export const callback: PayloadHandler = async ({
                     maxAge: 900,
                     secure: process.env.NODE_ENV == 'production'
                 })
-                cookieStore.delete(COOKIES.pkce)
 
-                const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
                 response.cookies.set({
                     name: COOKIES.state,
                     value: state as string ?? '',
@@ -57,6 +59,7 @@ export const callback: PayloadHandler = async ({
                     maxAge: 300,
                     secure: process.env.NODE_ENV == 'production'
                 })
+
                 return response
 
             }
