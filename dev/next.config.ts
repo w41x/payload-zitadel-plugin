@@ -17,17 +17,12 @@ export default withPayload({
             return [
                 {
                     source: '/admin/login',
-                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
+                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin'})}`,
                     missing: [
                         // not logged in
                         {
                             type: 'cookie',
                             key: 'payload-token'
-                        },
-                        // not logging in
-                        {
-                            type: 'cookie',
-                            key: 'zitadel_state'
                         }
                     ],
                     permanent: false
@@ -40,6 +35,18 @@ export default withPayload({
                         {
                             type: 'cookie',
                             key: 'zitadel_state'
+                        }
+                    ],
+                    permanent: false
+                },
+                {
+                    source: '/profile/:path',
+                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
+                    missing: [
+                        // not logged in
+                        {
+                            type: 'cookie',
+                            key: 'payload-token'
                         }
                     ],
                     permanent: false
