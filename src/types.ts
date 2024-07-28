@@ -1,4 +1,5 @@
-import {AuthStrategy, Config, PayloadHandler, SanitizedConfig, TypeWithID} from 'payload'
+import {AuthStrategy, Config, SanitizedConfig, TypeWithID} from 'payload'
+import {NextResponse} from 'next/server.js'
 
 export type ZitadelPluginProps = Partial<{
     disableAvatar: true
@@ -43,7 +44,7 @@ export type ZitadelUser = TypeWithID & Partial<{
     image: string | null,
 }>
 
-export type ZitadelOnSuccess = (state: URLSearchParams) => ReturnType<PayloadHandler>
+export type ZitadelOnSuccess = (state: URLSearchParams) => NextResponse
 
 export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
     admin: {

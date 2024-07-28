@@ -8,8 +8,6 @@ import {COOKIES} from '../constants.js'
 
 export const callback: PayloadHandler = async ({
                                                    payload: {config, secret},
-                                                   responseHeaders,
-                                                   origin,
                                                    query: {code, state}
                                                }) => {
 
@@ -47,7 +45,7 @@ export const callback: PayloadHandler = async ({
                     maxAge: 900,
                     secure: process.env.NODE_ENV == 'production'
                 })
-                cookieStore.delete('pkce_code_verifier')
+                cookieStore.delete(COOKIES.pkce)
 
                 const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
                 response.cookies.set({

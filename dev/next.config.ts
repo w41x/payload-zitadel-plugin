@@ -22,7 +22,7 @@ export default withPayload({
                         // not logged in
                         {
                             type: 'cookie',
-                            key: 'zitadel_id_token'
+                            key: 'payload-token'
                         },
                         // not logging in
                         {
@@ -33,7 +33,7 @@ export default withPayload({
                     permanent: false
                 },
                 {
-                    source: '/admin/login',
+                    source: '/admin',
                     destination: '/api/users/redirect',
                     has: [
                         // logging in

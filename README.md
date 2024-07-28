@@ -12,7 +12,7 @@ Thus the user collection in PayloadCMS becomes just a shadow of the information 
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.2.11
+pnpm add payload-zitadel-plugin@0.2.12
 ```
 
 ## Configuration

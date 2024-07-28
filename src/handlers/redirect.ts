@@ -9,8 +9,10 @@ export const redirect = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
 
     const zitadelState = new URLSearchParams(atob(cookieStore.get(COOKIES.state)?.value ?? ''))
 
-    cookieStore.delete(COOKIES.state)
+    const response = onSuccess(zitadelState)
 
-    return onSuccess(zitadelState)
+    response.cookies.delete(COOKIES.state)
+
+    return response
 
 }
