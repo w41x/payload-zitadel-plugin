@@ -22,7 +22,7 @@ export default withPayload({
                         // not logged in
                         {
                             type: 'cookie',
-                            key: 'payload-token'
+                            key: 'zitadel_id_token'
                         }
                     ],
                     permanent: false
@@ -46,7 +46,7 @@ export default withPayload({
                         // not logged in
                         {
                             type: 'cookie',
-                            key: 'payload-token'
+                            key: 'zitadel_id_token'
                         }
                     ],
                     permanent: false
