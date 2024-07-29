@@ -38,7 +38,6 @@ export const callback: PayloadHandler = async ({
 
                 const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
 
-                cookieStore.delete(COOKIES.pkce)
                 response.cookies.delete(COOKIES.pkce)
 
                 response.cookies.set({
