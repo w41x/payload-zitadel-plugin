@@ -2,14 +2,13 @@ import {PayloadHandler} from 'payload'
 import {cookies} from 'next/headers.js'
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
-import {PayloadConfigWithZitadel, ZitadelIdToken} from '../types.js'
-import {NextResponse} from 'next/server.js'
+import {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
 import {COOKIES} from '../constants.js'
 
-export const callback: PayloadHandler = async ({
-                                                   payload: {config, secret},
-                                                   query: {code, state}
-                                               }) => {
+export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async ({
+                                                                                    payload: {config, secret},
+                                                                                    query: {code, state}
+                                                                                }) => {
 
     const {admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}} = config as PayloadConfigWithZitadel
 
@@ -36,31 +35,19 @@ export const callback: PayloadHandler = async ({
 
             if (id_token) {
 
-                const response = NextResponse.redirect(`${new URL(callbackURL).origin}/admin/login`)
+                cookieStore.delete(COOKIES.pkce)
 
-                response.cookies.delete(COOKIES.pkce)
-
-                response.cookies.set({
+                cookieStore.set({
                     name: COOKIES.idToken,
                     value: jwt.sign(jwt.decode(id_token) as ZitadelIdToken, secret),
                     httpOnly: true,
                     path: '/',
-                    sameSite: 'strict',
+                    sameSite: 'lax',
                     maxAge: 900,
                     secure: process.env.NODE_ENV == 'production'
                 })
 
-                response.cookies.set({
-                    name: COOKIES.state,
-                    value: state as string ?? '',
-                    httpOnly: true,
-                    path: '/',
-                    sameSite: 'lax',
-                    maxAge: 300,
-                    secure: process.env.NODE_ENV == 'production'
-                })
-
-                return response
+                return onSuccess(new URLSearchParams(atob(state as string ?? '')))
 
             }
 

@@ -1,7 +1,7 @@
 import {cookies} from 'next/headers.js'
 import {Avatar, LoginButton} from './components/index.js'
 import {COOKIES, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
-import {authorize, callback, redirect} from './handlers/index.js'
+import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
@@ -126,12 +126,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             {
                                 path: ROUTES.callback,
                                 method: 'get',
-                                handler: callback
-                            },
-                            {
-                                path: ROUTES.redirect,
-                                method: 'get',
-                                handler: redirect(onSuccess ?? defaultOnSuccess)
+                                handler: callback(onSuccess ?? defaultOnSuccess)
                             }
                         ],
                         fields: [

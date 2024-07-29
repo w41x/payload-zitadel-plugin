@@ -28,18 +28,6 @@ export default withPayload({
                     permanent: false
                 },
                 {
-                    source: '/admin',
-                    destination: '/api/users/redirect',
-                    has: [
-                        // logging in
-                        {
-                            type: 'cookie',
-                            key: 'zitadel_state'
-                        }
-                    ],
-                    permanent: false
-                },
-                {
                     source: '/profile/:path',
                     destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
                     missing: [

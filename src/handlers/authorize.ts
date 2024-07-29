@@ -5,6 +5,7 @@ import {PayloadHandler} from 'payload'
 import {NextResponse} from 'next/server.js'
 import {PayloadConfigWithZitadel} from '../types.js'
 import {COOKIES} from '../constants.js'
+import {cookies} from 'next/headers.js'
 
 export const authorize: PayloadHandler = async ({searchParams, payload: {config}}) => {
 
@@ -14,17 +15,7 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
 
     const code_challenge = Buffer.from(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(code_verifier))).toString('base64url')
 
-    const response = NextResponse.redirect(`${issuerURL}/oauth/v2/authorize?${new URLSearchParams({
-        client_id: clientId,
-        redirect_uri: callbackURL,
-        response_type: 'code',
-        scope: 'openid email profile',
-        state: btoa(searchParams.toString()),
-        code_challenge,
-        code_challenge_method: 'S256'
-    })}`)
-
-    response.cookies.set({
+    cookies().set({
         name: COOKIES.pkce,
         value: code_verifier,
         httpOnly: true,
@@ -34,6 +25,14 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
         secure: process.env.NODE_ENV == 'production'
     })
 
-    return response
+    return NextResponse.redirect(`${issuerURL}/oauth/v2/authorize?${new URLSearchParams({
+        client_id: clientId,
+        redirect_uri: callbackURL,
+        response_type: 'code',
+        scope: 'openid email profile',
+        state: btoa(searchParams.toString()),
+        code_challenge,
+        code_challenge_method: 'S256'
+    })}`)
 
 }
