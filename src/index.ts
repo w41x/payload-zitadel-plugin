@@ -1,5 +1,4 @@
 import {cookies} from 'next/headers.js'
-import {Avatar, LoginButton} from './components/index.js'
 import {COOKIES, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
@@ -52,15 +51,22 @@ export const ZitadelPlugin: ZitadelPluginType = ({
             ...incomingConfig,
             admin: {
                 ...incomingConfig.admin,
-                ...(disableAvatar ? {} : {avatar: Avatar}),
-                components: {
-                    ...incomingConfig.admin?.components,
-                    afterLogin: [
-                        ...incomingConfig.admin?.components?.afterLogin || [],
-                        ...(disableDefaultLoginButton ? [] : [LoginButton])
-                    ]
+                ...disableAvatar ? {} : {
+                    avatar: {
+                        Component: 'payload-zitadel-plugin/client#Avatar'
+                    }
+                },
+                ...disableDefaultLoginButton ? {} : {
+                    components: {
+                        ...incomingConfig.admin?.components,
+                        afterLogin: [
+                            ...incomingConfig.admin?.components?.afterLogin ?? [],
+                            'payload-zitadel-plugin/client#LoginButton'
+                        ]
+                    }
                 },
                 custom: {
+                    ...incomingConfig.admin?.custom,
                     zitadel: {
                         issuerURL,
                         clientId,

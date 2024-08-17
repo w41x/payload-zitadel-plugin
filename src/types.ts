@@ -1,5 +1,6 @@
-import {AuthStrategy, Config, SanitizedConfig, TypeWithID} from 'payload'
+import {AuthStrategy, ClientConfig, Config, SanitizedConfig, TypeWithID} from 'payload'
 import {NextResponse} from 'next/server.js'
+import {ClientConfigContext} from '@payloadcms/ui/providers/Config'
 
 export type ZitadelPluginProps = Partial<{
     disableAvatar: true
@@ -46,7 +47,7 @@ export type ZitadelUser = TypeWithID & Partial<{
 
 export type ZitadelOnSuccess = (state: URLSearchParams) => NextResponse
 
-export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
+export type PayloadConfigWithZitadel = (Config | ClientConfig | SanitizedConfig) & {
     admin: {
         custom: {
             zitadel: {
@@ -58,4 +59,8 @@ export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
             }
         }
     }
+}
+
+export type PayloadConfigWithZitadelContext = ClientConfigContext & {
+    config: PayloadConfigWithZitadel
 }
