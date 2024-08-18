@@ -16,8 +16,8 @@ export default withPayload({
         async redirects() {
             return [
                 {
-                    source: '/admin/login',
-                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin'})}`,
+                    source: '/admin/:path',
+                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin/:path'})}`,
                     missing: [
                         // not logged in
                         {
@@ -29,7 +29,7 @@ export default withPayload({
                 },
                 {
                     source: '/profile/:path',
-                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
+                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile/:path'})}`,
                     missing: [
                         // not logged in
                         {
