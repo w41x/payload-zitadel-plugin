@@ -132,13 +132,32 @@ const nextConfig = {
             }
         ]
     },
-    // optional: enable auto-redirect to Zitadel login page if no logged in
+    
+    // optional: enable auto-redirect to Zitadel login page if not logged in
     async redirects() {
         return [
             {
-                source: '/admin/login',
-                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile'})}`,
-                permanent: true
+                source: '/admin/:path',
+                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin/:path'})}`,
+                missing: [
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_id_token'
+                    }
+                ],
+                permanent: false
+            },
+            // also works with any route outside of PayloadCMS
+            {
+                source: '/profile/:path',
+                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile/:path'})}`,
+                missing: [
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_id_token'
+                    }
+                ],
+                permanent: false
             }
         ]
     }
