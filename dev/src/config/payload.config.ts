@@ -18,6 +18,14 @@ export default buildConfig({
     i18n: {
         supportedLanguages: {de, en}
     },
+    admin: {
+        components: {
+            beforeDashboard: [
+                '/src/components#UserInfoCSR',
+                '/src/components#UserInfoSSR'
+            ]
+        }
+    },
     plugins: [
         ZitadelPlugin({
             label: 'Test-IdP',

@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
   "type": "module",
   "license": "MIT",
