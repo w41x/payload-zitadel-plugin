@@ -1,15 +1,17 @@
+'use client'
+
 import * as React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {ServerProps} from 'payload'
+import {useAuth} from '@payloadcms/ui'
 import {ZitadelUser} from '../types.js'
 
 
-export const Avatar = async ({user, payload}: ServerProps) => {
+export const Avatar = () => {
 
-    const fullUser = user ? await payload.findByID({collection: 'users', id: user.id}) as ZitadelUser : null
+    const {user} = useAuth<ZitadelUser>()
 
     return (
-        fullUser?.image ?
+        user?.image ?
             <>
                 <style>
                     {`
@@ -29,7 +31,7 @@ export const Avatar = async ({user, payload}: ServerProps) => {
                         `}
                 </style>
                 <div className="avatar">
-                    <img src={fullUser.image} alt="Profile Picture" sizes="2rem 2rem"/>
+                    <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
                 </div>
             </> :
             <DefaultAccountIcon active={false}/>
