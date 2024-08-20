@@ -1,13 +1,20 @@
+'use client'
+
 import * as React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {ServerProps} from 'payload'
+import {useAuth} from '@payloadcms/ui'
+import {ZitadelUser} from '../types.js'
 
 
-export const Avatar = ({user}: ServerProps) =>
-    user?.image ?
-        <>
-            <style>
-                {`
+export const Avatar = () => {
+
+    const {user} = useAuth<ZitadelUser>()
+
+    return (
+        user?.image ?
+            <>
+                <style>
+                    {`
                             .avatar {
                                 position: relative;
                                 height: 2rem;
@@ -22,11 +29,12 @@ export const Avatar = ({user}: ServerProps) =>
                                 border-radius: 100%;
                             }
                         `}
-            </style>
-            <div className="avatar">
-                <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
-            </div>
-        </> :
-        <DefaultAccountIcon active={false}/>
+                </style>
+                <div className="avatar">
+                    <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
+                </div>
+            </> :
+            <DefaultAccountIcon active={false}/>
+    )
 
-
+}
