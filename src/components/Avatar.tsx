@@ -6,7 +6,7 @@ import {useAuth} from '@payloadcms/ui'
 import {ZitadelUser} from '../types.js'
 
 
-export const Avatar = () => {
+export const Avatar = ({active}: { active: boolean }) => {
 
     const {user} = useAuth<ZitadelUser>()
 
@@ -30,11 +30,11 @@ export const Avatar = () => {
                             }
                         `}
                 </style>
-                <div className="avatar">
+                <div className={['avatar', active ? 'active' : ''].join(' ').trim()}>
                     <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
                 </div>
             </> :
-            <DefaultAccountIcon active={false}/>
+            <DefaultAccountIcon active={active}/>
     )
 
 }
