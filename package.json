@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
   "type": "module",
   "license": "MIT",
@@ -44,20 +44,20 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/next": "3.0.0-beta.84",
-    "@payloadcms/translations": "3.0.0-beta.84",
-    "@payloadcms/ui": "3.0.0-beta.84",
+    "@payloadcms/next": "3.0.0-beta.87",
+    "@payloadcms/translations": "3.0.0-beta.87",
+    "@payloadcms/ui": "3.0.0-beta.87",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.0.0-canary.119",
-    "payload": "3.0.0-beta.84",
+    "next": "15.0.0-canary.121",
+    "payload": "3.0.0-beta.87",
     "react": "rc",
     "react-dom": "rc"
   },
   "devDependencies": {
     "@swc/cli": "^0.4.0",
-    "@swc/core": "^1.7.11",
+    "@swc/core": "^1.7.14",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^22.4.0",
+    "@types/node": "^22.4.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "rimraf": "^6.0.1",
@@ -79,15 +79,10 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./client": {
-      "import": "./dist/client.js",
-      "require": "./dist/client.js",
-      "types": "./dist/client.d.ts"
-    },
-    "./hooks": {
-      "import": "./dist/hooks/index.js",
-      "require": "./dist/hooks/index.js",
-      "types": "./dist/hooks/index.d.ts"
+    "./components": {
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
     },
     "./types": {
       "import": "./dist/types.js",
@@ -103,15 +98,10 @@
         "require": "./dist/index.js",
         "types": "./dist/index.d.ts"
       },
-      "./client": {
-        "import": "./dist/client.js",
-        "require": "./dist/client.js",
-        "types": "./dist/client.d.ts"
-      },
-      "./hooks": {
-        "import": "./dist/hooks/index.js",
-        "require": "./dist/hooks/index.js",
-        "types": "./dist/hooks/index.d.ts"
+      "./components": {
+        "import": "./dist/components/index.js",
+        "require": "./dist/components/index.js",
+        "types": "./dist/components/index.d.ts"
       },
       "./types": {
         "import": "./dist/types.js",

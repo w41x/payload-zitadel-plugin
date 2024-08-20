@@ -1,19 +1,13 @@
-'use client'
-
 import * as React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {Image} from 'next/dist/client/image-component.js'
-import {useAuth} from '@payloadcms/ui'
+import {ServerProps} from 'payload'
 
 
-export const Avatar = () => {
-
-    const {user} = useAuth()
-
-    return (user?.image ?
-            <>
-                <style>
-                    {`
+export const Avatar = ({user}: ServerProps) =>
+    user?.image ?
+        <>
+            <style>
+                {`
                             .avatar {
                                 position: relative;
                                 height: 2rem;
@@ -28,12 +22,11 @@ export const Avatar = () => {
                                 border-radius: 100%;
                             }
                         `}
-                </style>
-                <div className="avatar">
-                    <Image src={user.image} alt="Profile Picture" fill sizes="2rem 2rem"/>
-                </div>
-            </> :
-            <DefaultAccountIcon active={false}/>
-    )
+            </style>
+            <div className="avatar">
+                <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
+            </div>
+        </> :
+        <DefaultAccountIcon active={false}/>
 
-}
+

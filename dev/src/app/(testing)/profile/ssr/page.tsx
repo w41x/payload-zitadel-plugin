@@ -1,12 +1,15 @@
 import * as React from 'react'
 import Image from 'next/image.js'
 import config from '@payload-config'
-import {getCurrentUser} from 'payload-zitadel-plugin'
-import {User} from '@payload-types'
+import {getPayloadHMR} from '@payloadcms/next/utilities'
+import {headers} from 'next/headers'
 
 export default async function Page() {
 
-    const user = await getCurrentUser<User>({config})
+    const payload = await getPayloadHMR({config})
+
+    const {user} = await payload.auth({headers: headers()})
+
     const imageUrl = user?.image as string
 
     return <>

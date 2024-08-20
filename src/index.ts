@@ -6,8 +6,6 @@ import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './t
 import {translations} from './translations.js'
 import {NextResponse} from 'next/server.js'
 
-export {getCurrentUser} from './utils/index.js'
-
 export const ZitadelPlugin: ZitadelPluginType = ({
                                                      associatedIdFieldName = DEFAULT_CONFIG.associatedIdFieldName,
                                                      disableAvatar,
@@ -43,9 +41,12 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         const authSlug = incomingConfig.admin?.user ?? 'users'
 
         const authBaseURL = `${serverURL}/api/${authSlug}`
+        const authorizeURL = authBaseURL + ROUTES.authorize
+        const callbackURL = authBaseURL + ROUTES.callback
 
         const defaultOnSuccess: ZitadelOnSuccess = (state) =>
             NextResponse.redirect(serverURL + (state.get('redirect') ?? ''))
+
 
         return {
             ...incomingConfig,
@@ -53,7 +54,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                 ...incomingConfig.admin,
                 ...disableAvatar ? {} : {
                     avatar: {
-                        Component: 'payload-zitadel-plugin/client#Avatar'
+                        Component: 'payload-zitadel-plugin/components#Avatar'
                     }
                 },
                 ...disableDefaultLoginButton ? {} : {
@@ -61,7 +62,13 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                         ...incomingConfig.admin?.components,
                         afterLogin: [
                             ...incomingConfig.admin?.components?.afterLogin ?? [],
-                            'payload-zitadel-plugin/client#LoginButton'
+                            {
+                                path: 'payload-zitadel-plugin/components#LoginButton',
+                                serverProps: {
+                                    authorizeURL,
+                                    label
+                                }
+                            }
                         ]
                     }
                 },
@@ -70,9 +77,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     zitadel: {
                         issuerURL,
                         clientId,
-                        label,
-                        authorizeURL: authBaseURL + ROUTES.authorize,
-                        callbackURL: authBaseURL + ROUTES.callback
+                        callbackURL
                     }
                 }
             },

@@ -1,23 +1,10 @@
-'use client'
-
 import React from 'react'
-import {NestedKeysStripped} from '@payloadcms/translations'
-import {Button, useConfig, useTranslation} from '@payloadcms/ui'
-import {translations} from '../translations.js'
-import {PayloadConfigWithZitadelContext} from '../types.js'
+import {Button} from '@payloadcms/ui'
+import {ZitadelLoginButtonProps} from '../types.js'
 
-export const LoginButton = () => {
-
-    const {t} = useTranslation<typeof translations.en, NestedKeysStripped<typeof translations.en>>()
-
-    const {config: {admin: {custom: {zitadel: {label, authorizeURL}}}}} = useConfig() as PayloadConfigWithZitadelContext
-
-    return (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-            <Button onClick={() => open(authorizeURL, '_self')}>
-                {t('zitadelPlugin:signIn', {label})}
-            </Button>
-        </div>
-    )
-
-}
+export const LoginButton = ({i18n, authorizeURL, label}: ZitadelLoginButtonProps) =>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Button el="anchor" url={authorizeURL}>
+            {i18n.t('zitadelPlugin:signIn', {label})}
+        </Button>
+    </div>

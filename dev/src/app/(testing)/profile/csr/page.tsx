@@ -2,14 +2,14 @@
 
 import * as React from 'react'
 import Image from 'next/image.js'
-import {useCurrentUser} from 'payload-zitadel-plugin/hooks'
+import {usePayloadAPI} from '@payloadcms/ui'
 import {User} from '@payload-types'
 
 export default function Page() {
 
-    const {user, isLoading} = useCurrentUser<User>()
+    const {data: {user}, isLoading} = usePayloadAPI('/api/users/me')[0]
 
-    const imageUrl = user?.image
+    const imageUrl = (user as User).image
 
     return <>
         <h1>{isLoading ? 'loading...' : JSON.stringify(user)}</h1>
