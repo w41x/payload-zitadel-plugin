@@ -26,6 +26,11 @@ export default buildConfig({
             ]
         }
     },
+    localization: {
+        locales: ['de', 'en'],
+        defaultLocale: 'en',
+        fallback: true
+    },
     plugins: [
         ZitadelPlugin({
             label: 'Test-IdP',

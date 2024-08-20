@@ -7,37 +7,18 @@ import {ZitadelUser} from '../types.js'
 
 export const Avatar = ({active}: { active: boolean }) => {
 
-    const {data, isLoading} = usePayloadAPI('/api/users/me')[0]
+    const {data} = usePayloadAPI('/api/users/me')[0]
 
     const {user} = data as { user: ZitadelUser }
 
     return (
-        !isLoading && user?.image ?
+        user?.image ?
             <>
-                <style>
-                    {`
-                        .avatar {
-                            position: relative;
-                            height: 2rem;
-                            width: 2rem;
-                        }
-                        
-                        .avatar:hover {
-                            filter: brightness(1.2);
-                        }
-                        
-                        .avatar.active {
-                            filter: brightness(.8);
-                        }
-                        
-                        .avatar img {
-                            border-radius: 100%;
-                        }
-                    `}
-                </style>
-                <div className={['avatar', active ? 'active' : ''].join(' ').trim()}>
-                    <img src={user.image} alt="Profile Picture" sizes="2rem 2rem"/>
-                </div>
+                <style>{'zitadel-avatar:hover { filter: brightness(1.2); }'}</style>
+                <img className="zitadel-avatar" src={user.image} height={25} width={25} alt="Profile Picture" style={{
+                    borderRadius: '100%',
+                    ...(active ? {filter: 'brightness(.8)'} : {})
+                }}/>
             </> :
             <DefaultAccountIcon active={active}/>
     )
