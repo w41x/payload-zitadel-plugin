@@ -48,7 +48,7 @@
     "@payloadcms/translations": "3.0.0-beta.90",
     "@payloadcms/ui": "3.0.0-beta.90",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.0.0-canary.125",
+    "next": "15.0.0-canary.127",
     "payload": "3.0.0-beta.90",
     "react": "rc",
     "react-dom": "rc"
