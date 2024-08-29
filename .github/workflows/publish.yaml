@@ -11,10 +11,10 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.8.0
+          version: 9.9.0
           run_install: false
       - uses: actions/setup-node@v4
         with:
