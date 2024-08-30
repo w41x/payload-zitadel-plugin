@@ -187,7 +187,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     limit: 1
                 })
 
-                if (existingUsers.docs.length === 0) {
+                if (existingUsers.totalDocs === 0) {
                     await payload.create({
                         collection: authSlug,
                         data: {
