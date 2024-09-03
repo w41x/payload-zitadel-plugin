@@ -16,19 +16,8 @@ export default withPayload({
         async redirects() {
             return [
                 {
-                    source: '/admin/:path',
-                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin/:path'})}`,
-                    missing: [
-                        {
-                            type: 'cookie',
-                            key: 'zitadel_id_token'
-                        }
-                    ],
-                    permanent: false
-                },
-                {
-                    source: '/profile/:path',
-                    destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile/:path'})}`,
+                    source: '/:path((?:admin|profile).*)',
+                    destination: '/api/users/authorize?redirect=/:path*',
                     missing: [
                         {
                             type: 'cookie',
