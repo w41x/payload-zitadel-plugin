@@ -26,7 +26,7 @@ EXPOSE 3000
 # start test environment
 CMD pnpm run dev
 
-FROM mongo:8.0.0-rc16-jammy as db
+FROM mongo:8.0.0-rc18-noble as db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
