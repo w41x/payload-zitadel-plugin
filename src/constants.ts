@@ -10,12 +10,6 @@ export const DEFAULT_CONFIG = {
     label: 'Zitadel'
 }
 
-export const DELETE_ME_USER = {
-    email: 'delete.me@now.not-tld',
-    password: 'password',
-    associatedId: 'DELETE_ME'
-}
-
 export const ERROR_MESSAGES = {
     issuerURL: 'ZITADEL-PLUGIN: ISSUER-URL IS EMPTY',
     clientId: 'ZITADEL-PLUGIN: CLIENT-ID IS EMPTY',

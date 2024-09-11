@@ -59,7 +59,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
 
         // search for associated user; if not found, create one
         if (idp_id) {
-            const {docs} = await payload.find({
+            const {docs, totalDocs} = await payload.find({
                 collection: authSlug,
                 where: {
                     [associatedIdFieldName]: {
@@ -67,7 +67,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                     }
                 }
             })
-            id = docs.length ? docs[0].id : (await payload.create({
+            id = totalDocs ? docs[0].id : (await payload.create({
                 collection: authSlug,
                 data: {
                     [associatedIdFieldName]: idp_id

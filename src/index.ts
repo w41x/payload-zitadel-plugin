@@ -1,5 +1,5 @@
 import {cookies} from 'next/headers.js'
-import {COOKIES, DEFAULT_CONFIG, DELETE_ME_USER, ERROR_MESSAGES, ROUTES} from './constants.js'
+import {COOKIES, DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
@@ -109,24 +109,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             ]
                         },
                         hooks: {
-                            afterLogout: [() => cookies().delete(COOKIES.idToken)],
-
-                            // current work around (see onInit)
-                            afterChange: [async ({req}) => {
-                                const response = await req.payload.find({collection: authSlug})
-                                // to minimize unnecessary checks after the first two real users
-                                if (response.totalDocs == 2) {
-                                    await req.payload.delete({
-                                        collection: authSlug,
-                                        where: {
-                                            [associatedIdFieldName]: {
-                                                equals: DELETE_ME_USER.associatedId
-                                            }
-                                        }
-                                    })
-                                }
-                            }]
-
+                            afterLogout: [() => cookies().delete(COOKIES.idToken)]
                         },
                         endpoints: [
                             {
@@ -148,6 +131,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                 admin: {
                                     readOnly: true
                                 },
+                                index: true,
                                 unique: true,
                                 required: true
                             },
@@ -176,29 +160,6 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     } : {}
                 }
             }),
-
-            // current work around on creating a non-functional first user, which will be deleted after first login
-            async onInit(payload) {
-                if (incomingConfig.onInit)
-                    await incomingConfig.onInit(payload)
-
-                const existingUsers = await payload.find({
-                    collection: authSlug,
-                    limit: 1
-                })
-
-                if (existingUsers.totalDocs === 0) {
-                    await payload.create({
-                        collection: authSlug,
-                        data: {
-                            email: DELETE_ME_USER.email,
-                            password: DELETE_ME_USER.password,
-                            [associatedIdFieldName]: DELETE_ME_USER.associatedId
-                        }
-                    })
-                }
-            },
-
             i18n: {
                 ...incomingConfig.i18n,
                 translations: {
