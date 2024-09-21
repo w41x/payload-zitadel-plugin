@@ -1,4 +1,4 @@
-import {ZitadelStrategyProps} from './types.js'
+import {ZitadelFieldsConfig} from './types.js'
 
 export const COOKIES = {
     pkce: 'zitadel_pkce_code_verifier',
@@ -41,7 +41,7 @@ export const DEFAULT_CONFIG = {
                 label: {de: 'Name', en: 'Name'}
             }
         }
-    } satisfies ZitadelStrategyProps['fieldsConfig'],
+    } satisfies ZitadelFieldsConfig,
     strategyName: 'zitadel',
     label: 'Zitadel'
 }

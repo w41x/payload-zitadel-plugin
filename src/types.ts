@@ -26,14 +26,13 @@ export type ZitadelFieldsConfig = {
 }
 
 export type ZitadelPluginProps = Partial<{
+    fieldsConfig: Partial<ZitadelFieldsConfig>,
     disableAvatar: true
     disableDefaultLoginButton: true
     defaultLoginButtonTitle: string
     label: string
     onSuccess: ZitadelOnSuccess
-}> & Partial<ZitadelStrategyProps> & {
-    fieldsConfig: Partial<ZitadelFieldsConfig>,
-}
+}> & Partial<ZitadelStrategyProps>
 
 export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => Config
 
@@ -45,7 +44,6 @@ export type ZitadelAPIProps = {
 }
 
 export type ZitadelStrategyProps = {
-    fieldsConfig: ZitadelFieldsConfig,
     strategyName: string,
     issuerURL: string,
     clientId: string
@@ -54,7 +52,9 @@ export type ZitadelStrategyProps = {
     enableAPI?: undefined
 } & Partial<ZitadelAPIProps>)
 
-export type ZitadelStrategyType = (props: ZitadelStrategyProps) => AuthStrategy
+export type ZitadelStrategyType = (props: ZitadelStrategyProps & {
+    fieldsConfig: ZitadelFieldsConfig
+}) => AuthStrategy
 
 export type ZitadelIdToken = Partial<{
     sub: string,
