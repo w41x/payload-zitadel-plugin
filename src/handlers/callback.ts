@@ -35,6 +35,8 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
 
             if (id_token) {
 
+                console.log(JSON.stringify(jwt.decode(id_token)))
+
                 cookieStore.delete(COOKIES.pkce)
 
                 cookieStore.set({

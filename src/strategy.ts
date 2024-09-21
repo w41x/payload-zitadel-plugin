@@ -5,7 +5,7 @@ import {COOKIES} from './constants.js'
 
 export const zitadelStrategy: ZitadelStrategyType = ({
                                                          authSlug,
-                                                         associatedIdFieldName,
+                                                         fieldsConfig,
                                                          strategyName,
                                                          issuerURL,
                                                          enableAPI,
@@ -62,7 +62,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
             const {docs, totalDocs} = await payload.find({
                 collection: authSlug,
                 where: {
-                    [associatedIdFieldName]: {
+                    [fieldsConfig.id.name]: {
                         equals: idp_id
                     }
                 }
@@ -70,7 +70,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
             id = totalDocs ? docs[0].id : (await payload.create({
                 collection: authSlug,
                 data: {
-                    [associatedIdFieldName]: idp_id
+                    [fieldsConfig.id.name]: idp_id
                 }
             })).id
         }
@@ -81,9 +81,11 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                 collection: authSlug,
                 id,
                 data: {
-                    email: id_token.email,
-                    name: id_token.name,
-                    image: id_token.picture
+                    [fieldsConfig.name.name]: id_token.name,
+                    [fieldsConfig.email.name]: id_token.email,
+                    [fieldsConfig.image.name]: id_token.picture,
+                    [fieldsConfig.roles.name]: Object.keys(id_token['urn:zitadel:iam:org:project:roles'] ?? {})
+                        .map(key => ({[fieldsConfig.roleFields.name.name]: key}))
                 }
             })
         }

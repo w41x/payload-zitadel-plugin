@@ -7,7 +7,7 @@ import {translations} from './translations.js'
 import {NextResponse} from 'next/server.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
-                                                     associatedIdFieldName = DEFAULT_CONFIG.associatedIdFieldName,
+                                                     fieldsConfig: _fieldsConfig,
                                                      disableAvatar,
                                                      disableDefaultLoginButton,
                                                      strategyName = DEFAULT_CONFIG.strategyName,
@@ -33,6 +33,8 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         if (!apiKey)
             throw new Error(ERROR_MESSAGES.apiKey)
     }
+
+    const fieldsConfig = {...DEFAULT_CONFIG.fields, ..._fieldsConfig}
 
     return (incomingConfig) => {
 
@@ -95,7 +97,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                 ...authConfig?.strategies ?? [],
                                 zitadelStrategy({
                                     authSlug,
-                                    associatedIdFieldName,
+                                    fieldsConfig,
                                     strategyName: strategyName,
                                     issuerURL: issuerURL as string,
                                     clientId: clientId as string,
@@ -126,7 +128,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                         fields: [
                             ...collection.fields,
                             {
-                                name: associatedIdFieldName,
+                                ...fieldsConfig.id,
                                 type: 'text',
                                 admin: {
                                     readOnly: true
@@ -136,25 +138,38 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                 required: true
                             },
                             {
-                                name: 'email',
+                                ...fieldsConfig.name,
+                                type: 'text',
+                                admin: {
+                                    readOnly: true
+                                }
+                            },
+                            {
+                                ...fieldsConfig.email,
                                 type: 'email',
                                 admin: {
                                     readOnly: true
                                 }
                             },
                             {
-                                name: 'name',
+                                ...fieldsConfig.image,
                                 type: 'text',
                                 admin: {
                                     readOnly: true
                                 }
                             },
                             {
-                                name: 'image',
-                                type: 'text',
+                                ...fieldsConfig.roles,
+                                type: 'array',
                                 admin: {
                                     readOnly: true
-                                }
+                                },
+                                fields: [
+                                    {
+                                        ...fieldsConfig.roleFields.name,
+                                        type: 'text'
+                                    }
+                                ]
                             }
                         ]
                     } : {}

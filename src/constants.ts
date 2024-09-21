@@ -1,3 +1,5 @@
+import {ZitadelStrategyProps} from './types.js'
+
 export const COOKIES = {
     pkce: 'zitadel_pkce_code_verifier',
     idToken: 'zitadel_id_token',
@@ -5,7 +7,41 @@ export const COOKIES = {
 }
 
 export const DEFAULT_CONFIG = {
-    associatedIdFieldName: 'idp_id',
+    fields: {
+        id: {
+            name: 'idp_id',
+            label: {
+                de: 'Identifikation im System des Identitätsanbieters',
+                en: 'Identifier in the system of the Identity Provider'
+            }
+        },
+        name: {
+            name: 'name',
+            label: {de: 'Name', en: 'Name'}
+        },
+        email: {
+            name: 'email',
+            label: {de: 'E-Mail', en: 'Email'}
+        },
+        image: {
+            name: 'image',
+            label: {de: 'Profilbild-URL', en: 'Profile picture URL'}
+        },
+        roles: {
+            name: 'roles',
+            label: {de: 'Rollen', en: 'Roles'},
+            labels: {
+                singular: {de: 'Rolle', en: 'Role'},
+                plural: {de: 'Rollen', en: 'Roles'}
+            }
+        },
+        roleFields: {
+            name: {
+                name: 'name',
+                label: {de: 'Name', en: 'Name'}
+            }
+        }
+    } satisfies ZitadelStrategyProps['fieldsConfig'],
     strategyName: 'zitadel',
     label: 'Zitadel'
 }

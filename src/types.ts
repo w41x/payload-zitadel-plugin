@@ -3,13 +3,37 @@ import {NextResponse} from 'next/server.js'
 import {translations} from './translations.js'
 import {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 
+export type ZitadelFieldConfig = {
+    hidden?: boolean,
+    name: string,
+    label: string | Record<string, string>,
+}
+
+export type ZitadelFieldsConfig = {
+    id: ZitadelFieldConfig,
+    name: ZitadelFieldConfig
+    email: ZitadelFieldConfig,
+    image: ZitadelFieldConfig,
+    roles: ZitadelFieldConfig & {
+        labels: {
+            singular: string | Record<string, string>,
+            plural: string | Record<string, string>
+        }
+    }
+    roleFields: {
+        name: ZitadelFieldConfig
+    }
+}
+
 export type ZitadelPluginProps = Partial<{
     disableAvatar: true
     disableDefaultLoginButton: true
     defaultLoginButtonTitle: string
     label: string
     onSuccess: ZitadelOnSuccess
-}> & Partial<ZitadelStrategyProps>
+}> & Partial<ZitadelStrategyProps> & {
+    fieldsConfig: Partial<ZitadelFieldsConfig>,
+}
 
 export type ZitadelPluginType = (props: ZitadelPluginProps) => (config: Config) => Config
 
@@ -21,12 +45,11 @@ export type ZitadelAPIProps = {
 }
 
 export type ZitadelStrategyProps = {
+    fieldsConfig: ZitadelFieldsConfig,
     strategyName: string,
     issuerURL: string,
     clientId: string
-} & {
-    authSlug: string,
-    associatedIdFieldName: string,
+    authSlug: string
 } & (ZitadelAPIProps | {
     enableAPI?: undefined
 } & Partial<ZitadelAPIProps>)
@@ -37,7 +60,8 @@ export type ZitadelIdToken = Partial<{
     sub: string,
     name: string,
     email: string,
-    picture: string
+    picture: string,
+    'urn:zitadel:iam:org:project:roles'?: Record<string, Record<string, string>>
 }>
 
 export type ZitadelUser = TypedUser & Partial<{
