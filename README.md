@@ -39,6 +39,16 @@ export default buildConfig({
             // interpolation text for the Login Button - "sign in with ..."
             label: 'Zitadel',
 
+            // change field names, field labels and alse hide them if wanted
+            /* 
+            fieldConfig: {
+                image: {
+                    name: 'idp_image',
+                    label: 'some custom label'
+                }
+            }
+             */
+
             // set the name of the CustomStrategy in PayloadCMS - usually not necessary
             // strategyName: 'zitadel'
 
@@ -47,9 +57,6 @@ export default buildConfig({
 
             // set to true if you want to use your own custom login button
             // disableDefaultLoginButton: true
-
-            // if you want to specify the field name for the Zitadel User Id in the users collection
-            // associatedIdFieldName: 'idp_id'
 
             // if you want to manually control what happen after a successful login
             // state contains all URLSearchParams that were send to /authorize
@@ -73,8 +80,6 @@ Optionally you could use an `.env.local` file for parameters:
 #### .env.local
 
 ```dotenv
-NEXTAUTH_URL=http://localhost
-NEXTAUTH_SECRET=pMvElMzVrLvGL4tHyqtDlVP/90wQdxGBy94ISifi62I=
 ZITADEL_URL=https://idp.zitadel.url
 ZITADEL_CLIENT_ID=123456789012345678@project_name
 ZITADEL_API_CLIENT_ID=123456789123456789@project_name
@@ -92,8 +97,6 @@ import {withPayload} from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        NEXTAUTH_URL: 'http://localhost',
-        NEXTAUTH_SECRET: 'mQ46qpFwfE1BHuqMC+qlm19qBAD9fVPgh28werwe3ASFlAfnKjM=',
         ZITADEL_URL: 'https://idp.zitadel.url',
         ZITADEL_CLIENT_ID: '123456789012345678@project_name',
         ZITADEL_API_CLIENT_ID: '123456789123456789@project_name',
@@ -132,25 +135,13 @@ const nextConfig = {
             }
         ]
     },
-    
+
     // optional: enable auto-redirect to Zitadel login page if not logged in
     async redirects() {
         return [
             {
-                source: '/admin/:path',
-                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/admin/:path'})}`,
-                missing: [
-                    {
-                        type: 'cookie',
-                        key: 'zitadel_id_token'
-                    }
-                ],
-                permanent: false
-            },
-            // also works with any route outside of PayloadCMS
-            {
-                source: '/profile/:path',
-                destination: `/api/users/authorize?${new URLSearchParams({redirect: '/profile/:path'})}`,
+                source: '/:path((?:admin|profile).*)',
+                destination: '/api/users/authorize?redirect=/:path*',
                 missing: [
                     {
                         type: 'cookie',
