@@ -15,7 +15,9 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
 
     const code_challenge = Buffer.from(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(code_verifier))).toString('base64url')
 
-    cookies().set({
+    const cookieStore = await cookies()
+
+    cookieStore.set({
         name: COOKIES.pkce,
         value: code_verifier,
         httpOnly: true,

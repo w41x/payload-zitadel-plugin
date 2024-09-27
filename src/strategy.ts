@@ -18,7 +18,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
 
         let id, idp_id, id_token
 
-        const cookieStore = cookies()
+        const cookieStore = await cookies()
 
         if (enableAPI) {
             // in case of incoming API call from the app

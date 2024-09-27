@@ -12,7 +12,7 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
 
     const {admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}} = config as PayloadConfigWithZitadel
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
 
     const code_verifier = cookieStore.get(COOKIES.pkce)?.value
 

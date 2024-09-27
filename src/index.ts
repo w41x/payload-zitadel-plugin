@@ -49,7 +49,6 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         const defaultOnSuccess: ZitadelOnSuccess = (state) =>
             NextResponse.redirect(serverURL + (state.get('redirect') ?? ''))
 
-
         return {
             ...incomingConfig,
             admin: {
@@ -111,7 +110,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             ]
                         },
                         hooks: {
-                            afterLogout: [() => cookies().delete(COOKIES.idToken)]
+                            afterLogout: [async () => (await cookies()).delete(COOKIES.idToken)]
                         },
                         endpoints: [
                             {
