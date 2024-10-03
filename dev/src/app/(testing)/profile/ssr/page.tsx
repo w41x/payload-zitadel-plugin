@@ -8,7 +8,7 @@ export default async function Page() {
 
     const payload = await getPayloadHMR({config})
 
-    const {user} = await payload.auth({headers: headers()})
+    const {user} = await payload.auth({headers: await headers()})
 
     const fullUser = user ? await payload.findByID({collection: 'users', id: user.id}) : null
 

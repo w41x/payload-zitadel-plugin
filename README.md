@@ -5,14 +5,14 @@
 plugin for [Payload CMS](https://payloadcms.com), which enables authentication via Zitadel IdP.
 
 The default use case is to fully replace PayloadCMS Auth with Zitadel.
-Thus the user collection in PayloadCMS becomes just a shadow of the information in Zitadel.
+Thus, the user collection in PayloadCMS becomes just a shadow of the information in Zitadel.
 
 :boom: :boom: :boom: &nbsp; works :100: with PayloadCMS version :three: &nbsp; :boom: :boom: :boom:
 
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.2.31
+pnpm add payload-zitadel-plugin@0.2.32
 ```
 
 ## Configuration

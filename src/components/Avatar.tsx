@@ -2,14 +2,12 @@
 
 import * as React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {usePayloadAPI} from '@payloadcms/ui'
+import {useAuth} from '@payloadcms/ui'
 import {ZitadelUser} from '../types.js'
 
 export const Avatar = ({active}: { active: boolean }) => {
 
-    const {data} = usePayloadAPI('/api/users/me')[0]
-
-    const {user} = data as { user: ZitadelUser }
+    const {user} = useAuth<ZitadelUser>()
 
     return (
         user?.image ?
