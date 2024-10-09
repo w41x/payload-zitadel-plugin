@@ -1,4 +1,4 @@
-import {AuthStrategy, Config, SanitizedConfig, ServerProps, TypedUser} from 'payload'
+import {AuthStrategy, Config, SanitizedConfig, ServerProps} from 'payload'
 import {NextResponse} from 'next/server.js'
 import {translations} from './translations.js'
 import {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
@@ -64,12 +64,6 @@ export type ZitadelIdToken = Partial<{
     'urn:zitadel:iam:org:project:roles'?: Record<string, Record<string, string>>
 }>
 
-export type ZitadelUser = TypedUser & Partial<{
-    email: string | null,
-    name: string | null,
-    image: string | null,
-}>
-
 export type ZitadelLoginButtonProps = ServerProps & {
     i18n: I18nClient<typeof translations.en, NestedKeysStripped<typeof translations.en>>,
     authorizeURL: string,
@@ -78,14 +72,17 @@ export type ZitadelLoginButtonProps = ServerProps & {
 
 export type ZitadelOnSuccess = (state: URLSearchParams) => NextResponse
 
+export type ZitadelCustomConfigSegment = {
+    zitadel: {
+        issuerURL: string
+        clientId: string
+        callbackURL: string,
+        imageFieldName: string
+    }
+}
+
 export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
     admin: {
-        custom: {
-            zitadel: {
-                issuerURL: string
-                clientId: string
-                callbackURL: string
-            }
-        }
+        custom: ZitadelCustomConfigSegment
     }
 }

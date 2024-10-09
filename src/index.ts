@@ -78,7 +78,8 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     zitadel: {
                         issuerURL,
                         clientId,
-                        callbackURL
+                        callbackURL,
+                        imageFieldName: fieldsConfig.image.name
                     }
                 }
             },
