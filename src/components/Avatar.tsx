@@ -14,7 +14,7 @@ export const Avatar = ({active}: { active: boolean }) => {
     const {zitadel: {imageFieldName}} = custom as ZitadelCustomConfigSegment
 
     return (
-        user[imageFieldName] ?
+        user && user[imageFieldName] ?
             <>
                 <style>{'zitadel-avatar:hover { filter: brightness(1.2); }'}</style>
                 <img className="zitadel-avatar" src={user[imageFieldName]} height={25} width={25} alt="Profile Picture"

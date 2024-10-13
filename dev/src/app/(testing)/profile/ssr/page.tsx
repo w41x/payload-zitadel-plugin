@@ -13,7 +13,7 @@ export default async function Page() {
     const fullUser = user ? await payload.findByID({collection: 'users', id: user.id}) : null
 
     return <>
-        <h1>{JSON.stringify(user)}</h1>
+        <h1>{JSON.stringify(fullUser)}</h1>
         {fullUser?.image ? <Image src={fullUser.image} alt="Profile Picture" width={100} height={100}/> :
             <h1>No Avatar</h1>}
     </>
