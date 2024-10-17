@@ -18,9 +18,9 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: '23.0.0'
+          node-version: 23.0.0
           cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm publish --access public --no-git-checks
         env:
