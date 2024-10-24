@@ -1,5 +1,5 @@
 import {ZitadelIdToken, ZitadelStrategyType} from './types.js'
-import jwt from 'jsonwebtoken'
+import {SignJWT, jwtVerify} from 'jose'
 import {cookies} from 'next/headers.js'
 import {COOKIES} from './constants.js'
 
@@ -31,14 +31,14 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                     },
                     body: new URLSearchParams({
                         'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-                        'client_assertion': jwt.sign({}, apiKey, {
-                            algorithm: 'RS256',
-                            audience: issuerURL,
-                            expiresIn: '1h',
-                            issuer: apiClientId,
-                            keyid: apiKeyId,
-                            subject: apiClientId
-                        }),
+                        'client_assertion': await new SignJWT()
+                            .setProtectedHeader({alg: 'RS256', kid: apiKeyId})
+                            .setIssuer(apiClientId)
+                            .setAudience(issuerURL)
+                            .setSubject(apiClientId)
+                            .setIssuedAt()
+                            .setExpirationTime('1h')
+                            .sign(new TextEncoder().encode(apiKey)),
                         'token': authHeader.split(' ')[1]
                     })
                 })
@@ -53,7 +53,7 @@ export const zitadelStrategy: ZitadelStrategyType = ({
 
         // in case of normal browsing
         if (!idp_id && cookieStore.has(COOKIES.idToken)) {
-            id_token = jwt.verify(cookieStore.get(COOKIES.idToken)?.value ?? '', payload.secret) as ZitadelIdToken
+            id_token = (await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken)?.value ?? '', new TextEncoder().encode(payload.secret))).payload
             idp_id = id_token.sub
         }
 

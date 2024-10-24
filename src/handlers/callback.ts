@@ -1,7 +1,7 @@
 import {PayloadHandler} from 'payload'
 import {cookies} from 'next/headers.js'
 import process from 'node:process'
-import jwt from 'jsonwebtoken'
+import {SignJWT, decodeJwt} from 'jose'
 import {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
 import {COOKIES} from '../constants.js'
 
@@ -39,7 +39,10 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
 
                 cookieStore.set({
                     name: COOKIES.idToken,
-                    value: jwt.sign(jwt.decode(id_token) as ZitadelIdToken, secret),
+                    value: await new SignJWT(decodeJwt<ZitadelIdToken>(id_token))
+                        .setProtectedHeader({alg: 'HS256'})
+                        .setIssuedAt()
+                        .sign(new TextEncoder().encode(secret)),
                     httpOnly: true,
                     path: '/',
                     sameSite: 'lax',
