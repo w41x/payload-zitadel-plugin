@@ -1,6 +1,5 @@
-import React from 'react'
 import {Button} from '@payloadcms/ui'
-import {ZitadelLoginButtonProps} from '../types.js'
+import type {ZitadelLoginButtonProps} from '../types.ts'
 
 export const LoginButton = ({i18n, authorizeURL, label}: ZitadelLoginButtonProps) =>
     <div style={{display: 'flex', justifyContent: 'center'}}>

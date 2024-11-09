@@ -1,7 +1,7 @@
-import {AuthStrategy, Config, SanitizedConfig, ServerProps} from 'payload'
-import {NextResponse} from 'next/server.js'
-import {translations} from './translations.js'
-import {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
+import type {AuthStrategy, Config, SanitizedConfig, ServerProps} from 'payload'
+import type {NextResponse} from 'next/server.js'
+import type {translations} from './translations.ts'
+import type {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 
 export type ZitadelFieldConfig = {
     hidden?: boolean,

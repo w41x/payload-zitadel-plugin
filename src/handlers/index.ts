@@ -1,2 +1,2 @@
-export {authorize} from './authorize.js'
-export {callback} from './callback.js'
+export {authorize} from './authorize.ts'
+export {callback} from './callback.ts'

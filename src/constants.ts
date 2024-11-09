@@ -1,4 +1,4 @@
-import {ZitadelFieldsConfig} from './types.js'
+import type {ZitadelFieldsConfig} from './types.ts'
 
 export const COOKIES = {
     pkce: 'zitadel_pkce_code_verifier',
@@ -58,4 +58,3 @@ export const ROUTES = {
     callback: '/callback',
     redirect: '/redirect'
 }
-

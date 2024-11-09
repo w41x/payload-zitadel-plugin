@@ -1,0 +1,20 @@
+{
+  "tasks": {
+    "dev": "next dev",
+    "gen:types": "export PAYLOAD_CONFIG_PATH=src/config/payload.config.ts && payload generate:types",
+    "gen:imap": "export PAYLOAD_CONFIG_PATH=src/config/payload.config.ts && payload generate:importmap"
+  },
+  "imports": {
+    "next": "npm:next@canary",
+    "payload": "npm:payload@3.0.0-beta.126",
+    "payload-zitadel-plugin": "../src",
+    "@payload-config": "./src/config/payload.config.ts",
+    "@payload-types": "./src/config/payload-types.ts",
+    "@payloadcms/db-mongodb": "npm:@payloadcms/db-mongodb@3.0.0-beta.126",
+    "@payloadcms/next": "npm:@payloadcms/next@3.0.0-beta.126",
+    "@payloadcms/richtext-lexical": "npm:@payloadcms/richtext-lexical@3.0.0-beta.126",
+    "@payloadcms/translations": "npm:@payloadcms/translations@3.0.0-beta.126",
+    "@payloadcms/ui": "npm:@payloadcms/ui@3.0.0-beta.126",
+    "react": "npm:react@canary"
+  }
+}

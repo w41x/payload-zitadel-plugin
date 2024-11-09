@@ -1,2 +1,2 @@
-export {Avatar} from './Avatar.js'
-export {LoginButton} from './LoginButton.js'
+export {Avatar} from './Avatar.tsx'
+export {LoginButton} from './LoginButton.tsx'

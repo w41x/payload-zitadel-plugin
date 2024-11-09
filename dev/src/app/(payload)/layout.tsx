@@ -4,7 +4,7 @@
 import React, {PropsWithChildren} from 'react'
 import configPromise from '@payload-config'
 import {RootLayout} from '@payloadcms/next/layouts'
-import {importMap} from './admin/importMap'
+import {importMap} from './admin/importMap.js'
 
 import '@payloadcms/next/css'
 

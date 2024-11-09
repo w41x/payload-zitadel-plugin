@@ -1,9 +1,18 @@
 import {cookies} from 'next/headers.js'
-import {COOKIES, DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
-import {authorize, callback} from './handlers/index.js'
-import {zitadelStrategy} from './strategy.js'
-import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
-import {translations} from './translations.js'
+import {
+    COOKIES,
+    DEFAULT_CONFIG,
+    ERROR_MESSAGES,
+    ROUTES
+} from './constants.ts'
+import {authorize, callback} from './handlers/index.ts'
+import {zitadelStrategy} from './strategy.ts'
+import type {
+    PayloadConfigWithZitadel,
+    ZitadelOnSuccess,
+    ZitadelPluginType
+} from './types.ts'
+import {translations} from './translations.ts'
 import {NextResponse} from 'next/server.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
@@ -20,24 +29,27 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                                      apiKey,
                                                      onSuccess
                                                  }) => {
-
-    if (!issuerURL)
+    if (!issuerURL) {
         throw new Error(ERROR_MESSAGES.issuerURL)
-    if (!clientId)
+    }
+    if (!clientId) {
         throw new Error(ERROR_MESSAGES.clientId)
+    }
     if (enableAPI) {
-        if (!apiClientId)
+        if (!apiClientId) {
             throw new Error(ERROR_MESSAGES.apiClientId)
-        if (!apiKeyId)
+        }
+        if (!apiKeyId) {
             throw new Error(ERROR_MESSAGES.apiKey)
-        if (!apiKey)
+        }
+        if (!apiKey) {
             throw new Error(ERROR_MESSAGES.apiKey)
+        }
     }
 
     const fieldsConfig = {...DEFAULT_CONFIG.fields, ..._fieldsConfig}
 
     return (incomingConfig) => {
-
         const serverURL = incomingConfig.serverURL ?? 'http://localhost'
 
         const authSlug = incomingConfig.admin?.user ?? 'users'
@@ -62,9 +74,11 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     components: {
                         ...incomingConfig.admin?.components,
                         afterLogin: [
-                            ...incomingConfig.admin?.components?.afterLogin ?? [],
+                            ...incomingConfig.admin?.components?.afterLogin ??
+                            [],
                             {
-                                path: 'payload-zitadel-plugin/components#LoginButton',
+                                path:
+                                    'payload-zitadel-plugin/components#LoginButton',
                                 serverProps: {
                                     authorizeURL,
                                     label
@@ -83,98 +97,110 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     }
                 }
             },
-            collections: (incomingConfig.collections || []).map((collection) => {
+            collections: (incomingConfig.collections || []).map(
+                (collection) => {
+                    const authConfig = typeof collection.auth == 'boolean'
+                        ? {}
+                        : collection.auth
 
-                const authConfig = typeof collection.auth == 'boolean' ? {} : collection.auth
-
-                return {
-                    ...collection,
-                    ...collection.slug == authSlug ? {
-                        auth: {
-                            ...authConfig,
-                            disableLocalStrategy: true,
-                            strategies: [
-                                ...authConfig?.strategies ?? [],
-                                zitadelStrategy({
-                                    authSlug,
-                                    fieldsConfig,
-                                    strategyName: strategyName,
-                                    issuerURL: issuerURL as string,
-                                    clientId: clientId as string,
-                                    ...(enableAPI ? {
-                                        enableAPI: true,
-                                        apiClientId: apiClientId!,
-                                        apiKeyId: apiClientId!,
-                                        apiKey: apiKey!
-                                    } : {enableAPI: undefined})
-                                })
-                            ]
-                        },
-                        hooks: {
-                            afterLogout: [async () => (await cookies()).delete(COOKIES.idToken)]
-                        },
-                        endpoints: [
-                            {
-                                path: ROUTES.authorize,
-                                method: 'get',
-                                handler: authorize
-                            },
-                            {
-                                path: ROUTES.callback,
-                                method: 'get',
-                                handler: callback(onSuccess ?? defaultOnSuccess)
-                            }
-                        ],
-                        fields: [
-                            ...collection.fields,
-                            {
-                                ...fieldsConfig.id,
-                                type: 'text',
-                                admin: {
-                                    readOnly: true
+                    return {
+                        ...collection,
+                        ...collection.slug == authSlug
+                            ? {
+                                auth: {
+                                    ...authConfig,
+                                    disableLocalStrategy: true,
+                                    strategies: [
+                                        ...authConfig?.strategies ?? [],
+                                        zitadelStrategy({
+                                            authSlug,
+                                            fieldsConfig,
+                                            strategyName: strategyName,
+                                            issuerURL: issuerURL as string,
+                                            clientId: clientId as string,
+                                            ...(enableAPI
+                                                ? {
+                                                    enableAPI: true,
+                                                    apiClientId: apiClientId!,
+                                                    apiKeyId: apiClientId!,
+                                                    apiKey: apiKey!
+                                                }
+                                                : {enableAPI: undefined})
+                                        })
+                                    ]
                                 },
-                                index: true,
-                                unique: true,
-                                required: true
-                            },
-                            {
-                                ...fieldsConfig.name,
-                                type: 'text',
-                                admin: {
-                                    readOnly: true
-                                }
-                            },
-                            {
-                                ...fieldsConfig.email,
-                                type: 'email',
-                                admin: {
-                                    readOnly: true
-                                }
-                            },
-                            {
-                                ...fieldsConfig.image,
-                                type: 'text',
-                                admin: {
-                                    readOnly: true
-                                }
-                            },
-                            {
-                                ...fieldsConfig.roles,
-                                type: 'array',
-                                admin: {
-                                    readOnly: true
+                                hooks: {
+                                    afterLogout: [async () =>
+                                        (await cookies()).delete(
+                                            COOKIES.idToken
+                                        )]
                                 },
-                                fields: [
+                                endpoints: [
                                     {
-                                        ...fieldsConfig.roleFields.name,
-                                        type: 'text'
+                                        path: ROUTES.authorize,
+                                        method: 'get',
+                                        handler: authorize
+                                    },
+                                    {
+                                        path: ROUTES.callback,
+                                        method: 'get',
+                                        handler: callback(
+                                            onSuccess ?? defaultOnSuccess
+                                        )
+                                    }
+                                ],
+                                fields: [
+                                    ...collection.fields,
+                                    {
+                                        ...fieldsConfig.id,
+                                        type: 'text',
+                                        admin: {
+                                            readOnly: true
+                                        },
+                                        index: true,
+                                        unique: true,
+                                        required: true
+                                    },
+                                    {
+                                        ...fieldsConfig.name,
+                                        type: 'text',
+                                        admin: {
+                                            readOnly: true
+                                        }
+                                    },
+                                    {
+                                        ...fieldsConfig.email,
+                                        type: 'email',
+                                        admin: {
+                                            readOnly: true
+                                        }
+                                    },
+                                    {
+                                        ...fieldsConfig.image,
+                                        type: 'text',
+                                        admin: {
+                                            readOnly: true
+                                        }
+                                    },
+                                    {
+                                        ...fieldsConfig.roles,
+                                        type: 'array',
+                                        admin: {
+                                            readOnly: true
+                                        },
+                                        fields: [
+                                            {
+                                                ...fieldsConfig.roleFields.name,
+                                                type: 'text'
+                                            }
+                                        ]
                                     }
                                 ]
                             }
-                        ]
-                    } : {}
+                            : {}
+                    }
                 }
-            }),
+            ),
             i18n: {
                 ...incomingConfig.i18n,
                 translations: {
@@ -190,7 +216,5 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                 }
             }
         } satisfies PayloadConfigWithZitadel
-
     }
-
 }

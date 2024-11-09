@@ -1,0 +1,17 @@
+{
+  "name": "@walx/payload-zitadel-plugin",
+  "version": "0.1.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./types": "./src/types.ts"
+  },
+  "imports": {
+    "jose": "npm:jose@^5.9.6",
+    "next": "npm:next@canary",
+    "payload": "npm:payload@3.0.0-beta.126",
+    "@payloadcms/translations": "npm:@payloadcms/translations@3.0.0-beta.126",
+    "@payloadcms/ui": "npm:@payloadcms/ui@3.0.0-beta.126",
+    "react": "npm:react@canary"
+  }
+}

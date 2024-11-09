@@ -1,2 +1,2 @@
-export {UserInfoCSR} from './UserInfoCSR'
-export {UserInfoSSR} from './UserInfoSSR'
+export {UserInfoCSR} from './UserInfoCSR.tsx'
+export {UserInfoSSR} from './UserInfoSSR.tsx'
