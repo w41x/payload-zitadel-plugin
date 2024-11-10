@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {useAuth, usePayloadAPI} from '@payloadcms/ui'
 
 export const UserInfoCSR = () => {
@@ -16,6 +15,5 @@ export const UserInfoCSR = () => {
             <p>User from REST-API: {JSON.stringify(apiUser)}</p>
         </div>
     )
-
 
 }

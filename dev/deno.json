@@ -7,14 +7,16 @@
   "imports": {
     "next": "npm:next@canary",
     "payload": "npm:payload@3.0.0-beta.126",
-    "payload-zitadel-plugin": "../src",
+    "payload-zitadel-plugin": "../src/index.ts",
     "@payload-config": "./src/config/payload.config.ts",
     "@payload-types": "./src/config/payload-types.ts",
+    "@/collections": "./src/collections/index.ts",
     "@payloadcms/db-mongodb": "npm:@payloadcms/db-mongodb@3.0.0-beta.126",
     "@payloadcms/next": "npm:@payloadcms/next@3.0.0-beta.126",
     "@payloadcms/richtext-lexical": "npm:@payloadcms/richtext-lexical@3.0.0-beta.126",
     "@payloadcms/translations": "npm:@payloadcms/translations@3.0.0-beta.126",
     "@payloadcms/ui": "npm:@payloadcms/ui@3.0.0-beta.126",
-    "react": "npm:react@canary"
+    "react": "npm:react@canary",
+    "@types/react": "npm:types-react@19.0.0-rc.0"
   }
 }

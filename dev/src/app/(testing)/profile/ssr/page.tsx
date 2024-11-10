@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Image from 'next/image.js'
 import config from '@payload-config'
 import {getPayloadHMR} from '@payloadcms/next/utilities'
@@ -14,7 +13,7 @@ export default async function Page() {
 
     return <>
         <h1>{JSON.stringify(fullUser)}</h1>
-        {fullUser?.image ? <Image src={fullUser.image} alt="Profile Picture" width={100} height={100}/> :
+        {fullUser?.image ? <Image.default src={fullUser.image} alt="Profile Picture" width={100} height={100}/> :
             <h1>No Avatar</h1>}
     </>
 
