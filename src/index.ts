@@ -1,4 +1,4 @@
-import {cookies} from 'next/headers.js'
+import {NextResponse, cookies} from './deps.ts'
 import {
     COOKIES,
     DEFAULT_CONFIG,
@@ -13,7 +13,6 @@ import type {
     ZitadelPluginType
 } from './types.ts'
 import {translations} from './translations.ts'
-import {NextResponse} from 'next/server.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
                                                      fieldsConfig: _fieldsConfig,

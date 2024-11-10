@@ -1,7 +1,6 @@
-import type {PayloadHandler} from 'payload'
-import {cookies} from 'next/headers.js'
 import process from 'node:process'
-import {SignJWT, decodeJwt} from 'jose'
+import type {PayloadHandler} from '../deps.ts'
+import {cookies, SignJWT, decodeJwt} from '../deps.ts'
 import type {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.ts'
 import {COOKIES} from '../constants.ts'
 

@@ -5,8 +5,6 @@ LABEL name='api build'
 USER deno
 WORKDIR /home/deno/workspace
 COPY --chown=deno . .
-# install deno module for plugin
-RUN deno install
 # set working directory for test environment
 WORKDIR /home/node/workspace/dev
 # install deno module for test environment

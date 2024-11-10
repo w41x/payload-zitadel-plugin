@@ -1,7 +1,6 @@
 'use client'
 
-import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {useAuth, useConfig} from '@payloadcms/ui'
+import {DefaultAccountIcon, useAuth, useConfig} from '../deps.ts'
 import type {ZitadelCustomConfigSegment} from '../types.ts'
 
 export const Avatar = ({active}: { active: boolean }) => {

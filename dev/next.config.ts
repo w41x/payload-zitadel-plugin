@@ -1,4 +1,5 @@
 import {withPayload} from '@payloadcms/next/withPayload'
+import process from 'node:process'
 
 export default withPayload({
         images: {
@@ -13,6 +14,7 @@ export default withPayload({
         },
 
         // optional: enable auto-redirect to Zitadel login page if not logged in
+        // deno-lint-ignore require-await
         async redirects() {
             return [
                 {

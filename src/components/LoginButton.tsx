@@ -1,4 +1,4 @@
-import {Button} from '@payloadcms/ui'
+import {Button} from '../deps.ts'
 import type {ZitadelLoginButtonProps} from '../types.ts'
 
 export const LoginButton = ({i18n, authorizeURL, label}: ZitadelLoginButtonProps) =>

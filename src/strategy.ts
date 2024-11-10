@@ -1,6 +1,5 @@
 import type {ZitadelIdToken, ZitadelStrategyType} from './types.ts'
-import {SignJWT, jwtVerify} from 'jose'
-import {cookies} from 'next/headers.js'
+import {cookies, SignJWT, jwtVerify} from './deps.ts'
 import {COOKIES} from './constants.ts'
 
 export const zitadelStrategy: ZitadelStrategyType = ({
