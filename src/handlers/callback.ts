@@ -1,4 +1,3 @@
-import process from 'node:process'
 import type {PayloadHandler} from '../deps.ts'
 import {cookies, SignJWT, decodeJwt} from '../deps.ts'
 import type {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.ts'
@@ -46,7 +45,7 @@ export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async (
                     path: '/',
                     sameSite: 'lax',
                     maxAge: 900,
-                    secure: process.env.NODE_ENV == 'production'
+                    secure: Deno.env.get('NODE_ENV') == 'production'
                 })
 
                 return onSuccess(new URLSearchParams(atob(state as string ?? '')))

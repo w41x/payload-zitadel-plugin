@@ -1,6 +1,6 @@
 import {buildConfig} from 'payload'
-import path from 'node:path'
-import {fileURLToPath} from 'node:url'
+
+import {dirname, fromFileUrl, resolve} from '@std/path'
 
 import {mongooseAdapter} from '@payloadcms/db-mongodb'
 import {lexicalEditor} from '@payloadcms/richtext-lexical'
@@ -34,18 +34,18 @@ export default buildConfig({
     plugins: [
         ZitadelPlugin({
             label: 'Test-IdP',
-            issuerURL: process.env.ZITADEL_URL,
-            clientId: process.env.ZITADEL_CLIENT_ID,
+            issuerURL: Deno.env.get('ZITADEL_URL'),
+            clientId: Deno.env.get('ZITADEL_CLIENT_ID'),
             enableAPI: true,
-            apiClientId: process.env.ZITADEL_API_CLIENT_ID,
-            apiKeyId: process.env.ZITADEL_API_KEY_ID,
-            apiKey: process.env.ZITADEL_API_KEY
+            apiClientId: Deno.env.get('ZITADEL_API_CLIENT_ID'),
+            apiKeyId: Deno.env.get('ZITADEL_API_KEY_ID'),
+            apiKey: Deno.env.get('ZITADEL_API_KEY')
         })
     ],
     secret: 'top-secret',
     serverURL: 'http://localhost',
     telemetry: false,
     typescript: {
-        outputFile: path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'payload-types.ts')
+        outputFile: resolve(dirname(fromFileUrl(import.meta.url)), 'payload-types.ts')
     }
 })
