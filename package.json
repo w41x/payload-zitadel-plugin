@@ -69,7 +69,7 @@
     }
   },
   "engines": {
-    "node": "^23.2.0"
+    "node": "^22.11.0"
   },
   "packageManager": "pnpm@9.12.3",
   "exports": {
