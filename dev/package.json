@@ -51,8 +51,8 @@
     "next": "^15.0.3",
     "payload": "^3.1.0",
     "payload-zitadel-plugin": "file:..",
-    "react": "19.0.0-rc.1",
-    "react-dom": "19.0.0-rc.1"
+    "react": "19.0.0-rc-91061073-20241121",
+    "react-dom": "19.0.0-rc-91061073-20241121"
   },
   "devDependencies": {
     "@types/node": "^22.9.3",
