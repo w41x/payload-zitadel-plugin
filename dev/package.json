@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin-dev",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "development environment for payload-zitadel-plugin",
   "license": "MIT",
   "type": "module",
@@ -43,19 +43,19 @@
     "gen:imap": "payload generate:importmap"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.2.1",
-    "@payloadcms/next": "^3.2.1",
-    "@payloadcms/richtext-lexical": "^3.2.1",
-    "@payloadcms/translations": "^3.2.1",
-    "@payloadcms/ui": "^3.2.1",
+    "@payloadcms/db-mongodb": "^3.3.0",
+    "@payloadcms/next": "^3.3.0",
+    "@payloadcms/richtext-lexical": "^3.3.0",
+    "@payloadcms/translations": "^3.3.0",
+    "@payloadcms/ui": "^3.3.0",
     "next": "^15.0.3",
-    "payload": "^3.2.1",
+    "payload": "^3.3.0",
     "payload-zitadel-plugin": "file:..",
-    "react": "19.0.0-rc-7670501b-20241124",
-    "react-dom": "19.0.0-rc-7670501b-20241124"
+    "react": "19.0.0-rc-1b1283ad-20241203",
+    "react-dom": "19.0.0-rc-1b1283ad-20241203"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.10.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "typescript": "^5.7.2"
@@ -67,7 +67,7 @@
     }
   },
   "engines": {
-    "node": "^22.11.0"
+    "node": "^22.12.0"
   },
   "packageManager": "pnpm@9.14.2",
   "private": true
