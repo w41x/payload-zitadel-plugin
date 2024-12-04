@@ -3,7 +3,7 @@ import React, {PropsWithChildren} from 'react'
 
 export const metadata: Metadata = {
     title: 'Plugin Test',
-    description: 'Bidirectional Relationships'
+    description: 'Payload Zitadel Plugin'
 }
 
 export default function RootLayout({children}: PropsWithChildren) {
