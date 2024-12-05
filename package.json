@@ -44,20 +44,20 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/next": "^3.3.0",
-    "@payloadcms/translations": "^3.3.0",
-    "@payloadcms/ui": "^3.3.0",
+    "@payloadcms/next": "^3.4.0",
+    "@payloadcms/translations": "^3.4.0",
+    "@payloadcms/ui": "^3.4.0",
     "jose": "^5.9.6",
     "next": "^15.0.3",
-    "payload": "^3.3.0",
-    "react": "19.0.0-rc-1b1283ad-20241203",
-    "react-dom": "19.0.0-rc-1b1283ad-20241203"
+    "payload": "^3.4.0",
+    "react": "19.0.0-rc-de68d2f4-20241204",
+    "react-dom": "19.0.0-rc-de68d2f4-20241204"
   },
   "devDependencies": {
     "@swc/cli": "^0.5.2",
-    "@swc/core": "^1.9.3",
+    "@swc/core": "^1.10.0",
     "@types/node": "^22.10.1",
-    "@types/react": "^18.3.12",
+    "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2"
