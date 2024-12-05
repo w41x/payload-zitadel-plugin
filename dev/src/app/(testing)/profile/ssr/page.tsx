@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {getPayload} from 'payload'
 import Image from 'next/image.js'
 import config from '@payload-config'

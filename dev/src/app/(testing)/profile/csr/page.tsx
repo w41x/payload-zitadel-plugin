@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
+import React from 'react'
 import Image from 'next/image.js'
 import {usePayloadAPI} from '@payloadcms/ui'
-import {User} from '@payload-types'
+import type {User} from '@payload-types'
 
 export default function Page() {
 
