@@ -1,5 +1,5 @@
 import React from 'react'
-import {ServerProps} from 'payload'
+import type {ServerProps} from 'payload'
 
 export const UserInfoSSR = async ({user, payload}: ServerProps) => {
 
