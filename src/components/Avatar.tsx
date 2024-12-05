@@ -2,16 +2,11 @@
 
 import * as React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {useAuth, useConfig} from '@payloadcms/ui'
-import {ZitadelCustomConfigSegment} from '../types.js'
+import {useAuth} from '@payloadcms/ui'
 
-export const Avatar = ({active}: { active: boolean }) => {
+export const Avatar = ({active, imageFieldName}: { active: boolean, imageFieldName: string }) => {
 
     const {user} = useAuth()
-
-    const {config: {admin: {custom}}} = useConfig()
-
-    const {zitadel: {imageFieldName}} = custom as ZitadelCustomConfigSegment
 
     return (
         user && user[imageFieldName] ?

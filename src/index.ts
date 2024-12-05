@@ -55,7 +55,12 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                 ...incomingConfig.admin,
                 ...disableAvatar ? {} : {
                     avatar: {
-                        Component: 'payload-zitadel-plugin/components#Avatar'
+                        Component: {
+                            path: 'payload-zitadel-plugin/components#Avatar',
+                            clientProps: {
+                                imageFieldName: fieldsConfig.image.name
+                            }
+                        }
                     }
                 },
                 ...disableDefaultLoginButton ? {} : {
