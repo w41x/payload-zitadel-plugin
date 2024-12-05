@@ -53,8 +53,11 @@ export const zitadelStrategy: ZitadelStrategyType = ({
 
         // in case of normal browsing
         if (!idp_id && cookieStore.has(COOKIES.idToken)) {
-            id_token = (await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken)?.value ?? '', new TextEncoder().encode(payload.secret))).payload
-            idp_id = id_token.sub
+            const {payload: jwtPayload} = await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken)?.value ?? '', new TextEncoder().encode(payload.secret))
+            if (jwtPayload.sub) {
+                id_token = jwtPayload
+                idp_id = jwtPayload.sub
+            }
         }
 
         // search for associated user; if not found, create one
