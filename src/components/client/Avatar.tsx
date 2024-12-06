@@ -1,10 +1,11 @@
 'use client'
 
-import * as React from 'react'
+import React from 'react'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
 import {useAuth} from '@payloadcms/ui'
+import type {ZitadelAvatarProps} from '../../types.js'
 
-export const Avatar = ({active, imageFieldName}: { active: boolean, imageFieldName: string }) => {
+export const Avatar = ({active, imageFieldName}: ZitadelAvatarProps) => {
 
     const {user} = useAuth()
 

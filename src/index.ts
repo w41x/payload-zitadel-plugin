@@ -1,10 +1,11 @@
 import {cookies} from 'next/headers.js'
+import {NextResponse} from 'next/server.js'
 import {COOKIES, DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
-import {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 import {translations} from './translations.js'
-import {NextResponse} from 'next/server.js'
+import {AvatarComponent, LoginButtonComponent} from './components/index.js'
+import type {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
                                                      fieldsConfig: _fieldsConfig,
@@ -56,7 +57,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                 ...disableAvatar ? {} : {
                     avatar: {
                         Component: {
-                            path: 'payload-zitadel-plugin/components#Avatar',
+                            ...AvatarComponent,
                             clientProps: {
                                 imageFieldName: fieldsConfig.image.name
                             }
@@ -69,7 +70,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                         afterLogin: [
                             ...incomingConfig.admin?.components?.afterLogin ?? [],
                             {
-                                path: 'payload-zitadel-plugin/components#LoginButton',
+                                ...LoginButtonComponent,
                                 serverProps: {
                                     authorizeURL,
                                     label

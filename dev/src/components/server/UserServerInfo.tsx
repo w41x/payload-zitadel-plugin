@@ -1,7 +1,7 @@
 import React from 'react'
 import type {ServerProps} from 'payload'
 
-export const UserInfoSSR = async ({user, payload}: ServerProps) => {
+export const UserServerInfo = async ({user, payload}: ServerProps) => {
 
     const fullUser = user ? await payload.findByID({collection: 'users', id: user.id}) : null
 

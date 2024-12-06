@@ -1,2 +1,2 @@
-export {Avatar} from './Avatar.js'
-export {LoginButton} from './LoginButton.js'
+export {AvatarComponent} from './client/index.js'
+export {LoginButtonComponent} from './server/index.js'

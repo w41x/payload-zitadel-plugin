@@ -1,7 +1,7 @@
-import {ZitadelIdToken, ZitadelStrategyType} from './types.js'
-import {SignJWT, jwtVerify} from 'jose'
+import {jwtVerify, SignJWT} from 'jose'
 import {cookies} from 'next/headers.js'
 import {COOKIES} from './constants.js'
+import type {ZitadelIdToken, ZitadelStrategyType} from './types.js'
 
 export const zitadelStrategy: ZitadelStrategyType = ({
                                                          authSlug,

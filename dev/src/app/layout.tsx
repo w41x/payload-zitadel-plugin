@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: 'Payload Zitadel Plugin'
 }
 
-export default function RootLayout({children}: PropsWithChildren) {
+export default async function RootLayout({children}: PropsWithChildren) {
     return (
         <html>
         <body>{children}</body>

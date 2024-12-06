@@ -1,11 +1,9 @@
-'use server'
-
 import process from 'node:process'
-import {PayloadHandler} from 'payload'
-import {NextResponse} from 'next/server.js'
-import {PayloadConfigWithZitadel} from '../types.js'
-import {COOKIES} from '../constants.js'
 import {cookies} from 'next/headers.js'
+import {NextResponse} from 'next/server.js'
+import type {PayloadHandler} from 'payload'
+import type {PayloadConfigWithZitadel} from '../types.js'
+import {COOKIES} from '../constants.js'
 
 export const authorize: PayloadHandler = async ({searchParams, payload: {config}}) => {
 

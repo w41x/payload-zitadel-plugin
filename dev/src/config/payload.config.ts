@@ -1,14 +1,15 @@
-import {buildConfig} from 'payload'
 import path from 'path'
 import {fileURLToPath} from 'url'
 
+import {buildConfig} from 'payload'
 import {mongooseAdapter} from '@payloadcms/db-mongodb'
 import {lexicalEditor} from '@payloadcms/richtext-lexical'
-
 import {de} from '@payloadcms/translations/languages/de'
 import {en} from '@payloadcms/translations/languages/en'
-import {collections} from '@/collections'
 import {ZitadelPlugin} from 'payload-zitadel-plugin'
+
+import {collections} from '@/collections'
+import {UserInfoClientComponent, UserInfoServerComponent} from '@/components'
 
 
 export default buildConfig({
@@ -21,8 +22,8 @@ export default buildConfig({
     admin: {
         components: {
             beforeDashboard: [
-                '/src/components#UserInfoCSR',
-                '/src/components#UserInfoSSR'
+                UserInfoClientComponent,
+                UserInfoServerComponent
             ]
         }
     },

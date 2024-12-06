@@ -1,4 +1,6 @@
-import {ZitadelFieldsConfig} from './types.js'
+import type {ZitadelFieldsConfig} from './types.js'
+
+export const COMPONENTS_PATH = 'payload-zitadel-plugin/components'
 
 export const COOKIES = {
     pkce: 'zitadel_pkce_code_verifier',

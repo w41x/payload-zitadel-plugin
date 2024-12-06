@@ -1,8 +1,8 @@
-import {PayloadHandler} from 'payload'
-import {cookies} from 'next/headers.js'
 import process from 'node:process'
 import {SignJWT, decodeJwt} from 'jose'
-import {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
+import {cookies} from 'next/headers.js'
+import type {PayloadHandler} from 'payload'
+import type {PayloadConfigWithZitadel, ZitadelIdToken, ZitadelOnSuccess} from '../types.js'
 import {COOKIES} from '../constants.js'
 
 export const callback = (onSuccess: ZitadelOnSuccess): PayloadHandler => async ({

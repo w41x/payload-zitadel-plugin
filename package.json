@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
   "type": "module",
   "license": "MIT",
@@ -78,10 +78,15 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./components": {
-      "import": "./dist/components/index.js",
-      "require": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
+    "./components/client": {
+      "import": "./dist/components/client/index.js",
+      "require": "./dist/components/client/index.js",
+      "types": "./dist/components/client/index.d.ts"
+    },
+    "./components/server": {
+      "import": "./dist/components/server/index.js",
+      "require": "./dist/components/server/index.js",
+      "types": "./dist/components/server/index.d.ts"
     },
     "./types": {
       "import": "./dist/types.js",
@@ -97,10 +102,15 @@
         "require": "./dist/index.js",
         "types": "./dist/index.d.ts"
       },
-      "./components": {
-        "import": "./dist/components/index.js",
-        "require": "./dist/components/index.js",
-        "types": "./dist/components/index.d.ts"
+      "./components/client": {
+        "import": "./dist/components/client/index.js",
+        "require": "./dist/components/client/index.js",
+        "types": "./dist/components/client/index.d.ts"
+      },
+      "./components/server": {
+        "import": "./dist/components/server/index.js",
+        "require": "./dist/components/server/index.js",
+        "types": "./dist/components/server/index.d.ts"
       },
       "./types": {
         "import": "./dist/types.js",

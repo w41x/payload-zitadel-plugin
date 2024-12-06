@@ -1,2 +1,2 @@
-export {UserInfoCSR} from './UserInfoCSR'
-export {UserInfoSSR} from './UserInfoSSR'
+export {UserInfoClientComponent} from './client'
+export {UserInfoServerComponent} from './server'

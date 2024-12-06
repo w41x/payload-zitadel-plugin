@@ -1,7 +1,7 @@
-import {AuthStrategy, Config, SanitizedConfig, ServerProps} from 'payload'
-import {NextResponse} from 'next/server.js'
+import type {NextResponse} from 'next/server.js'
+import type {AuthStrategy, Config, SanitizedConfig, ServerProps} from 'payload'
+import type {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 import {translations} from './translations.js'
-import {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 
 export type ZitadelFieldConfig = {
     hidden?: boolean,
@@ -63,6 +63,11 @@ export type ZitadelIdToken = Partial<{
     picture: string,
     'urn:zitadel:iam:org:project:roles'?: Record<string, Record<string, string>>
 }>
+
+export type ZitadelAvatarProps = {
+    active: boolean,
+    imageFieldName: string,
+}
 
 export type ZitadelLoginButtonProps = ServerProps & {
     i18n: I18nClient<typeof translations.en, NestedKeysStripped<typeof translations.en>>,

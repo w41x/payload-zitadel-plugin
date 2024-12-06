@@ -3,7 +3,7 @@
 import React from 'react'
 import {useAuth, usePayloadAPI} from '@payloadcms/ui'
 
-export const UserInfoCSR = () => {
+export const UserClientInfo = () => {
 
     const {user} = useAuth()
 
