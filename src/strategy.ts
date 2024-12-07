@@ -70,12 +70,16 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                     }
                 }
             })
-            id = totalDocs ? docs[0].id : (await payload.create({
-                collection: authSlug,
-                data: {
-                    [fieldsConfig.id.name]: idp_id
-                }
-            })).id
+            try {
+                id = totalDocs ? docs[0].id : (await payload.create({
+                    collection: authSlug,
+                    data: {
+                        [fieldsConfig.id.name]: idp_id
+                    }
+                })).id
+            } catch (e) {
+                console.error(e)
+            }
         }
 
         // update user information if possible
