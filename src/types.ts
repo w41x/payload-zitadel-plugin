@@ -65,7 +65,6 @@ export type ZitadelIdToken = Partial<{
 }>
 
 export type ZitadelAvatarProps = {
-    active: boolean,
     imageFieldName: string,
 }
 

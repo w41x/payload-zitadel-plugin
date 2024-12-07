@@ -5,7 +5,13 @@ import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
-import type {PayloadConfigWithZitadel, ZitadelOnSuccess, ZitadelPluginType} from './types.js'
+import type {
+    PayloadConfigWithZitadel,
+    ZitadelAvatarProps,
+    ZitadelLoginButtonProps,
+    ZitadelOnSuccess,
+    ZitadelPluginType
+} from './types.js'
 
 export const ZitadelPlugin: ZitadelPluginType = ({
                                                      fieldsConfig: _fieldsConfig,
@@ -60,7 +66,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             ...AvatarComponent,
                             clientProps: {
                                 imageFieldName: fieldsConfig.image.name
-                            }
+                            } satisfies ZitadelAvatarProps
                         }
                     }
                 },
@@ -74,7 +80,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                 serverProps: {
                                     authorizeURL,
                                     label
-                                }
+                                } satisfies Pick<ZitadelLoginButtonProps, 'authorizeURL' | 'label'>
                             }
                         ]
                     }
