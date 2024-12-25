@@ -1,8 +1,8 @@
 import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
 import type {PayloadHandler} from 'payload'
-import type {PayloadConfigWithZitadel} from '../types.js'
 import {AUTHORIZE_QUERY, COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROUTES} from '../constants.js'
+import type {PayloadConfigWithZitadel} from '../types.js'
 
 export const authorize: PayloadHandler = async ({searchParams, payload: {config}}) => {
 

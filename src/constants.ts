@@ -1,6 +1,6 @@
 import process from 'node:process'
-import type {ZitadelFieldsConfig} from './types.js'
 import {ResponseCookie} from 'next/dist/compiled/@edge-runtime/cookies/index.js'
+import type {ZitadelFieldsConfig} from './types.js'
 
 export const AUTHORIZE_QUERY = {
     response_type: 'code',

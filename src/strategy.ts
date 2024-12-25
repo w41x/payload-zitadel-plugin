@@ -1,8 +1,8 @@
 import {jwtVerify, SignJWT} from 'jose'
 import {cookies} from 'next/headers.js'
+import {TypeWithID} from 'payload'
 import {COOKIES, ENDPOINT_PATHS} from './constants.js'
 import type {ZitadelIdToken, ZitadelStrategy} from './types.js'
-import {TypeWithID} from 'payload'
 
 export const zitadelStrategy: ZitadelStrategy = ({
                                                      strategyName,
