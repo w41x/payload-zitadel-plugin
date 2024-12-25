@@ -6,7 +6,7 @@ import {mongooseAdapter} from '@payloadcms/db-mongodb'
 import {lexicalEditor} from '@payloadcms/richtext-lexical'
 import {de} from '@payloadcms/translations/languages/de'
 import {en} from '@payloadcms/translations/languages/en'
-import {ZitadelPlugin} from 'payload-zitadel-plugin'
+import {zitadelPlugin} from 'payload-zitadel-plugin'
 
 import {collections} from '@/collections'
 import {UserInfoClientComponent, UserInfoServerComponent} from '@/components'
@@ -33,7 +33,7 @@ export default buildConfig({
         fallback: true
     },
     plugins: [
-        ZitadelPlugin({
+        zitadelPlugin({
             label: 'Test-IdP',
             issuerURL: process.env.ZITADEL_URL,
             clientId: process.env.ZITADEL_CLIENT_ID,

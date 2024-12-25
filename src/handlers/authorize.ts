@@ -1,13 +1,12 @@
-import process from 'node:process'
 import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
 import type {PayloadHandler} from 'payload'
 import type {PayloadConfigWithZitadel} from '../types.js'
-import {COOKIES} from '../constants.js'
+import {AUTHORIZE_QUERY, COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROUTES} from '../constants.js'
 
 export const authorize: PayloadHandler = async ({searchParams, payload: {config}}) => {
 
-    const {admin: {custom: {zitadel: {issuerURL, clientId, callbackURL}}}} = config as PayloadConfigWithZitadel
+    const {admin: {custom: {zitadel: {issuerURL, clientId, authBaseURL}}}} = config as PayloadConfigWithZitadel
 
     const code_verifier = Buffer.from(crypto.getRandomValues(new Uint8Array(24))).toString('base64url')
 
@@ -18,21 +17,16 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
     cookieStore.set({
         name: COOKIES.pkce,
         value: code_verifier,
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
         maxAge: 300,
-        secure: process.env.NODE_ENV == 'production'
+        ...COOKIE_CONFIG
     })
 
-    return NextResponse.redirect(`${issuerURL}/oauth/v2/authorize?${new URLSearchParams({
+    return NextResponse.redirect(`${issuerURL}${ENDPOINT_PATHS.authorize}?${new URLSearchParams({
         client_id: clientId,
-        redirect_uri: callbackURL,
-        response_type: 'code',
-        scope: 'openid email profile',
+        redirect_uri: authBaseURL + ROUTES.callback,
         state: btoa(searchParams.toString()),
         code_challenge,
-        code_challenge_method: 'S256'
+        ...AUTHORIZE_QUERY
     })}`)
 
 }

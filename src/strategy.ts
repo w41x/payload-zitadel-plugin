@@ -1,30 +1,32 @@
 import {jwtVerify, SignJWT} from 'jose'
 import {cookies} from 'next/headers.js'
-import {COOKIES} from './constants.js'
-import type {ZitadelIdToken, ZitadelStrategyType} from './types.js'
+import {COOKIES, ENDPOINT_PATHS} from './constants.js'
+import type {ZitadelIdToken, ZitadelStrategy} from './types.js'
+import {TypeWithID} from 'payload'
 
-export const zitadelStrategy: ZitadelStrategyType = ({
-                                                         authSlug,
-                                                         fieldsConfig,
-                                                         strategyName,
-                                                         issuerURL,
-                                                         enableAPI,
-                                                         apiClientId,
-                                                         apiKeyId,
-                                                         apiKey
-                                                     }) => ({
+export const zitadelStrategy: ZitadelStrategy = ({
+                                                     strategyName,
+                                                     authSlug,
+                                                     fieldsConfig,
+                                                     issuerURL,
+                                                     enableAPI,
+                                                     apiClientId,
+                                                     apiKeyId,
+                                                     apiKey
+                                                 }) => ({
     name: strategyName,
     authenticate: async ({headers, payload}) => {
 
-        let id, idp_id, id_token
+        let idp_id
+        let user: TypeWithID | null = null
 
         const cookieStore = await cookies()
 
         if (enableAPI) {
-            // in case of incoming API call from the app
+            // in case of API call
             const authHeader = headers.get('Authorization')
             if (authHeader?.includes('Bearer')) {
-                const introspect = await fetch(`${issuerURL}/oauth/v2/introspect`, {
+                const introspect = await fetch(issuerURL + ENDPOINT_PATHS.introspect, {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -54,13 +56,10 @@ export const zitadelStrategy: ZitadelStrategyType = ({
         // in case of normal browsing
         if (!idp_id && cookieStore.has(COOKIES.idToken)) {
             const {payload: jwtPayload} = await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken)?.value ?? '', new TextEncoder().encode(payload.secret))
-            if (jwtPayload.sub) {
-                id_token = jwtPayload
-                idp_id = jwtPayload.sub
-            }
+            idp_id = jwtPayload.sub
         }
 
-        // search for associated user; if not found, create one
+        // search for associated user
         if (idp_id) {
             const {docs, totalDocs} = await payload.find({
                 collection: authSlug,
@@ -70,37 +69,15 @@ export const zitadelStrategy: ZitadelStrategyType = ({
                     }
                 }
             })
-            try {
-                id = totalDocs ? docs[0].id : (await payload.create({
-                    collection: authSlug,
-                    data: {
-                        [fieldsConfig.id.name]: idp_id
-                    }
-                })).id
-            } catch (e) {
-                console.error(e)
+            if (totalDocs) {
+                user = docs[0]
             }
         }
 
-        // update user information if possible
-        if (id && id_token) {
-            await payload.update({
-                collection: authSlug,
-                id,
-                data: {
-                    [fieldsConfig.name.name]: id_token.name,
-                    [fieldsConfig.email.name]: id_token.email,
-                    [fieldsConfig.image.name]: id_token.picture,
-                    [fieldsConfig.roles.name]: Object.keys(id_token['urn:zitadel:iam:org:project:roles'] ?? {})
-                        .map(key => ({[fieldsConfig.roleFields.name.name]: key}))
-                }
-            })
-        }
-
         return {
-            user: id ? {
+            user: user ? {
                 collection: authSlug,
-                id
+                ...user
             } : null
         }
 

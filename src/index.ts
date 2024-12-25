@@ -1,32 +1,33 @@
-import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
-import {COOKIES, DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
-import {authorize, callback} from './handlers/index.js'
+import {DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
+import {authorize, callback, loggedOut} from './handlers/index.js'
+import {logout} from './logout.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
-import type {
-    PayloadConfigWithZitadel,
+import {
     ZitadelAvatarProps,
+    PayloadConfigWithZitadel,
     ZitadelLoginButtonProps,
-    ZitadelOnSuccess,
-    ZitadelPluginType
+    ZitadelPlugin,
+    ZitadelStateHandler
 } from './types.js'
 
-export const ZitadelPlugin: ZitadelPluginType = ({
-                                                     fieldsConfig: _fieldsConfig,
-                                                     disableAvatar,
-                                                     disableDefaultLoginButton,
-                                                     strategyName = DEFAULT_CONFIG.strategyName,
-                                                     label = DEFAULT_CONFIG.label,
-                                                     issuerURL,
-                                                     clientId,
-                                                     enableAPI,
-                                                     apiClientId,
-                                                     apiKeyId,
-                                                     apiKey,
-                                                     onSuccess
-                                                 }) => {
+export const zitadelPlugin: ZitadelPlugin = ({
+                                                 fieldsConfig: _fieldsConfig,
+                                                 disableAvatar,
+                                                 disableDefaultLoginButton,
+                                                 strategyName = DEFAULT_CONFIG.strategyName,
+                                                 label = DEFAULT_CONFIG.label,
+                                                 issuerURL,
+                                                 clientId,
+                                                 enableAPI,
+                                                 apiClientId,
+                                                 apiKeyId,
+                                                 apiKey,
+                                                 afterLogin,
+                                                 afterLogout
+                                             }) => {
 
     if (!issuerURL)
         throw new Error(ERROR_MESSAGES.issuerURL)
@@ -50,10 +51,8 @@ export const ZitadelPlugin: ZitadelPluginType = ({
         const authSlug = incomingConfig.admin?.user ?? 'users'
 
         const authBaseURL = `${serverURL}/api/${authSlug}`
-        const authorizeURL = authBaseURL + ROUTES.authorize
-        const callbackURL = authBaseURL + ROUTES.callback
 
-        const defaultOnSuccess: ZitadelOnSuccess = (state) =>
+        const defaultStateHandler: ZitadelStateHandler = (state) =>
             NextResponse.redirect(serverURL + (state.get('redirect') ?? ''))
 
         return {
@@ -78,7 +77,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             {
                                 ...LoginButtonComponent,
                                 serverProps: {
-                                    authorizeURL,
+                                    authorizeURL: authBaseURL + ROUTES.authorize,
                                     label
                                 } satisfies Pick<ZitadelLoginButtonProps, 'authorizeURL' | 'label'>
                             }
@@ -90,8 +89,9 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                     zitadel: {
                         issuerURL,
                         clientId,
-                        callbackURL,
-                        imageFieldName: fieldsConfig.image.name
+                        authSlug,
+                        authBaseURL,
+                        fieldsConfig
                     }
                 }
             },
@@ -112,7 +112,6 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                                     fieldsConfig,
                                     strategyName: strategyName,
                                     issuerURL: issuerURL as string,
-                                    clientId: clientId as string,
                                     ...(enableAPI ? {
                                         enableAPI: true,
                                         apiClientId: apiClientId!,
@@ -123,7 +122,7 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             ]
                         },
                         hooks: {
-                            afterLogout: [async () => (await cookies()).delete(COOKIES.idToken)]
+                            afterLogout: [logout]
                         },
                         endpoints: [
                             {
@@ -134,7 +133,12 @@ export const ZitadelPlugin: ZitadelPluginType = ({
                             {
                                 path: ROUTES.callback,
                                 method: 'get',
-                                handler: callback(onSuccess ?? defaultOnSuccess)
+                                handler: callback(afterLogin ?? defaultStateHandler)
+                            },
+                            {
+                                path: ROUTES.logged_out,
+                                method: 'get',
+                                handler: loggedOut(afterLogout ?? defaultStateHandler)
                             }
                         ],
                         fields: [

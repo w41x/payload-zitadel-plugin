@@ -12,7 +12,7 @@ Thus, the user collection in PayloadCMS becomes just a shadow of the information
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.3.9
+pnpm add payload-zitadel-plugin@0.4.0
 ```
 
 ## Configuration
@@ -23,13 +23,13 @@ Initialize the plugin in Payload Config File. Change the parameters to connect t
 
 ```typescript
 import {buildConfig} from 'payload/config'
-import {ZitadelPlugin} from 'payload-zitadel-plugin'
+import {zitadelPlugin} from 'payload-zitadel-plugin'
 
 
 export default buildConfig({
     ...,
     plugins: [
-        ZitadelPlugin({
+        zitadelPlugin({
             // URL of your Zitadel instance
             issuerUrl: process.env.ZITADEL_URL,
 
