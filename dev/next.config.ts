@@ -16,7 +16,7 @@ export default withPayload({
         async redirects() {
             return [
                 {
-                    source: '/:path((?:admin|profile).*)',
+                    source: '/:path((?!admin\/logout)(?:admin|profile).*)',
                     destination: '/api/users/authorize?redirect=/:path*',
                     missing: [
                         {

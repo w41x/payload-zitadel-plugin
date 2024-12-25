@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server.js'
 import {DEFAULT_CONFIG, ERROR_MESSAGES, ROUTES} from './constants.js'
 import {authorize, callback, loggedOut} from './handlers/index.js'
-import {logout} from './logout.js'
+import {logout} from './hooks/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
