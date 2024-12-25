@@ -60,8 +60,12 @@ export default buildConfig({
 
             // if you want to manually control what happen after a successful login
             // state contains all URLSearchParams that were send to /authorize
-            // onSuccess: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
+            // afterLogin: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
 
+            // if you want to manually control what happen after a successful logout
+            // state contains the pathName of the route where the logout has accured
+            // afterLogout: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
+            
             // following properties are only needed if you want to authenticate clients for the API
             // if you are just using the CMS you can ignore all of them
             // in Zitadel create a new App->API->JWT
