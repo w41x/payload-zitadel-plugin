@@ -53,8 +53,8 @@ export const zitadelStrategy: ZitadelStrategy = ({
         }
 
         // in case of normal browsing
-        if (!idp_id && cookieStore.has(COOKIES.idToken)) {
-            const {payload: jwtPayload} = await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken)?.value ?? '', new TextEncoder().encode(payload.secret))
+        if (!idp_id && cookieStore.has(COOKIES.idToken.name)) {
+            const {payload: jwtPayload} = await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken.name)?.value ?? '', new TextEncoder().encode(payload.secret))
             idp_id = jwtPayload.sub
         }
 

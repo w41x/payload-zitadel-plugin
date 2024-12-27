@@ -1,4 +1,3 @@
-import process from 'node:process'
 import {ResponseCookie} from 'next/dist/compiled/@edge-runtime/cookies/index.js'
 import type {ZitadelFieldsConfig} from './types.js'
 
@@ -10,7 +9,7 @@ export const AUTHORIZE_QUERY = {
 
 export const COMPONENTS_PATH = 'payload-zitadel-plugin/components'
 
-export const COOKIE_CONFIG = {
+const COOKIE_CONFIG = {
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
@@ -18,9 +17,19 @@ export const COOKIE_CONFIG = {
 } satisfies Pick<ResponseCookie, 'httpOnly' | 'path' | 'sameSite' | 'secure'>
 
 export const COOKIES = {
-    pkce: 'zitadel_pkce_code_verifier',
-    idToken: 'zitadel_id_token',
-    logout: 'zitadel_logout'
+    pkce: {
+        name: 'zitadel_pkce_code_verifier',
+        ...COOKIE_CONFIG
+    } satisfies Omit<ResponseCookie, 'value'>,
+    idToken: {
+        name: 'zitadel_id_token',
+        ...COOKIE_CONFIG
+    } satisfies Omit<ResponseCookie, 'value'>,
+    logout: {
+        name: 'zitadel_logout',
+        value: 'true',
+        ...COOKIE_CONFIG
+    } satisfies ResponseCookie
 }
 
 export const DEFAULT_CONFIG = {

@@ -1,6 +1,6 @@
 import {SignJWT, decodeJwt} from 'jose'
 import {cookies} from 'next/headers.js'
-import {COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROLES_KEY, ROUTES} from '../constants.js'
+import {COOKIES, ENDPOINT_PATHS, ROLES_KEY, ROUTES} from '../constants.js'
 import {ZitadelCallbackHandler, ZitadelCallbackQuery, ZitadelIdToken} from '../types.js'
 import {getAuthBaseURL, getAuthSlug, getState} from '../utils/index.js'
 
@@ -30,7 +30,7 @@ export const callback: ZitadelCallbackHandler = ({
 
     const cookieStore = await cookies()
 
-    const codeVerifier = cookieStore.get(COOKIES.pkce)?.value
+    const codeVerifier = cookieStore.get(COOKIES.pkce.name)?.value
 
     if (!code) {
         return Response.json({
@@ -168,19 +168,15 @@ export const callback: ZitadelCallbackHandler = ({
 
     }
 
-    cookieStore.delete({
-        name: COOKIES.pkce,
-        ...COOKIE_CONFIG
-    })
+    cookieStore.delete(COOKIES.pkce)
 
     cookieStore.set({
-        name: COOKIES.idToken,
+        ...COOKIES.idToken,
         value: await new SignJWT(decodedIdToken)
             .setProtectedHeader({alg: 'HS256'})
             .setIssuedAt()
             .sign(new TextEncoder().encode(secret)),
-        maxAge: 900,
-        ...COOKIE_CONFIG
+        maxAge: 900
     })
 
     return afterLogin(req)

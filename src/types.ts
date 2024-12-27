@@ -1,4 +1,4 @@
-import type {AuthStrategy, Config, PayloadHandler, ServerProps} from 'payload'
+import type {AuthStrategy, Config, PayloadHandler, PayloadRequest, ServerProps} from 'payload'
 import type {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 import {translations} from './translations.js'
 
@@ -46,9 +46,13 @@ export type ZitadelCallbackQuery = Partial<{
     state: string | null,
 }>
 
-export type ZitadelCallbackState = Record<any, any> & {
-    invokedBy: 'authorize' | 'end_session'
+type ZitadelInvoker = 'authorize' | 'end_session'
+
+type ZitadelInvokedBy<InvokedBy extends ZitadelInvoker = ZitadelInvoker> = {
+    invokedBy: InvokedBy
 }
+
+export type ZitadelCallbackState = Record<any, any> & ZitadelInvokedBy
 
 export type ZitadelCallbackConfig = {
     afterLogin: PayloadHandler
@@ -105,6 +109,19 @@ type ZitadelPluginConfig =
 
 export type ZitadelPlugin = (config: ZitadelPluginConfig) => (config: Config) => Config
 
+type ZitadelAuthorizeRequestConfig = {
+    codeChallenge: string
+}
 
+
+type ZitadelRequestState =
+    (ZitadelInvokedBy<'authorize'> & ZitadelAuthorizeRequestConfig)
+    | (ZitadelInvokedBy<'end_session'> & Partial<ZitadelAuthorizeRequestConfig>)
+
+type ZitadelRequestConfig = {
+    req: PayloadRequest
+} & ZitadelBaseConfig & ZitadelRequestState
+
+export type ZitadelRequestHandler = (config: ZitadelRequestConfig) => Response
 
 

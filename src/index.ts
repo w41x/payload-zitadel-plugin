@@ -1,11 +1,11 @@
+import {cookies} from 'next/headers.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
-import {DEFAULT_CONFIG, ROUTES} from './constants.js'
-import {authorize, callback, defaultRedirect, endSession} from './handlers/index.js'
-import {logout} from './hooks/index.js'
+import {COOKIES, DEFAULT_CONFIG, ROUTES} from './constants.js'
+import {authorize, callback, endSession} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
-import {getAuthSlug} from './utils/index.js'
+import {defaultRedirect, getAuthSlug} from './utils/index.js'
 
 export const zitadelPlugin: ZitadelPlugin = ({
                                                  issuerURL,
@@ -69,7 +69,7 @@ export const zitadelPlugin: ZitadelPlugin = ({
                         ]
                     },
                     hooks: {
-                        afterLogout: [logout]
+                        afterLogout: [async () => (await cookies()).set(COOKIES.logout)]
                     },
                     endpoints: [
                         {
