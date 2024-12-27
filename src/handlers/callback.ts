@@ -1,8 +1,8 @@
 import {SignJWT, decodeJwt} from 'jose'
 import {cookies} from 'next/headers.js'
 import {COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROLES_KEY, ROUTES} from '../constants.js'
-import {ZitadelCallbackHandler, ZitadelCallbackQuery, ZitadelCallbackState, ZitadelIdToken} from '../types.js'
-import {getAuthBaseURL, getAuthSlug} from '../utils.js'
+import {ZitadelCallbackHandler, ZitadelCallbackQuery, ZitadelIdToken} from '../types.js'
+import {getAuthBaseURL, getAuthSlug, getState} from '../utils/index.js'
 
 export const callback: ZitadelCallbackHandler = ({
                                                      issuerURL,
@@ -14,13 +14,13 @@ export const callback: ZitadelCallbackHandler = ({
 
     console.log('callback handler was called!')
 
-    const {payload, searchParams} = req
+    const {payload, query} = req
 
     const {config, secret} = payload
 
-    const {code, state: encodedState} = searchParams as ZitadelCallbackQuery
+    const {code} = query as ZitadelCallbackQuery
 
-    const state = new URLSearchParams(atob(encodedState ?? '')) as ZitadelCallbackState
+    const state = getState(req)
 
     console.log('retrieved callback state:', JSON.stringify(state))
 

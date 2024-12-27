@@ -2,9 +2,9 @@ import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
 import {AUTHORIZE_QUERY, COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROUTES} from '../constants.js'
 import {ZitadelBaseHandler} from '../types.js'
-import {getAuthBaseURL} from '../utils.js'
+import {createState, getAuthBaseURL} from '../utils/index.js'
 
-export const authorize: ZitadelBaseHandler = ({issuerURL, clientId}) => async ({payload: {config}, searchParams}) => {
+export const authorize: ZitadelBaseHandler = ({issuerURL, clientId}) => async (req) => {
 
     console.log('authorize handler was called!')
 
@@ -23,8 +23,8 @@ export const authorize: ZitadelBaseHandler = ({issuerURL, clientId}) => async ({
 
     return NextResponse.redirect(`${issuerURL}${ENDPOINT_PATHS.authorize}?${new URLSearchParams({
         client_id: clientId,
-        redirect_uri: getAuthBaseURL(config) + ROUTES.callback,
-        state: btoa(searchParams.toString()),
+        redirect_uri: getAuthBaseURL(req.payload.config) + ROUTES.callback,
+        state: createState(req, 'authorize'),
         code_challenge,
         ...AUTHORIZE_QUERY
     })}`)

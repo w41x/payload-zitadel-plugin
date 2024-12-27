@@ -46,10 +46,9 @@ export type ZitadelCallbackQuery = Partial<{
     state: string | null,
 }>
 
-export type ZitadelCallbackState = Partial<{
-    redirect: string,
+export type ZitadelCallbackState = Record<any, any> & {
     invokedBy: 'authorize' | 'end_session'
-}>
+}
 
 export type ZitadelCallbackConfig = {
     afterLogin: PayloadHandler

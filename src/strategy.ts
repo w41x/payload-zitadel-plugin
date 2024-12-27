@@ -3,7 +3,7 @@ import {cookies} from 'next/headers.js'
 import {TypeWithID} from 'payload'
 import {COOKIES, ENDPOINT_PATHS} from './constants.js'
 import type {ZitadelIdToken, ZitadelStrategy} from './types.js'
-import {getAuthSlug} from './utils.js'
+import {getAuthSlug} from './utils/index.js'
 
 export const zitadelStrategy: ZitadelStrategy = ({
                                                      strategyName,

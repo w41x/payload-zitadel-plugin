@@ -2,9 +2,9 @@ import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
 import {COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROUTES} from '../constants.js'
 import {ZitadelBaseHandler} from '../types.js'
-import {getAuthBaseURL} from '../utils.js'
+import {createState, getAuthBaseURL} from '../utils/index.js'
 
-export const endSession: ZitadelBaseHandler = ({issuerURL, clientId}) => async ({payload: {config}, searchParams}) => {
+export const endSession: ZitadelBaseHandler = ({issuerURL, clientId}) => async (req) => {
 
     console.log('end_session handler was called!')
 
@@ -38,13 +38,10 @@ export const endSession: ZitadelBaseHandler = ({issuerURL, clientId}) => async (
         ...COOKIE_CONFIG
     })
 
-    const state = new URLSearchParams(searchParams)
-    state.append('invokedBy', 'end_session')
-
     const endSessionRequest = `${issuerURL}${ENDPOINT_PATHS.end_session}?${new URLSearchParams({
         client_id: clientId,
-        post_logout_redirect_uri: getAuthBaseURL(config) + ROUTES.end_session,
-        state: btoa(searchParams.toString())
+        post_logout_redirect_uri: getAuthBaseURL(req.payload.config) + ROUTES.end_session,
+        state: createState(req, 'end_session')
     })}`
 
     console.log('endSessionRequest: ', endSessionRequest)

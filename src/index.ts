@@ -5,7 +5,7 @@ import {logout} from './hooks/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
-import {getAuthSlug} from './utils.js'
+import {getAuthSlug} from './utils/index.js'
 
 export const zitadelPlugin: ZitadelPlugin = ({
                                                  issuerURL,
