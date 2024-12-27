@@ -1,19 +1,17 @@
-import {NextResponse} from 'next/server.js'
+import {cookies} from 'next/headers.js'
 import {CollectionAfterLogoutHook} from 'payload'
-import {ROUTES, ENDPOINT_PATHS} from '../constants.js'
-import {PayloadConfigWithZitadel} from '../types.js'
+import {COOKIES, COOKIE_CONFIG} from '../constants.js'
 
-export const logout: CollectionAfterLogoutHook = async ({req: {payload: {config}}}) => {
+export const logout: CollectionAfterLogoutHook = async () => {
 
-    const {admin: {custom: {zitadel: {issuerURL, clientId, authBaseURL}}}} = config as PayloadConfigWithZitadel
+    console.log('afterLogout hook was called!')
 
-    const endSessionRequest = `${issuerURL}${ENDPOINT_PATHS.end_session}?${new URLSearchParams({
-        client_id: clientId,
-        post_logout_redirect_uri: authBaseURL + ROUTES.logged_out
-    })}`
+    const cookieStore = await cookies()
 
-    console.log('endSessionRequest: ', endSessionRequest)
-
-    return NextResponse.redirect(endSessionRequest)
+    cookieStore.set({
+        name: COOKIES.logout,
+        value: 'true',
+        ...COOKIE_CONFIG
+    })
 
 }

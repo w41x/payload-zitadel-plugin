@@ -1,12 +1,12 @@
 import {cookies} from 'next/headers.js'
 import {NextResponse} from 'next/server.js'
-import type {PayloadHandler} from 'payload'
 import {AUTHORIZE_QUERY, COOKIE_CONFIG, COOKIES, ENDPOINT_PATHS, ROUTES} from '../constants.js'
-import type {PayloadConfigWithZitadel} from '../types.js'
+import {ZitadelBaseHandler} from '../types.js'
+import {getAuthBaseURL} from '../utils.js'
 
-export const authorize: PayloadHandler = async ({searchParams, payload: {config}}) => {
+export const authorize: ZitadelBaseHandler = ({issuerURL, clientId}) => async ({payload: {config}, searchParams}) => {
 
-    const {admin: {custom: {zitadel: {issuerURL, clientId, authBaseURL}}}} = config as PayloadConfigWithZitadel
+    console.log('authorize handler was called!')
 
     const code_verifier = Buffer.from(crypto.getRandomValues(new Uint8Array(24))).toString('base64url')
 
@@ -23,7 +23,7 @@ export const authorize: PayloadHandler = async ({searchParams, payload: {config}
 
     return NextResponse.redirect(`${issuerURL}${ENDPOINT_PATHS.authorize}?${new URLSearchParams({
         client_id: clientId,
-        redirect_uri: authBaseURL + ROUTES.callback,
+        redirect_uri: getAuthBaseURL(config) + ROUTES.callback,
         state: btoa(searchParams.toString()),
         code_challenge,
         ...AUTHORIZE_QUERY

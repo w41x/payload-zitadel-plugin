@@ -20,7 +20,7 @@ export const COOKIE_CONFIG = {
 export const COOKIES = {
     pkce: 'zitadel_pkce_code_verifier',
     idToken: 'zitadel_id_token',
-    state: 'zitadel_state'
+    logout: 'zitadel_logout'
 }
 
 export const DEFAULT_CONFIG = {
@@ -70,20 +70,11 @@ export const ENDPOINT_PATHS = {
     end_session: '/oidc/v1/end_session'
 }
 
-export const ERROR_MESSAGES = {
-    issuerURL: 'ZITADEL-PLUGIN: ISSUER-URL IS EMPTY',
-    clientId: 'ZITADEL-PLUGIN: CLIENT-ID IS EMPTY',
-    apiClientId: 'ZITADEL-PLUGIN: API ENABLED, BUT API-CLIENT-ID IS EMPTY',
-    apiKeyId: 'ZITADEL-PLUGIN: API ENABLED, BUT API-KEY-ID IS EMPTY',
-    apiKey: 'ZITADEL-PLUGIN: API ENABLED, BUT API-KEY IS EMPTY'
-}
-
 export const ROLES_KEY = 'urn:zitadel:iam:org:project:roles'
 
 export const ROUTES = {
     authorize: '/authorize',
     callback: '/callback',
-    redirect: '/redirect',
-    logged_out: '/logged_out'
+    end_session: '/end_session'
 }
 

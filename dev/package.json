@@ -48,7 +48,7 @@
     "@payloadcms/richtext-lexical": "^3.11.0",
     "@payloadcms/translations": "^3.11.0",
     "@payloadcms/ui": "^3.11.0",
-    "next": "^15.1.2",
+    "next": "^15.1.3",
     "payload": "^3.11.0",
     "payload-zitadel-plugin": "file:..",
     "react": "^19.0.0",

@@ -12,9 +12,21 @@ export default withPayload({
             ]
         },
 
-        // optional: enable auto-redirect to Zitadel login page if not logged in
         async redirects() {
             return [
+                // for proper logout
+                {
+                    source: '/:path',
+                    destination: '/api/users/end_session?redirect=/:path*',
+                    has: [
+                        {
+                            type: 'cookie',
+                            key: 'zitadel_logout'
+                        }
+                    ],
+                    permanent: false
+                },
+                // optional: enable auto-redirect to Zitadel login page if not logged in
                 {
                     source: '/:path((?!admin\/logout)(?:admin|profile).*)',
                     destination: '/api/users/authorize?redirect=/:path*',

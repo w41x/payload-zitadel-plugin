@@ -1,3 +1,4 @@
 export {authorize} from './authorize.js'
 export {callback} from './callback.js'
-export {loggedOut} from './loggedOut.js'
+export {endSession} from './endSession.js'
+export {defaultRedirect} from './defaultRedirect.js'

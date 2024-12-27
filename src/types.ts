@@ -1,11 +1,4 @@
-import type {NextResponse} from 'next/server.js'
-import type {
-    AuthStrategy,
-    Config,
-    PayloadHandler,
-    SanitizedConfig,
-    ServerProps
-} from 'payload'
+import type {AuthStrategy, Config, PayloadHandler, ServerProps} from 'payload'
 import type {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 import {translations} from './translations.js'
 
@@ -41,61 +34,78 @@ export type ZitadelFieldsConfig = {
 
 type ZitadelBaseConfig = {
     issuerURL: string
-    authSlug: string
-    fieldsConfig: ZitadelFieldsConfig
-}
-
-type ZitadelClientConfig = {
     clientId: string
 }
 
-export type ZitadelCallbackQuery = {
-    code?: string | null
-    state?: string | null
+type ZitadelUserConfig = {
+    fields: ZitadelFieldsConfig
 }
 
-export type PayloadConfigWithZitadel = (Config | SanitizedConfig) & {
-    admin: {
-        custom: {
-            zitadel: ZitadelBaseConfig & ZitadelClientConfig & {
-                authBaseURL: string
-            }
-        }
-    }
+export type ZitadelCallbackQuery = Partial<{
+    code: string | null,
+    state: string | null,
+}>
+
+export type ZitadelCallbackState = Partial<{
+    redirect: string,
+    invokedBy: 'authorize' | 'end_session'
+}>
+
+export type ZitadelCallbackConfig = {
+    afterLogin: PayloadHandler
+    afterLogout: PayloadHandler
 }
 
-export type ZitadelStateHandler = (state: URLSearchParams) => NextResponse
+export type ZitadelBaseHandler<ConfigExtension = {}> = (config: ZitadelBaseConfig & ConfigExtension) => PayloadHandler
 
-export type ZitadelCallbackHandler = (stateHandler: ZitadelStateHandler) => PayloadHandler
+export type ZitadelCallbackHandler = ZitadelBaseHandler<ZitadelUserConfig & ZitadelCallbackConfig>
 
 type ZitadelAPIConfig = {
-    enableAPI: true
-    apiClientId: string
-    apiKeyId: string
-    apiKey: string
+    clientId: string
+    key: string
+    keyId: string
 }
 
-type ZitadelStrategyConfig = { strategyName: string } & ZitadelBaseConfig & (ZitadelAPIConfig | {
-    enableAPI?: undefined
-} & Partial<ZitadelAPIConfig>)
+type ZitadelStrategyConfig = {
+    strategyName: string
+    api: ZitadelAPIConfig | false
+}
 
-export type ZitadelStrategy = (config: ZitadelStrategyConfig) => AuthStrategy
+export type ZitadelStrategy = (config: Omit<ZitadelBaseConfig, 'clientId'> & ZitadelUserConfig & ZitadelStrategyConfig) => AuthStrategy
 
-export type ZitadelPlugin = (config: Partial<{
-    afterLogin: ZitadelStateHandler
-    afterLogout: ZitadelStateHandler
-    disableAvatar: true
-    disableDefaultLoginButton: true
-    label: string
-}> & Partial<ZitadelClientConfig> & Partial<ZitadelStrategyConfig>) => (config: Config) => Config
+type ZitadelAvatarConfig = {
+    disable: true
+}
 
 export type ZitadelAvatarProps = {
     imageFieldName: string
 }
 
-export type ZitadelLoginButtonProps = ServerProps & {
-    authorizeURL: string
-    i18n: I18nClient<typeof translations.en, NestedKeysStripped<typeof translations.en>>
+type ZitadelLoginButtonConfig = {
+    disable: true
     label: string
 }
+
+export type ZitadelLoginButtonProps = ServerProps & Omit<ZitadelLoginButtonConfig, 'disable'> & {
+    i18n: I18nClient<typeof translations.en, NestedKeysStripped<typeof translations.en>>
+}
+
+type ZitadelComponentsConfig = {
+    avatar: ZitadelAvatarConfig
+    loginButton: ZitadelLoginButtonConfig
+}
+
+type ZitadelPluginConfig =
+    ZitadelBaseConfig
+    & Partial<ZitadelUserConfig>
+    & Partial<ZitadelStrategyConfig>
+    & Partial<{
+    callbacks: Partial<ZitadelCallbackConfig>
+    components: Partial<ZitadelComponentsConfig>
+}>
+
+export type ZitadelPlugin = (config: ZitadelPluginConfig) => (config: Config) => Config
+
+
+
 
