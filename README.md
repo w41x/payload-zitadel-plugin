@@ -33,7 +33,9 @@ export default buildConfig({
             // URL of your Zitadel instance
             issuerUrl: process.env.ZITADEL_URL ?? '',
 
-            // in Zitadel create a new App->Web->PKCE, then copy the Client ID
+            // in Zitadel create a new App->Web->PKCE in your project, then copy the Client ID
+            // DO NOT FORGET to add '{http://localhost with development mode on or https://your-domain.tld}/api/users/callback'
+            // to the allowed redirect URIs and ALSO to the post logout redirect URIs
             clientId: process.env.ZITADEL_CLIENT_ID ?? '',
 
             // change field names, field labels and alse hide them if wanted
@@ -73,9 +75,9 @@ export default buildConfig({
             // if you want to manually control what happen after a successful logout
             // afterLogout: (req) => NextResponse.redirect('...')
 
-            // following properties are only needed if you want to authenticate clients for the API
-            // if you are just using the CMS you can ignore all of them
-            // in Zitadel create a new App->API->JWT
+            // following properties are only needed if you want to authenticate clients (e.g. a mobile app) for the API
+            // if the users are just visit the CMS via a browser you can ignore all of them
+            // otherwise create in Zitadel a new App->API->JWT and copy the Client ID, Key ID and the Key itself
             /* 
             api: {
                 clientId: process.env.ZITADEL_API_CLIENT_ID ?? ''
