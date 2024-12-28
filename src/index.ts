@@ -1,11 +1,11 @@
 import {cookies} from 'next/headers.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
 import {COOKIES, DEFAULT_CONFIG, ROUTES} from './constants.js'
-import {authorize, callback, endSession} from './handlers/index.js'
+import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
-import {defaultRedirect, getAuthSlug} from './utils/index.js'
+import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
 
 export const zitadelPlugin: ZitadelPlugin = ({
                                                  issuerURL,
@@ -94,10 +94,7 @@ export const zitadelPlugin: ZitadelPlugin = ({
                         {
                             path: ROUTES.end_session,
                             method: 'get',
-                            handler: endSession({
-                                issuerURL,
-                                clientId
-                            })
+                            handler: (req) => requestRedirect({req, issuerURL, clientId, invokedBy: 'end_session'})
                         }
                     ],
                     fields: [

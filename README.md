@@ -31,13 +31,10 @@ export default buildConfig({
     plugins: [
         zitadelPlugin({
             // URL of your Zitadel instance
-            issuerUrl: process.env.ZITADEL_URL,
+            issuerUrl: process.env.ZITADEL_URL ?? '',
 
             // in Zitadel create a new App->Web->PKCE, then copy the Client ID
-            clientId: process.env.ZITADEL_CLIENT_ID,
-
-            // interpolation text for the Login Button - "sign in with ..."
-            label: 'Zitadel',
+            clientId: process.env.ZITADEL_CLIENT_ID ?? '',
 
             // change field names, field labels and alse hide them if wanted
             /* 
@@ -52,27 +49,40 @@ export default buildConfig({
             // set the name of the CustomStrategy in PayloadCMS - usually not necessary
             // strategyName: 'zitadel'
 
-            // set to true if you do not want to use the Zitadel Profile Picture as the Avatar
-            // disableAvatar: true
+            /* 
+            avatar: {
+                // set to true if you do not want to use the Zitadel Profile Picture as the Avatar
+                disable: true
+            }
+            */
 
-            // set to true if you want to use your own custom login button
-            // disableDefaultLoginButton: true
+
+            /* 
+            loginButton: {
+                // set to true if you want to use your own custom login button
+                disable: true,
+                
+                // interpolation text for the Login Button - "sign in with ..."
+                label: 'Zitadel'
+            }
+             */
 
             // if you want to manually control what happen after a successful login
-            // state contains all URLSearchParams that were send to /authorize
-            // afterLogin: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
+            // afterLogin: (req) => NextResponse.redirect('...')
 
             // if you want to manually control what happen after a successful logout
-            // state contains the pathName of the route where the logout has accured
-            // afterLogout: (state) => NextResponse.redirect([serverURL, state.get('redirect')].join(''))
-            
+            // afterLogout: (req) => NextResponse.redirect('...')
+
             // following properties are only needed if you want to authenticate clients for the API
             // if you are just using the CMS you can ignore all of them
             // in Zitadel create a new App->API->JWT
-            // enableAPI: true,
-            // apiClientId: process.env.ZITADEL_API_CLIENT_ID,
-            // apiKeyId: process.env.ZITADEL_API_KEY_ID,
-            // apiKey: process.env.ZITADEL_API_KEY
+            /* 
+            api: {
+                clientId: process.env.ZITADEL_API_CLIENT_ID ?? ''
+                keyId: process.env.ZITADEL_API_KEY_ID ?? ''
+                key: process.env.ZITADEL_API_KEY ?? ''
+            }
+             */
         })
     ],
     ...
@@ -140,16 +150,32 @@ const nextConfig = {
         ]
     },
 
-    // optional: enable auto-redirect to Zitadel login page if not logged in
     async redirects() {
         return [
+            // for proper logout
             {
-                source: '/:path((?:admin|profile).*)',
+                source: '/:path((?!api).*)',
+                destination: '/api/users/end_session?redirect=/:path*',
+                has: [
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_logout'
+                    }
+                ],
+                permanent: false
+            },
+            // optional: enable auto-redirect to Zitadel login page if not logged in
+            {
+                source: '/:path((?!admin\/logout)(?:admin|profile).*)',
                 destination: '/api/users/authorize?redirect=/:path*',
                 missing: [
                     {
                         type: 'cookie',
                         key: 'zitadel_id_token'
+                    },
+                    {
+                        type: 'cookie',
+                        key: 'zitadel_logout'
                     }
                 ],
                 permanent: false

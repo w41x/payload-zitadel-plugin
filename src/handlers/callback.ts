@@ -12,8 +12,6 @@ export const callback: ZitadelCallbackHandler = ({
                                                      afterLogout
                                                  }) => async (req) => {
 
-    console.log('callback handler was called!')
-
     const {payload, query} = req
 
     const {config, secret} = payload
@@ -22,13 +20,17 @@ export const callback: ZitadelCallbackHandler = ({
 
     const state = getState(req)
 
-    console.log('retrieved callback state:', JSON.stringify(state))
-
-    if (state.invokedBy == 'end_session') {
-        return afterLogout(req)
-    }
+    console.log('callback with state:', JSON.stringify(state))
 
     const cookieStore = await cookies()
+
+    if (state.invokedBy == 'end_session') {
+
+        [COOKIES.logout, COOKIES.idToken].forEach(cookie => cookieStore.delete(cookie))
+
+        return afterLogout(req)
+
+    }
 
     const codeVerifier = cookieStore.get(COOKIES.pkce.name)?.value
 

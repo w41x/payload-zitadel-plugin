@@ -16,7 +16,7 @@ export default withPayload({
             return [
                 // for proper logout
                 {
-                    source: '/:path',
+                    source: '/:path((?!api).*)',
                     destination: '/api/users/end_session?redirect=/:path*',
                     has: [
                         {
@@ -34,6 +34,10 @@ export default withPayload({
                         {
                             type: 'cookie',
                             key: 'zitadel_id_token'
+                        },
+                        {
+                            type: 'cookie',
+                            key: 'zitadel_logout'
                         }
                     ],
                     permanent: false
