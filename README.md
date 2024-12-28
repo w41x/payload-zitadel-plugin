@@ -69,10 +69,10 @@ export default buildConfig({
             }
              */
 
-            // if you want to manually control what happen after a successful login
+            // if you want to manually control what happens after a successful login
             // afterLogin: (req) => NextResponse.redirect('...')
 
-            // if you want to manually control what happen after a successful logout
+            // if you want to manually control what happens after a successful logout
             // afterLogout: (req) => NextResponse.redirect('...')
 
             // following properties are only needed if you want to authenticate clients (e.g. a mobile app) for the API
