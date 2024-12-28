@@ -9,7 +9,7 @@ export const endSession: ZitadelBaseHandler = ({issuerURL, clientId}) => async (
 
     const cookieStore = await cookies()
 
-    if (cookieStore.get(COOKIES.logout.name)?.value == COOKIES.logout.value) {
+    if (cookieStore.get(COOKIES.logout.name)?.value !== COOKIES.logout.value) {
         return Response.json({
             status: 'error',
             message: 'logout cookie not properly set or not found'
