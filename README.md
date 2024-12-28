@@ -76,7 +76,7 @@ export default buildConfig({
             // afterLogout: (req) => NextResponse.redirect('...')
 
             // following properties are only needed if you want to authenticate clients (e.g. a mobile app) for the API
-            // if the users are just visit the CMS via a browser you can ignore all of them
+            // if the users are just visiting the CMS via a browser you can ignore all of them
             // otherwise create in Zitadel a new App->API->JWT and copy the Client ID, Key ID and the Key itself
             /* 
             api: {
