@@ -12,7 +12,7 @@ export const requestRedirect: ZitadelRequestHandler = ({req, issuerURL, clientId
 
     const redirectURL = `${issuerURL}${ENDPOINT_PATHS[invokedBy]}?${new URLSearchParams({
         client_id: clientId,
-        [`${invokedBy == 'authorize' ? '' : 'post_logout_'}redirect_uri`]: getAuthBaseURL(req.payload.config) + ROUTES[invokedBy == 'authorize' ? 'callback' : 'end_session'],
+        [`${invokedBy == 'authorize' ? '' : 'post_logout_'}redirect_uri`]: getAuthBaseURL(req.payload.config) + ROUTES.callback,
         state: createState(req, invokedBy),
         ...invokedBy == 'authorize' ? {
             code_challenge: codeChallenge,
