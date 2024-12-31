@@ -10,7 +10,7 @@ Thus, the user collection in PayloadCMS becomes just a shadow of the information
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.4.1
+pnpm add payload-zitadel-plugin@0.4.2
 ```
 
 ## Configuration
@@ -50,7 +50,7 @@ export default buildConfig({
                     label: 'some custom label'
                 }
             }
-             */
+            */
 
             // set the name of the CustomStrategy in PayloadCMS - usually not necessary
             // strategyName: 'zitadel'
@@ -71,7 +71,7 @@ export default buildConfig({
                 // interpolation text for the Login Button - "sign in with ..."
                 label: 'Zitadel'
             }
-             */
+            */
 
             // if you want to manually control what happens after a successful login
             // afterLogin: (req) => NextResponse.redirect('...')
