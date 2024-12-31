@@ -90,7 +90,7 @@ export default buildConfig({
                 keyId: '123456789012345678'
                 key: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
             }
-             */
+            */
         })
     ],
     ...
@@ -135,10 +135,10 @@ export default withPayload(nextConfig)
 If you want to use the Zitadel profile picture as the avatar in PayloadCMS,
 you have to manually add the asset URL to the Next.js config file.
 
+For a proper logout you have to add the `end_session` redirect.
+
 Also, if you want to automatically redirect to Zitadel without asking the user to click on the login button,
 you have to add the redirect manually to the Next.js config file.
-
-For a proper logout you also have to add the `end_session` redirect.
 
 #### next.config.js
 
