@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/payload-zitadel-plugin.png)](https://npmjs.org/package/payload-zitadel-plugin)
 
-plugin for [Payload CMS](https://payloadcms.com) (v3), which enables authentication via Zitadel IdP.
+a plugin for [Payload CMS](https://payloadcms.com) (v3), which enables authentication via Zitadel IdP
 
 The default use case is to fully replace PayloadCMS Auth with Zitadel.
 Thus, the user collection in PayloadCMS becomes just a shadow of the information in Zitadel.
@@ -15,7 +15,11 @@ pnpm add payload-zitadel-plugin@0.4.1
 
 ## Configuration
 
-Initialize the plugin in Payload Config File. Change the parameters to connect to your Zitadel Instance.
+Initialize the plugin in the Payload config file. Change the parameters to connect to your Zitadel instance.
+
+The cleanest way to use this plugin is just to set the `ZITADEL_URL` and `ZITADEL_CLIENT_ID` environment variables,
+set up the `next.config.ts` as described down below and then add `zitadelPlugin()` without further configuration to the
+plugin list.
 
 #### payload.config.ts
 
@@ -29,14 +33,16 @@ export default buildConfig({
     plugins: [
         zitadelPlugin({
             // URL of your Zitadel instance
-            issuerUrl: process.env.ZITADEL_URL ?? '',
+            // if not provided, it will look for the ZITADEL_URL environment variable
+            // issuerUrl: 'https://idp.zitadel.url',
 
             // in Zitadel create a new App->Web->PKCE in your project, then copy the Client ID
             // DO NOT FORGET to add '{http://localhost with development mode on or https://your-domain.tld}/api/users/callback'
             // to the allowed redirect URIs and ALSO to the post logout redirect URIs
-            clientId: process.env.ZITADEL_CLIENT_ID ?? '',
+            // if not provided, it will look for the ZITADEL_CLIENT_ID environment variable
+            // clientId: '123456789012345678@project_name',
 
-            // change field names, field labels and alse hide them if wanted
+            // change field names, field labels and also hide them if wanted
             /* 
             fieldConfig: {
                 image: {
@@ -76,11 +82,13 @@ export default buildConfig({
             // following properties are only needed if you want to authenticate clients (e.g. a mobile app) for the API
             // if the users are just visiting the CMS via a browser you can ignore all of them
             // otherwise create in Zitadel a new App->API->JWT and copy the Client ID, Key ID and the Key itself
+            // if not provided it will look for the ZITADEL_API_CLIENT_ID environment variable
+            // if ZITADEL_API_CLIENT_ID was found it will look for ZITADEL_API_KEY_ID and ZITADEL_API_KEY
             /* 
             api: {
-                clientId: process.env.ZITADEL_API_CLIENT_ID ?? ''
-                keyId: process.env.ZITADEL_API_KEY_ID ?? ''
-                key: process.env.ZITADEL_API_KEY ?? ''
+                clientId: '123456789123456789@project_name'
+                keyId: '123456789012345678'
+                key: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
             }
              */
         })
@@ -127,8 +135,10 @@ export default withPayload(nextConfig)
 If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`),
 you have to manually add the asset URL to the Next.js config file.
 
-Also if you want to automatically redirect to Zitadel without asking the user to click on the login button,
+Also, if you want to automatically redirect to Zitadel without asking the user to click on the login button,
 you have to add the redirect manually to the Next.js config file.
+
+For a proper logout you also have to add the `end_session` redirect.
 
 #### next.config.js
 
@@ -142,9 +152,9 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                //protocol: new URL(process.env.ZITADEL_URL).protocol,
+                // protocol: new URL(process.env.ZITADEL_URL).protocol,
                 hostname: new URL(process.env.ZITADEL_URL).hostname,
-                //port: new URL(process.env.ZITADEL_URL).port,
+                // port: new URL(process.env.ZITADEL_URL).port,
                 pathname: '/assets/**'
             }
         ]
@@ -154,6 +164,8 @@ const nextConfig = {
         return [
             // for proper logout
             {
+                // all paths, that do not start with 'api'
+                // it is important to ignore the Payload API routes!
                 source: '/:path((?!api).*)',
                 destination: '/api/users/end_session?redirect=/:path*',
                 has: [
@@ -166,16 +178,14 @@ const nextConfig = {
             },
             // optional: enable auto-redirect to Zitadel login page if not logged in
             {
-                source: '/:path((?!admin\/logout)(?:admin|profile).*)',
+                // all paths that start with 'admin' or 'profile'
+                // you could replace 'profile' with 'app' or some other protected route
+                source: '/:path((?:admin|profile).*)',
                 destination: '/api/users/authorize?redirect=/:path*',
                 missing: [
                     {
                         type: 'cookie',
                         key: 'zitadel_id_token'
-                    },
-                    {
-                        type: 'cookie',
-                        key: 'zitadel_logout'
                     }
                 ],
                 permanent: false

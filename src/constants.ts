@@ -79,6 +79,19 @@ export const ENDPOINT_PATHS = {
     end_session: '/oidc/v1/end_session'
 }
 
+export const ERRORS = {
+    issuerURL: new Error('ZITADEL-PLUGIN | Error during initialization of the issuer URL: ' +
+        'issuerURL in plugin configuration not provided or empty and ZITADEL_URL environment variable also not found or empty'),
+    clientId: new Error('ZITADEL-PLUGIN | Error during initialization of the client Id: ' +
+        'clientId in plugin configuration not provided or empty and ZITADEL_CLIENT_ID environment variable also not found or empty'),
+    apiKeyId: new Error('ZITADEL-PLUGIN | Error during initialization of the API credentials: ' +
+        'API is enabled (api credentials in plugin configuration not provided, but the ZITADEL_API_CLIENT_ID environment variable was found), ' +
+        'but ZITADEL_API_KEY_ID environment variable was not found or is empty'),
+    apiKey: new Error('ZITADEL-PLUGIN | Error during initialization of the API credentials: ' +
+        'API is enabled (api credentials in plugin configuration not provided, but the ZITADEL_API_CLIENT_ID environment variable was found), ' +
+        'but ZITADEL_API_KEY environment variable was not found or is empty')
+}
+
 export const ROLES_KEY = 'urn:zitadel:iam:org:project:roles'
 
 export const ROUTES = {

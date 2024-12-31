@@ -1,21 +1,51 @@
 import {cookies} from 'next/headers.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
-import {COOKIES, DEFAULT_CONFIG, ROUTES} from './constants.js'
+import {COOKIES, DEFAULT_CONFIG, ERRORS, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
 import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
 
-export const zitadelPlugin: ZitadelPlugin = ({
-                                                 issuerURL,
-                                                 clientId,
-                                                 fields,
-                                                 strategyName = DEFAULT_CONFIG.strategyName,
-                                                 api,
-                                                 callbacks,
-                                                 components
-                                             }) => {
+export const zitadelPlugin: ZitadelPlugin = (config) => {
+
+    let {
+        issuerURL = process.env.ZITADEL_URL,
+        clientId = process.env.ZITADEL_CLIENT_ID,
+        fields,
+        strategyName = DEFAULT_CONFIG.strategyName,
+        api,
+        callbacks,
+        components
+    } = config ?? {}
+
+    if (!issuerURL) {
+        throw ERRORS.issuerURL
+    }
+
+    if (!clientId) {
+        throw ERRORS.clientId
+    }
+
+    if (!api && process.env.ZITADEL_API_CLIENT_ID) {
+
+        const keyId = process.env.ZITADEL_API_KEY_ID
+        if (!keyId) {
+            throw ERRORS.apiKeyId
+        }
+
+        const key = process.env.ZITADEL_API_KEY
+        if (!key) {
+            throw ERRORS.apiKey
+        }
+
+        api = {
+            clientId: process.env.ZITADEL_API_CLIENT_ID,
+            keyId,
+            key
+        }
+
+    }
 
     const fieldsConfig = {...DEFAULT_CONFIG.fields, ...fields}
 

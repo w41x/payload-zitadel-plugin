@@ -4,9 +4,7 @@ export default withPayload({
         images: {
             remotePatterns: [
                 {
-                    //protocol: new URL(process.env.ZITADEL_URL).protocol,
                     hostname: new URL(process.env.ZITADEL_URL ?? '').hostname,
-                    //port: new URL(process.env.ZITADEL_URL).port,
                     pathname: '/assets/**'
                 }
             ]
@@ -14,7 +12,6 @@ export default withPayload({
 
         async redirects() {
             return [
-                // for proper logout
                 {
                     source: '/:path((?!api).*)',
                     destination: '/api/users/end_session?redirect=/:path*',
@@ -26,18 +23,13 @@ export default withPayload({
                     ],
                     permanent: false
                 },
-                // optional: enable auto-redirect to Zitadel login page if not logged in
                 {
-                    source: '/:path((?!admin\/logout)(?:admin|profile).*)',
+                    source: '/:path((?:admin|profile).*)',
                     destination: '/api/users/authorize?redirect=/:path*',
                     missing: [
                         {
                             type: 'cookie',
                             key: 'zitadel_id_token'
-                        },
-                        {
-                            type: 'cookie',
-                            key: 'zitadel_logout'
                         }
                     ],
                     permanent: false

@@ -99,7 +99,7 @@ type ZitadelComponentsConfig = {
 }
 
 type ZitadelPluginConfig =
-    ZitadelBaseConfig
+    Partial<ZitadelBaseConfig>
     & Partial<ZitadelUserConfig>
     & Partial<ZitadelStrategyConfig>
     & Partial<{
@@ -107,7 +107,7 @@ type ZitadelPluginConfig =
     components: Partial<ZitadelComponentsConfig>
 }>
 
-export type ZitadelPlugin = (config: ZitadelPluginConfig) => (config: Config) => Config
+export type ZitadelPlugin = (config?: ZitadelPluginConfig) => (config: Config) => Config
 
 type ZitadelAuthorizeRequestConfig = {
     codeChallenge: string
