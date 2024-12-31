@@ -20,8 +20,6 @@ export const callback: ZitadelCallbackHandler = ({
 
     const state = getState(req)
 
-    console.log('callback with state:', JSON.stringify(state))
-
     const cookieStore = await cookies()
 
     if (state.invokedBy == 'end_session') {
