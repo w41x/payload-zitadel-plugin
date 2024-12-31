@@ -132,7 +132,7 @@ export default withPayload(nextConfig)
 
 ### further configuration
 
-If you want to use the Zitadel profile picture as the avatar in PayloadCMS (`disableAvatar != true`),
+If you want to use the Zitadel profile picture as the avatar in PayloadCMS,
 you have to manually add the asset URL to the Next.js config file.
 
 Also, if you want to automatically redirect to Zitadel without asking the user to click on the login button,
