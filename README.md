@@ -116,18 +116,17 @@ or use the Next.js Config file:
 ```typescript
 import {withPayload} from '@payloadcms/next/withPayload'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+export default withPayload({
+    ...,
     env: {
         ZITADEL_URL: 'https://idp.zitadel.url',
         ZITADEL_CLIENT_ID: '123456789012345678@project_name',
         ZITADEL_API_CLIENT_ID: '123456789123456789@project_name',
         ZITADEL_API_KEY_ID: '123456789012345678',
         ZITADEL_API_KEY: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
-    }
-}
-
-export default withPayload(nextConfig)
+    },
+    ...
+})
 ```
 
 ### further configuration
@@ -140,13 +139,14 @@ For a proper logout you have to add the `end_session` redirect.
 Also, if you want to automatically redirect to Zitadel without asking the user to click on the login button,
 you have to add the redirect manually to the Next.js config file.
 
-#### next.config.js
+#### next.config.ts
 
 ```typescript
 import {withPayload} from '@payloadcms/next/withPayload'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+export default withPayload({
+    ...,
+    
     // if Avatar enabled:
     // allow loading assets like profile pictures from Zitadel
     images: {
@@ -191,11 +191,11 @@ const nextConfig = {
                 permanent: false
             }
         ]
-    }
+    },
+    
+    ...
 
-}
-
-export default withPayload(nextConfig)
+})
 ```
 
 ## For an example look in this repository at the `dev` directory!
