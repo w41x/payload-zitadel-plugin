@@ -30,7 +30,7 @@ export interface Config {
   };
   globals: {};
   globalsSelect: {};
-  locale: 'de' | 'en';
+  locale: null;
   user: User & {
     collection: 'users';
   };
