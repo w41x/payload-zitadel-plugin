@@ -24,7 +24,7 @@ plugin list.
 #### payload.config.ts
 
 ```typescript
-import {buildConfig} from 'payload/config'
+import {buildConfig} from 'payload'
 import {zitadelPlugin} from 'payload-zitadel-plugin'
 
 
@@ -146,7 +146,7 @@ import {withPayload} from '@payloadcms/next/withPayload'
 
 export default withPayload({
     ...,
-    
+
     // if Avatar enabled:
     // allow loading assets like profile pictures from Zitadel
     images: {
@@ -192,7 +192,7 @@ export default withPayload({
             }
         ]
     },
-    
+
     ...
 
 })
