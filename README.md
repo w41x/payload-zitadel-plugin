@@ -86,8 +86,8 @@ export default buildConfig({
             // if ZITADEL_API_CLIENT_ID was found it will look for ZITADEL_API_KEY_ID and ZITADEL_API_KEY
             /* 
             api: {
-                clientId: '123456789123456789@project_name'
-                keyId: '123456789012345678'
+                clientId: '123456789123456789'
+                keyId: '123456789123456789'
                 key: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
             }
             */
@@ -103,9 +103,9 @@ Optionally you could use an `.env.local` file for parameters:
 
 ```dotenv
 ZITADEL_URL=https://idp.zitadel.url
-ZITADEL_CLIENT_ID=123456789012345678@project_name
-ZITADEL_API_CLIENT_ID=123456789123456789@project_name
-ZITADEL_API_KEY_ID=123456789012345678
+ZITADEL_CLIENT_ID=123456789123456789
+ZITADEL_API_CLIENT_ID=123456789123456789
+ZITADEL_API_KEY_ID=123456789123456789
 ZITADEL_API_KEY='-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
 ```
 
@@ -120,9 +120,9 @@ export default withPayload({
     ...,
     env: {
         ZITADEL_URL: 'https://idp.zitadel.url',
-        ZITADEL_CLIENT_ID: '123456789012345678@project_name',
-        ZITADEL_API_CLIENT_ID: '123456789123456789@project_name',
-        ZITADEL_API_KEY_ID: '123456789012345678',
+        ZITADEL_CLIENT_ID: '123456789123456789',
+        ZITADEL_API_CLIENT_ID: '123456789123456789',
+        ZITADEL_API_KEY_ID: '123456789123456789',
         ZITADEL_API_KEY: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
     },
     ...
