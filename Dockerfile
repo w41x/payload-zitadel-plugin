@@ -2,6 +2,8 @@
 
 FROM node:22.13.1-alpine3.21 AS payload
 LABEL name='api build'
+# current fix for the corepack bug (https://vercel.com/guides/corepack-errors-github-actions)
+RUN npm install -g corepack@latest
 # enable corepack
 RUN corepack enable
 # set user and working directory and copy all project files
