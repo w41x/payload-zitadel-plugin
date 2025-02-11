@@ -60,7 +60,7 @@
     "typescript": "^5.7.3"
   },
   "engines": {
-    "node": "^22.14.0"
+    "node": "^23.7.0"
   },
   "packageManager": "pnpm@10.3.0",
   "private": true
