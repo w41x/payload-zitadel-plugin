@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.4.1
 
-FROM node:23.8.0-alpine3.21 AS payload
+FROM node:23.9.0-alpine3.21 AS payload
 LABEL name='api build'
 # enable corepack
 RUN corepack enable
@@ -26,7 +26,7 @@ EXPOSE 3000
 # start test environment
 CMD pnpm run dev
 
-FROM mongo:8.0.4-noble AS db
+FROM mongo:8.0.5-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
