@@ -1,6 +1,10 @@
 import {withPayload} from '@payloadcms/next/withPayload'
 
 export default withPayload({
+        devIndicators: {
+            position: 'bottom-right'
+        },
+
         images: {
             remotePatterns: [
                 {
