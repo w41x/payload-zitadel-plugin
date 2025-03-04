@@ -10,8 +10,8 @@ import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
 export const zitadelPlugin: ZitadelPlugin = (config) => {
 
     let {
-        issuerURL = process.env.ZITADEL_URL,
-        clientId = process.env.ZITADEL_CLIENT_ID,
+        issuerURL = process.env.ZITADEL_URL ?? '',
+        clientId = process.env.ZITADEL_CLIENT_ID ?? '',
         fields,
         strategyName = DEFAULT_CONFIG.strategyName,
         api,
