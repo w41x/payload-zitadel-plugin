@@ -3,7 +3,7 @@ services:
   #api development build
   payload:
     build:
-      target: payload
+      target: payload-dev
     container_name: payload.dev
     ports:
       - target: 3000
@@ -12,13 +12,25 @@ services:
         mode: host
     depends_on:
       - db
+    profiles:
+      - development
     restart: unless-stopped
-    #enabling hot reload by binding the project folder
-    volumes:
-      - type: bind
-        source: ./
-        target: /home/node/workspace
 
+  #api production test build
+  payload-prod:
+    build:
+      target: payload-prod
+    container_name: payload.prod
+    ports:
+      - target: 3000
+        published: 80
+        protocol: tcp
+        mode: host
+    depends_on:
+      - db
+    profiles:
+      - production
+    restart: unless-stopped
 
   #db development build
   db:

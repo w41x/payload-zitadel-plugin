@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin-dev",
-  "version": "0.4.17",
+  "version": "0.4.18",
   "description": "development environment for payload-zitadel-plugin",
   "license": "MIT",
   "type": "module",
@@ -39,8 +39,10 @@
   ],
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "gen:types": "payload generate:types",
-    "gen:imap": "payload generate:importmap"
+    "gen:imap": "payload generate:importmap",
+    "start": "next start"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.26.0",

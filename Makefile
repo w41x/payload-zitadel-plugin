@@ -8,4 +8,7 @@ build:
 	pnpm prepublishOnly
 
 start:
-	docker compose up
+	docker compose --profile development up
+
+production-test:
+	docker compose --profile production up

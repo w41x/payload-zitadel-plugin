@@ -19,12 +19,16 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
         components
     } = config ?? {}
 
-    if (!issuerURL) {
-        throw ERRORS.issuerURL
-    }
+    if (process.env.NEXT_PHASE == 'phase-production-build') {
+        console.log('ignoring eventually missing ZITADEL_URL or ZITADEL_CLIENT_ID variable during production build...')
+    } else {
+        if (!issuerURL) {
+            throw ERRORS.issuerURL
+        }
 
-    if (!clientId) {
-        throw ERRORS.clientId
+        if (!clientId) {
+            throw ERRORS.clientId
+        }
     }
 
     if (!api && process.env.ZITADEL_API_CLIENT_ID) {
