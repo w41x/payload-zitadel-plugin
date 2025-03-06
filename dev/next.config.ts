@@ -7,10 +7,10 @@ export default withPayload({
 
         images: {
             remotePatterns: [
-                {
-                    hostname: new URL(process.env.ZITADEL_URL ?? '').hostname,
+                ...process.env.ZITADEL_URL ? [{
+                    hostname: new URL(process.env.ZITADEL_URL).hostname,
                     pathname: '/assets/**'
-                }
+                }] : []
             ]
         },
 

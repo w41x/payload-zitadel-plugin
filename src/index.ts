@@ -6,6 +6,7 @@ import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
 import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
 import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
+import {PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER} from 'next/constants.js'
 
 export const zitadelPlugin: ZitadelPlugin = (config) => {
 
@@ -19,28 +20,26 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
         components
     } = config ?? {}
 
-    if (process.env.NEXT_PHASE == 'phase-production-build') {
-        console.log('ignoring eventually missing ZITADEL_URL or ZITADEL_CLIENT_ID variable during production build...')
-    } else {
-        if (!issuerURL) {
-            throw ERRORS.issuerURL
-        }
+    let errors = []
 
-        if (!clientId) {
-            throw ERRORS.clientId
-        }
+    if (!issuerURL) {
+        errors.push(ERRORS.issuerURL)
+    }
+
+    if (!clientId) {
+        errors.push(ERRORS.clientId)
     }
 
     if (!api && process.env.ZITADEL_API_CLIENT_ID) {
 
-        const keyId = process.env.ZITADEL_API_KEY_ID
+        const keyId = process.env.ZITADEL_API_KEY_ID ?? ''
         if (!keyId) {
-            throw ERRORS.apiKeyId
+            errors.push(ERRORS.apiKeyId)
         }
 
-        const key = process.env.ZITADEL_API_KEY
+        const key = process.env.ZITADEL_API_KEY ?? ''
         if (!key) {
-            throw ERRORS.apiKey
+            errors.push(ERRORS.apiKey)
         }
 
         api = {
@@ -49,6 +48,12 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
             key
         }
 
+    }
+
+    if (errors.length && [PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER].includes(process.env.NEXT_PHASE ?? '')) {
+        console.warn('The following errors accured during initialization of the payload zitadel plugin:')
+        for (const error of errors)
+            console.warn(error)
     }
 
     const fieldsConfig = {...DEFAULT_CONFIG.fields, ...fields}
