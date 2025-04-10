@@ -10,13 +10,13 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4.2.2
+      - uses: pnpm/action-setup@v4.1.0
         name: Install pnpm
         with:
-          version: 10.7.1
+          version: 10.8.0
           run_install: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4.3.0
         with:
           node-version: 23.11.0
           cache: pnpm
