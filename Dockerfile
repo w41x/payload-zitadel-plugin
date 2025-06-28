@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.7-labs
 
-FROM node:24.2.0-alpine3.22 AS node-base
+FROM node:24.3.0-alpine3.22 AS node-base
 LABEL name='node base build'
 # enable corepack
 RUN corepack enable
