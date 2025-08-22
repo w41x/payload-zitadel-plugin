@@ -45,12 +45,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.53.0",
-    "@payloadcms/next": "^3.53.0",
-    "@payloadcms/richtext-lexical": "^3.53.0",
-    "@payloadcms/ui": "^3.53.0",
+    "@payloadcms/db-mongodb": "^3.54.0-canary.0",
+    "@payloadcms/next": "^3.54.0-canary.0",
+    "@payloadcms/richtext-lexical": "^3.54.0-canary.0",
+    "@payloadcms/ui": "^3.54.0-canary.0",
     "next": "^15.5.0",
-    "payload": "^3.53.0",
+    "payload": "^3.54.0-canary.0",
     "payload-zitadel-plugin": "file:..",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
