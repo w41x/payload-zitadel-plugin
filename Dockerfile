@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.7-labs
 
-FROM node:24.5.0-alpine3.22 AS node-base
+FROM node:24.6.0-alpine3.22 AS node-base
 LABEL name='node base build'
 # enable corepack
 RUN corepack enable
@@ -43,7 +43,7 @@ LABEL name='plugin test production build'
 ENV NODE_ENV production
 CMD pnpm build && pnpm start
 
-FROM mongo:8.0.12-noble AS db
+FROM mongo:8.0.13-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
