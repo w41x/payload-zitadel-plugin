@@ -15,6 +15,7 @@ export default buildConfig({
     db: mongooseAdapter({url: 'mongodb://root:secret@db:27017'}),
     editor: lexicalEditor(),
     admin: {
+        autoRefresh: true,
         components: {
             beforeDashboard: [
                 UserInfoClientComponent,
