@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.7-labs
+# syntax = docker/dockerfile:1.18.0
 
 FROM node:24.8.0-alpine3.22 AS node-base
 LABEL name='node base build'
@@ -43,7 +43,7 @@ LABEL name='plugin test production build'
 ENV NODE_ENV production
 CMD pnpm build && pnpm start
 
-FROM mongo:8.0.13-noble AS db
+FROM mongo:8.0.14-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
