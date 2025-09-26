@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@payloadcms/next':
         specifier: ^3.57.0
-        version: 3.57.0(@types/react@19.1.13)(graphql@16.11.0)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
+        version: 3.57.0(@types/react@19.1.14)(graphql@16.11.0)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
       '@payloadcms/translations':
         specifier: ^3.57.0
         version: 3.57.0
       '@payloadcms/ui':
         specifier: ^3.57.0
-        version: 3.57.0(@types/react@19.1.13)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
+        version: 3.57.0(@types/react@19.1.14)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
       jose:
         specifier: ^6.1.0
         version: 6.1.0
@@ -43,11 +43,11 @@ importers:
         specifier: ^24.5.2
         version: 24.5.2
       '@types/react':
-        specifier: ^19.1.13
-        version: 19.1.13
+        specifier: ^19.1.14
+        version: 19.1.14
       '@types/react-dom':
         specifier: ^19.1.9
-        version: 19.1.9(@types/react@19.1.13)
+        version: 19.1.9(@types/react@19.1.14)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -997,8 +997,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
 
-  '@types/react@19.1.13':
-    resolution: {integrity: sha512-hHkbU/eoO3EG5/MZkuFSKmYqPbSVk5byPFa3e7y/8TybHiLMACgI8seVYlicwk7H5K/rI2px9xrQp/C+AUDTiQ==}
+  '@types/react@19.1.14':
+    resolution: {integrity: sha512-ukd93VGzaNPMAUPy0gRDSC57UuQbnH9Kussp7HBjM06YFi9uZTFhOvMSO2OKqXm1rSgzOE+pVx1k1PYHGwlc8Q==}
 
   '@types/trusted-types@1.0.6':
     resolution: {integrity: sha512-230RC8sFeHoT6sSUlRO6a8cAnclO06eeiq1QDfiv2FGCLWFvvERWgwIQD4FWqD9A69BN7Lzee4OXwoMVnnsWDw==}
@@ -1076,8 +1076,8 @@ packages:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
 
-  b4a@1.7.2:
-    resolution: {integrity: sha512-DyUOdz+E8R6+sruDpQNOaV0y/dBbV6X/8ZkxrDcR0Ifc3BgKlpgG0VAtfOozA0eMtJO5GGe9FsZhueLs00pTww==}
+  b4a@1.7.3:
+    resolution: {integrity: sha512-5Q2mfq2WfGuFp3uS//0s6baOJLMoVduPYVeNmDYxu5OUA1/cBfvr2RIS7vi62LdNj/urk1hfmj867I3qt6uZ7Q==}
     peerDependencies:
       react-native-b4a: '*'
     peerDependenciesMeta:
@@ -2292,7 +2292,7 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@19.1.13)(react@19.1.1)':
+  '@emotion/react@11.14.0(@types/react@19.1.14)(react@19.1.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@emotion/babel-plugin': 11.13.5
@@ -2304,7 +2304,7 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 19.1.1
     optionalDependencies:
-      '@types/react': 19.1.13
+      '@types/react': 19.1.14
     transitivePeerDependencies:
       - supports-color
 
@@ -2761,12 +2761,12 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@payloadcms/next@3.57.0(@types/react@19.1.13)(graphql@16.11.0)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)':
+  '@payloadcms/next@3.57.0(@types/react@19.1.14)(graphql@16.11.0)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)':
     dependencies:
       '@dnd-kit/core': 6.0.8(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@payloadcms/graphql': 3.57.0(graphql@16.11.0)(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(typescript@5.9.2)
       '@payloadcms/translations': 3.57.0
-      '@payloadcms/ui': 3.57.0(@types/react@19.1.13)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
+      '@payloadcms/ui': 3.57.0(@types/react@19.1.14)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)
       busboy: 1.6.0
       dequal: 2.0.3
       file-type: 19.3.0
@@ -2792,7 +2792,7 @@ snapshots:
     dependencies:
       date-fns: 4.1.0
 
-  '@payloadcms/ui@3.57.0(@types/react@19.1.13)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)':
+  '@payloadcms/ui@3.57.0(@types/react@19.1.14)(monaco-editor@0.53.0)(next@15.5.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.77.4))(payload@3.57.0(graphql@16.11.0)(typescript@5.9.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.2)':
     dependencies:
       '@date-fns/tz': 1.2.0
       '@dnd-kit/core': 6.0.8(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -2815,7 +2815,7 @@ snapshots:
       react-datepicker: 7.6.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react-dom: 19.1.1(react@19.1.1)
       react-image-crop: 10.1.8(react@19.1.1)
-      react-select: 5.9.0(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      react-select: 5.9.0(@types/react@19.1.14)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       scheduler: 0.25.0
       sonner: 1.7.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       ts-essentials: 10.0.3(typescript@5.9.2)
@@ -2931,15 +2931,15 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
-  '@types/react-dom@19.1.9(@types/react@19.1.13)':
+  '@types/react-dom@19.1.9(@types/react@19.1.14)':
     dependencies:
-      '@types/react': 19.1.13
+      '@types/react': 19.1.14
 
-  '@types/react-transition-group@4.4.12(@types/react@19.1.13)':
+  '@types/react-transition-group@4.4.12(@types/react@19.1.14)':
     dependencies:
-      '@types/react': 19.1.13
+      '@types/react': 19.1.14
 
-  '@types/react@19.1.13':
+  '@types/react@19.1.14':
     dependencies:
       csstype: 3.1.3
 
@@ -3062,7 +3062,7 @@ snapshots:
 
   atomic-sleep@1.0.0: {}
 
-  b4a@1.7.2: {}
+  b4a@1.7.3: {}
 
   babel-plugin-macros@3.1.0:
     dependencies:
@@ -3811,19 +3811,19 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-select@5.9.0(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+  react-select@5.9.0(@types/react@19.1.14)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       '@babel/runtime': 7.28.4
       '@emotion/cache': 11.14.0
-      '@emotion/react': 11.14.0(@types/react@19.1.13)(react@19.1.1)
+      '@emotion/react': 11.14.0(@types/react@19.1.14)(react@19.1.1)
       '@floating-ui/dom': 1.7.4
-      '@types/react-transition-group': 4.4.12(@types/react@19.1.13)
+      '@types/react-transition-group': 4.4.12(@types/react@19.1.14)
       memoize-one: 6.0.0
       prop-types: 15.8.1
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
       react-transition-group: 4.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.1.13)(react@19.1.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.1.14)(react@19.1.1)
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
@@ -4034,7 +4034,7 @@ snapshots:
 
   tar-stream@3.1.7:
     dependencies:
-      b4a: 1.7.2
+      b4a: 1.7.3
       fast-fifo: 1.3.2
       streamx: 2.23.0
     transitivePeerDependencies:
@@ -4042,7 +4042,7 @@ snapshots:
 
   text-decoder@1.2.3:
     dependencies:
-      b4a: 1.7.2
+      b4a: 1.7.3
     transitivePeerDependencies:
       - react-native-b4a
 
@@ -4109,11 +4109,11 @@ snapshots:
       react: 19.1.1
       scheduler: 0.25.0
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@19.1.13)(react@19.1.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.1.14)(react@19.1.1):
     dependencies:
       react: 19.1.1
     optionalDependencies:
-      '@types/react': 19.1.13
+      '@types/react': 19.1.14
 
   utf8-byte-length@1.0.5: {}
 
