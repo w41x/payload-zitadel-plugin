@@ -43,7 +43,7 @@ LABEL name='plugin test production build'
 ENV NODE_ENV production
 CMD pnpm build && pnpm start
 
-FROM mongo:8.0.14-noble AS db
+FROM mongo:8.0.15-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
