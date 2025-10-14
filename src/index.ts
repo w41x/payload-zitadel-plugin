@@ -4,7 +4,7 @@ import {COOKIES, DEFAULT_CONFIG, ERRORS, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
-import {ZitadelAvatarProps, ZitadelPlugin} from './types.js'
+import {ZitadelAvatarProps, ZitadelJWT, ZitadelPlugin} from './types.js'
 import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
 import {PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER} from 'next/constants.js'
 
@@ -30,28 +30,38 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
         errors.push(ERRORS.clientId)
     }
 
-    if (!api && process.env.ZITADEL_API_CLIENT_ID) {
+    if (!api) {
 
-        const keyId = process.env.ZITADEL_API_KEY_ID ?? ''
-        if (!keyId) {
-            errors.push(ERRORS.apiKeyId)
-        }
+        if (process.env.ZITADEL_API_JWT) {
 
-        const key = process.env.ZITADEL_API_KEY ?? ''
-        if (!key) {
-            errors.push(ERRORS.apiKey)
-        }
+            try {
+                api = {
+                    type: 'jwt',
+                    jwt: JSON.parse(process.env.ZITADEL_API_JWT) as ZitadelJWT
+                }
+            } catch (e) {
+                errors.push(ERRORS.apiJWT)
+            }
 
-        api = {
-            clientId: process.env.ZITADEL_API_CLIENT_ID,
-            keyId,
-            key
+        } else if (process.env.ZITADEL_API_CLIENT_ID) {
+
+            const clientSecret = process.env.ZITADEL_API_CLIENT_SECRET ?? ''
+            if (!clientSecret) {
+                errors.push(ERRORS.apiClientSecret)
+            }
+
+            api = {
+                type: 'basic',
+                clientId: process.env.ZITADEL_API_CLIENT_ID,
+                clientSecret
+            }
+
         }
 
     }
 
     if (errors.length && [PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER].includes(process.env.NEXT_PHASE ?? '')) {
-        console.warn('The following errors accured during initialization of the payload zitadel plugin:')
+        console.warn('The following errors occurred during initialization of the payload zitadel plugin:')
         for (const error of errors)
             console.warn(error)
     }

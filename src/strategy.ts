@@ -1,7 +1,8 @@
+import {createPrivateKey} from 'crypto'
 import {jwtVerify, SignJWT} from 'jose'
 import {cookies} from 'next/headers.js'
 import {TypeWithID} from 'payload'
-import {COOKIES, ENDPOINT_PATHS} from './constants.js'
+import {COOKIES, ENDPOINT_PATHS, ROLES_KEY} from './constants.js'
 import type {ZitadelIdToken, ZitadelStrategy} from './types.js'
 import {getAuthSlug} from './utils/index.js'
 
@@ -16,7 +17,8 @@ export const zitadelStrategy: ZitadelStrategy = ({
 
         const authSlug = getAuthSlug(payload.config)
 
-        let idp_id
+        let idpId: string | undefined
+        let introspection
         let user: TypeWithID | null = null
 
         const cookieStore = await cookies()
@@ -28,49 +30,70 @@ export const zitadelStrategy: ZitadelStrategy = ({
                 const introspect = await fetch(issuerURL + ENDPOINT_PATHS.introspect, {
                     method: 'post',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        ...api.type == 'basic' ? {
+                            'Authorization': `Basic ${btoa(`${api.clientId}:${api.clientSecret}`)}`
+                        } : {}
                     },
                     body: new URLSearchParams({
-                        'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-                        'client_assertion': await new SignJWT()
-                            .setProtectedHeader({alg: 'RS256', kid: api.keyId})
-                            .setIssuer(api.clientId)
-                            .setAudience(issuerURL)
-                            .setSubject(api.clientId)
-                            .setIssuedAt()
-                            .setExpirationTime('1h')
-                            .sign(new TextEncoder().encode(api.key)),
-                        'token': authHeader.split(' ')[1]
+                        ...api.type == 'jwt' ? {
+                            client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+                            client_assertion: await new SignJWT()
+                                .setAudience(issuerURL)
+                                .setExpirationTime('1h')
+                                .setIssuedAt()
+                                .setIssuer(api.jwt.clientId)
+                                .setProtectedHeader({
+                                    alg: 'RS256',
+                                    kid: api.jwt.keyId
+                                })
+                                .setSubject(api.jwt.clientId)
+                                .sign(createPrivateKey(api.jwt.key))
+                        } : {},
+                        token: authHeader.split(' ')[1]
                     })
                 })
                 if (introspect.ok) {
                     const data = await introspect.json()
                     if (data?.active) {
-                        idp_id = data.sub
+                        idpId = data.sub
+                        introspection = {
+                            [fields.name.name]: data.name,
+                            [fields.roles.name]: Object.keys(data[ROLES_KEY] ?? {})
+                                .map(key => ({[fields.roleFields.name.name]: key}))
+                        }
                     }
                 }
             }
         }
 
         // in case of normal browsing
-        if (!idp_id && cookieStore.has(COOKIES.idToken.name)) {
+        if (!idpId && cookieStore.has(COOKIES.idToken.name)) {
             const {payload: jwtPayload} = await jwtVerify<ZitadelIdToken>(cookieStore.get(COOKIES.idToken.name)?.value ?? '', new TextEncoder().encode(payload.secret))
-            idp_id = jwtPayload.sub
+            idpId = jwtPayload.sub
         }
 
         // search for associated user
-        if (idp_id) {
+        if (idpId) {
             const {docs, totalDocs} = await payload.find({
                 collection: authSlug,
                 where: {
                     [fields.id.name]: {
-                        equals: idp_id
+                        equals: idpId
                     }
                 }
             })
-            if (totalDocs) {
-                user = docs[0]
-            }
+            user = totalDocs ? (introspection ? await payload.update({
+                collection: authSlug,
+                id: docs[0].id,
+                data: introspection
+            }) : docs[0]) : (introspection ? await payload.create({
+                collection: authSlug,
+                data: {
+                    [fields.id.name]: idpId,
+                    ...introspection
+                }
+            }) : null)
         }
 
         return {

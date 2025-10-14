@@ -10,7 +10,7 @@ Thus, the user collection in PayloadCMS becomes just a shadow of the information
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.4.48
+pnpm add payload-zitadel-plugin@0.5.0
 ```
 
 ## Configuration
@@ -79,16 +79,33 @@ export default buildConfig({
             // if you want to manually control what happens after a successful logout
             // afterLogout: (req) => NextResponse.redirect('...')
 
-            // following properties are only needed if you want to authenticate clients (e.g. a mobile app) for the API
+            // following properties are only needed if you want to authenticate clients 
+            // (e.g. a mobile app or a external service) for the API
             // if the users are just visiting the CMS via a browser you can ignore all of them
-            // otherwise create in Zitadel a new App->API->JWT and copy the Client ID, Key ID and the Key itself
-            // if not provided it will look for the ZITADEL_API_CLIENT_ID environment variable
-            // if ZITADEL_API_CLIENT_ID was found it will look for ZITADEL_API_KEY_ID and ZITADEL_API_KEY
+            // otherwise create in Zitadel a new App->API->JWT and create a new key
+            // download the JSON file and put the content in the jwt parameter
+            // if not provided it will look for the ZITADEL_API_JWT environment variable
             /* 
             api: {
-                clientId: '123456789123456789'
-                keyId: '123456789123456789'
-                key: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
+                type: 'jwt'
+                jwt: {
+                    keyId: '123456789123456789',
+                    key: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----',
+                    appId: '123456789123456789',    
+                    clientId: '123456789123456789'
+                }
+            }
+            */
+
+            // you can also use basic auth instead of JWT
+            // create a new App->API->Basic and save the Client Id and Client Secret
+            // if not provided it will look for the ZITADEL_API_CLIENT_ID environment variable
+            // make sure you have the ZITADEL_API_JWT environment variable unset as JWT will have priority
+            /* 
+            api: {
+                type: 'basic'
+                clientId: '123456789123456789',
+                clientSecret: '...'
             }
             */
         })
@@ -104,9 +121,11 @@ Optionally you could use an `.env.local` file for parameters:
 ```dotenv
 ZITADEL_URL=https://idp.zitadel.url
 ZITADEL_CLIENT_ID=123456789123456789
-ZITADEL_API_CLIENT_ID=123456789123456789
-ZITADEL_API_KEY_ID=123456789123456789
-ZITADEL_API_KEY='-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
+# if you use basic auth
+ZITADEL_API_CLIENT_ID: '123456789123456789',
+ZITADEL_API_CLIENT_SECRET: '...',
+# if you use JWT auth
+ZITADEL_API_JWT='{"type":"application","keyId":"123456789123456789","key":"-----BEGIN RSA PRIVATE KEY-----\n ... \n-----END RSA PRIVATE KEY-----\n","appId":"123456789123456789","clientId":"123456789123456789"}'
 ```
 
 or use the Next.js Config file:
@@ -121,9 +140,11 @@ export default withPayload({
     env: {
         ZITADEL_URL: 'https://idp.zitadel.url',
         ZITADEL_CLIENT_ID: '123456789123456789',
+        // if you use basic auth
         ZITADEL_API_CLIENT_ID: '123456789123456789',
-        ZITADEL_API_KEY_ID: '123456789123456789',
-        ZITADEL_API_KEY: '-----BEGIN RSA PRIVATE KEY----- ... ----END RSA PRIVATE KEY-----'
+        ZITADEL_API_CLIENT_SECRET: '...',
+        // if you use JWT auth
+        ZITADEL_API_JWT='{"type":"application","keyId":"123456789123456789","key":"-----BEGIN RSA PRIVATE KEY-----\n ... \n-----END RSA PRIVATE KEY-----\n","appId":"123456789123456789","clientId":"123456789123456789"}'
     },
     ...
 })

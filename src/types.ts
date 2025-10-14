@@ -63,11 +63,26 @@ export type ZitadelBaseHandler<ConfigExtension = {}> = (config: ZitadelBaseConfi
 
 export type ZitadelCallbackHandler = ZitadelBaseHandler<ZitadelUserConfig & ZitadelCallbackConfig>
 
-type ZitadelAPIConfig = {
+type ZitadelBasicAuth = {
     clientId: string
-    key: string
-    keyId: string
+    clientSecret: string
 }
+
+export type ZitadelJWT = {
+    type?: 'application'
+    keyId: string
+    key: string
+    appId: string
+    clientId: string
+}
+
+type ZitadelAPIConfig = ({
+    type: 'jwt'
+} & {
+    jwt: ZitadelJWT
+}) | {
+    type: 'basic'
+} & ZitadelBasicAuth
 
 type ZitadelStrategyConfig = {
     strategyName: string
