@@ -5,15 +5,19 @@ services:
     build:
       target: payload-dev
     container_name: payload.dev
+    depends_on:
+      - db
+    environment:
+      ZITADEL_API_JWT_FILE: /run/secrets/zitadel_api_jwt
     ports:
       - target: 3000
         published: 80
         protocol: tcp
         mode: host
-    depends_on:
-      - db
     profiles:
       - development
+    secrets:
+      - zitadel_api_jwt
     restart: unless-stopped
 
   #api production test build
@@ -21,15 +25,19 @@ services:
     build:
       target: payload-prod
     container_name: payload.prod
+    depends_on:
+      - db
+    environment:
+      ZITADEL_API_JWT_FILE: /run/secrets/zitadel_api_jwt
     ports:
       - target: 3000
         published: 80
         protocol: tcp
         mode: host
-    depends_on:
-      - db
     profiles:
       - production
+    secrets:
+      - zitadel_api_jwt
     restart: unless-stopped
 
   #db development build
@@ -40,18 +48,22 @@ services:
     restart: unless-stopped
     volumes:
       - type: volume
-        source: db-data
+        source: db_data
         target: /data/db
       - type: volume
-        source: db-config
+        source: db_config
         target: /data/configdb
 
 networks:
   default:
     name: workspace-dev
 
+secrets:
+  zitadel_api_jwt:
+    environment: ZITADEL_API_JWT
+
 volumes:
-  db-data:
+  db_data:
     name: workspace-vol-db-data
-  db-config:
+  db_config:
     name: workspace-vol-db-config

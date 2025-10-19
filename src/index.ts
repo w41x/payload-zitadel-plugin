@@ -10,11 +10,15 @@ import {defaultRedirect, getAuthSlug, loadEnv, requestRedirect} from './utils/in
 
 export const zitadelPlugin: ZitadelPlugin = (config) => {
 
+    console.log('loading zitadel envs')
+
     const envs = loadEnv(['ZITADEL_URL', 'ZITADEL_CLIENT_ID', 'ZITADEL_API_JWT', 'ZITADEL_API_CLIENT_ID', 'ZITADEL_API_CLIENT_SECRET'])
+
+    console.log('ZITADEL_ENVS:', JSON.stringify(envs))
 
     let {
         issuerURL = envs.ZITADEL_URL ?? '',
-        clientId = envs.ZITADEL_API_CLIENT_ID ?? '',
+        clientId = envs.ZITADEL_CLIENT_ID ?? '',
         fields,
         strategyName = DEFAULT_CONFIG.strategyName,
         api,
@@ -45,16 +49,16 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
                 errors.push(ERRORS.apiJWT)
             }
 
-        } else if (envs.ZITADEL_CLIENT_ID) {
+        } else if (envs.ZITADEL_API_CLIENT_ID) {
 
-            if (!envs.ZITADEL_API_CLIENT_SECRET) {
+            if (envs.ZITADEL_API_CLIENT_SECRET) {
+                api = {
+                    type: 'basic',
+                    clientId: envs.ZITADEL_API_CLIENT_ID,
+                    clientSecret: envs.ZITADEL_API_CLIENT_SECRET
+                }
+            } else {
                 errors.push(ERRORS.apiClientSecret)
-            }
-
-            api = {
-                type: 'basic',
-                clientId: envs.ZITADEL_CLIENT_ID,
-                clientSecret: envs.ZITADEL_API_CLIENT_SECRET ?? ''
             }
 
         }
