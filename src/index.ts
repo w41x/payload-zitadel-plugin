@@ -10,11 +10,7 @@ import {defaultRedirect, getAuthSlug, loadEnv, requestRedirect} from './utils/in
 
 export const zitadelPlugin: ZitadelPlugin = (config) => {
 
-    console.log('loading zitadel envs')
-
     const envs = loadEnv(['ZITADEL_URL', 'ZITADEL_CLIENT_ID', 'ZITADEL_API_JWT', 'ZITADEL_API_CLIENT_ID', 'ZITADEL_API_CLIENT_SECRET'])
-
-    console.log('ZITADEL_ENVS:', JSON.stringify(envs))
 
     let {
         issuerURL = envs.ZITADEL_URL ?? '',
