@@ -1,18 +1,20 @@
+import {PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER} from 'next/constants.js'
 import {cookies} from 'next/headers.js'
 import {AvatarComponent, LoginButtonComponent} from './components/index.js'
 import {COOKIES, DEFAULT_CONFIG, ERRORS, ROUTES} from './constants.js'
 import {authorize, callback} from './handlers/index.js'
 import {zitadelStrategy} from './strategy.js'
 import {translations} from './translations.js'
-import {ZitadelAvatarProps, ZitadelJWT, ZitadelPlugin} from './types.js'
-import {defaultRedirect, getAuthSlug, requestRedirect} from './utils/index.js'
-import {PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_SERVER} from 'next/constants.js'
+import type {ZitadelAvatarProps, ZitadelJWT, ZitadelPlugin} from './types.js'
+import {defaultRedirect, getAuthSlug, loadEnv, requestRedirect} from './utils/index.js'
 
 export const zitadelPlugin: ZitadelPlugin = (config) => {
 
+    const envs = loadEnv(['ZITADEL_URL', 'ZITADEL_CLIENT_ID', 'ZITADEL_API_JWT', 'ZITADEL_API_CLIENT_ID', 'ZITADEL_API_CLIENT_SECRET'])
+
     let {
-        issuerURL = process.env.ZITADEL_URL ?? '',
-        clientId = process.env.ZITADEL_CLIENT_ID ?? '',
+        issuerURL = envs.ZITADEL_URL ?? '',
+        clientId = envs.ZITADEL_API_CLIENT_ID ?? '',
         fields,
         strategyName = DEFAULT_CONFIG.strategyName,
         api,
@@ -32,28 +34,27 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
 
     if (!api) {
 
-        if (process.env.ZITADEL_API_JWT) {
+        if (envs.ZITADEL_API_JWT) {
 
             try {
                 api = {
                     type: 'jwt',
-                    jwt: JSON.parse(process.env.ZITADEL_API_JWT) as ZitadelJWT
+                    jwt: JSON.parse(envs.ZITADEL_API_JWT) as ZitadelJWT
                 }
             } catch (e) {
                 errors.push(ERRORS.apiJWT)
             }
 
-        } else if (process.env.ZITADEL_API_CLIENT_ID) {
+        } else if (envs.ZITADEL_CLIENT_ID) {
 
-            const clientSecret = process.env.ZITADEL_API_CLIENT_SECRET ?? ''
-            if (!clientSecret) {
+            if (!envs.ZITADEL_API_CLIENT_SECRET) {
                 errors.push(ERRORS.apiClientSecret)
             }
 
             api = {
                 type: 'basic',
-                clientId: process.env.ZITADEL_API_CLIENT_ID,
-                clientSecret
+                clientId: envs.ZITADEL_CLIENT_ID,
+                clientSecret: envs.ZITADEL_API_CLIENT_SECRET ?? ''
             }
 
         }
