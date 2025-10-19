@@ -32,11 +32,23 @@ import {readFileSync} from 'fs'
  * // If PASSWORD=mysecret and PASSWORD_FILE also exists
  * getEnvContent('PASSWORD', true) // Returns "mysecret" (not the file contents)
  */
-const getEnvContent = (key: string, useFileCheck = false): string | undefined => useFileCheck ?
-    (key.toUpperCase().endsWith('_FILE') ?
-            (process.env[key] ? readFileSync(process.env[key], 'utf8') : undefined) :
-            (process.env[key] ? process.env[key] : getEnvContent(`${key}_FILE`, useFileCheck))
-    ) : process.env[key]
+const getEnvContent = (key: string, useFileCheck = false) => {
+    const value = process.env[key]
+    if (useFileCheck) {
+        const hasFileEnding = key.toUpperCase().endsWith('_FILE')
+        if (value && hasFileEnding) {
+            try {
+                return readFileSync(value, 'utf8')
+            } catch (e) {
+                console.log(`An error occurred while trying to read the file at ${value} [${key}]:`, e)
+            }
+        }
+        if (!value && !hasFileEnding) {
+            return getEnvContent(`${key}_FILE`, useFileCheck)
+        }
+    }
+    return value
+}
 
 /**
  * Loads multiple environment variables into a typed object.
