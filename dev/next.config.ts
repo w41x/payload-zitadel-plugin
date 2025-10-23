@@ -39,6 +39,8 @@ export default withPayload({
                     permanent: false
                 }
             ]
-        }
+        },
+
+        turbopack: {}
     }
 )
