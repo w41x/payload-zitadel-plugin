@@ -36,7 +36,7 @@
         "name": "next"
       }
     ],
-    "jsx": "react"
+    "jsx": "react-jsx"
   },
   "include": [
     "src/**/*.ts",
