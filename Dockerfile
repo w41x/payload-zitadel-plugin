@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.19.0
 
-FROM node:25.0.0-alpine3.22 AS node-base
+FROM node:25.1.0-alpine3.22 AS node-base
 LABEL name='node base build'
 # install pnpm
 RUN npm install -g pnpm@latest
@@ -43,7 +43,7 @@ LABEL name='plugin test production build'
 ENV NODE_ENV production
 CMD pnpm build && pnpm start
 
-FROM mongo:8.0.15-noble AS db
+FROM mongo:8.2.1-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
