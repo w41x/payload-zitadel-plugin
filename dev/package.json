@@ -49,7 +49,7 @@
     "@payloadcms/next": "^3.64.0",
     "@payloadcms/richtext-lexical": "^3.64.0",
     "@payloadcms/ui": "^3.64.0",
-    "next": "^16.0.3",
+    "next": "^16.0.2 <16.0.3",
     "payload": "^3.64.0",
     "payload-zitadel-plugin": "file:..",
     "react": "^19.2.0",
