@@ -39,7 +39,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "gen:types": "payload generate:types",
     "gen:imap": "payload generate:importmap",
     "start": "next start"
