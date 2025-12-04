@@ -1,4 +1,4 @@
-# syntax = docker/dockerfile:1.19.0
+# syntax = docker/dockerfile:1.20.0
 
 FROM node:25.2.1-alpine3.22 AS node-base
 LABEL name='node base build'
