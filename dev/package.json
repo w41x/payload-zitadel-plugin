@@ -39,7 +39,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "gen:types": "payload generate:types",
     "gen:imap": "payload generate:importmap",
     "start": "next start"
@@ -49,7 +49,7 @@
     "@payloadcms/next": "^3.68.0",
     "@payloadcms/richtext-lexical": "^3.68.0",
     "@payloadcms/ui": "^3.68.0",
-    "next": "^16.1.0-canary.16",
+    "next": "^16.0.8",
     "payload": "^3.68.0",
     "payload-zitadel-plugin": "file:..",
     "react": "^19.2.1",

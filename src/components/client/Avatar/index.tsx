@@ -2,9 +2,9 @@
 
 import React from 'react'
 import {usePathname} from 'next/navigation.js'
+import {formatAdminURL} from 'payload/shared'
 import {useAuth, useConfig} from '@payloadcms/ui'
 import {DefaultAccountIcon} from '@payloadcms/ui/graphics/Account/Default'
-import {formatAdminURL} from '@payloadcms/ui/utilities/formatAdminURL'
 import type {ZitadelAvatarProps} from '../../../types.js'
 
 export const Avatar = ({imageFieldName}: ZitadelAvatarProps) => {
