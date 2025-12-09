@@ -1,8 +1,14 @@
 name: Publish package to GitHub Packages
+
 on:
   release:
     branches: 'main'
     types: [ published ]
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,5 +29,3 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

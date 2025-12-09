@@ -44,12 +44,12 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/next": "^3.68.0",
-    "@payloadcms/translations": "^3.68.0",
-    "@payloadcms/ui": "^3.68.0",
+    "@payloadcms/next": "^3.68.1",
+    "@payloadcms/translations": "^3.68.1",
+    "@payloadcms/ui": "^3.68.1",
     "jose": "^6.1.3",
     "next": "^16.0.8",
-    "payload": "^3.68.0",
+    "payload": "^3.68.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"
   },
