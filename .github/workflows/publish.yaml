@@ -5,14 +5,11 @@ on:
     branches: 'main'
     types: [ published ]
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: read
       packages: write
     steps:
@@ -28,4 +25,4 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm publish --access public --no-git-checks
+      - run: pnpm publish --provenance --access public --no-git-checks
