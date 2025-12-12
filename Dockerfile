@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.20.0
 
-FROM node:25.2.1-alpine3.22 AS node-base
+FROM node:25.2.1-alpine3.23 AS node-base
 LABEL name='node base build'
 # install pnpm
 RUN npm install -g pnpm@latest
