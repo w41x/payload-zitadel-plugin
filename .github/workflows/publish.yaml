@@ -17,7 +17,7 @@ jobs:
       - uses: pnpm/action-setup@v4.2.0
         name: Install pnpm
         with:
-          version: 10.27.0
+          version: 10.28.0
           run_install: false
       - uses: actions/setup-node@v6.1.0
         with:
