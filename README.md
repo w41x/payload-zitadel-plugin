@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/payload-zitadel-plugin.png)](https://npmjs.org/package/payload-zitadel-plugin)
 
-a plugin for [Payload CMS](https://payloadcms.com) (v3), which enables authentication via Zitadel IdP
+a plugin for [Payload CMS](https://payloadcms.com) (v3), which enables authentication via [Zitadel IdP](https://zitadel.com)
 
 The default use case is to fully replace PayloadCMS Auth with Zitadel.
 Thus, the user collection in PayloadCMS becomes just a shadow of the information in Zitadel.
