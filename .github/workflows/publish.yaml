@@ -21,7 +21,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v6.1.0
         with:
-          node-version: 25.2.1
+          node-version: 25.3.0
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
