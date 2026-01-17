@@ -19,7 +19,7 @@ jobs:
         with:
           version: 10.28.0
           run_install: false
-      - uses: actions/setup-node@v6.1.0
+      - uses: actions/setup-node@v6.2.0
         with:
           node-version: 25.3.0
           cache: pnpm
