@@ -17,11 +17,11 @@ jobs:
       - uses: pnpm/action-setup@v4.2.0
         name: Install pnpm
         with:
-          version: 10.28.1
+          version: 10.28.2
           run_install: false
       - uses: actions/setup-node@v6.2.0
         with:
-          node-version: 25.4.0
+          node-version: 25.5.0
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
