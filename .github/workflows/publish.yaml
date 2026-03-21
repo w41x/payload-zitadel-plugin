@@ -14,14 +14,14 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v6.0.2
-      - uses: pnpm/action-setup@v4.2.0
+      - uses: pnpm/action-setup@v5.0.0
         name: Install pnpm
         with:
-          version: 10.30.3
+          version: 10.32.1
           run_install: false
       - uses: actions/setup-node@v6.3.0
         with:
-          node-version: 25.8.0
+          node-version: 25.8.1
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
