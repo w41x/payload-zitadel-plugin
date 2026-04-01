@@ -202,12 +202,12 @@ export const zitadelPlugin: ZitadelPlugin = (config) => {
             translations: {
                 ...incomingConfig.i18n?.translations,
                 de: {
-                    ...incomingConfig.i18n?.translations?.de,
                     ...translations.de
+                    ...incomingConfig.i18n?.translations?.de,
                 },
                 en: {
-                    ...incomingConfig.i18n?.translations?.en,
                     ...translations.en
+                    ...incomingConfig.i18n?.translations?.en,
                 }
             }
         }
