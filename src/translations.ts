@@ -6,7 +6,7 @@ export const translations = {
     },
     en: {
         zitadelPlugin: {
-            signIn: 'sign in with {{label}}'
+            signIn: 'Sign in with {{label}}'
         }
     }
 }
