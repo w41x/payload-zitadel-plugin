@@ -10,7 +10,7 @@ Thus, the user collection in PayloadCMS becomes just a shadow of the information
 ## Install
 
 ```shell
-pnpm add payload-zitadel-plugin@0.5.27
+pnpm add payload-zitadel-plugin@0.5.28
 ```
 
 ## Configuration
@@ -144,7 +144,7 @@ export default withPayload({
         ZITADEL_API_CLIENT_ID: '123456789123456789',
         ZITADEL_API_CLIENT_SECRET: '...',
         // if you use JWT auth
-        ZITADEL_API_JWT = '{"type":"application","keyId":"123456789123456789","key":"-----BEGIN RSA PRIVATE KEY-----\n ... \n-----END RSA PRIVATE KEY-----\n","appId":"123456789123456789","clientId":"123456789123456789"}'
+        ZITADEL_API_JWT: '{"type":"application","keyId":"123456789123456789","key":"-----BEGIN RSA PRIVATE KEY-----\n ... \n-----END RSA PRIVATE KEY-----\n","appId":"123456789123456789","clientId":"123456789123456789"}'
     },
     ...
 })
