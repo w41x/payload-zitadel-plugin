@@ -18,8 +18,8 @@ pnpm add payload-zitadel-plugin@0.5.29
 Initialize the plugin in the Payload config file. Change the parameters to connect to your Zitadel instance.
 
 The cleanest way to use this plugin is just to set the `ZITADEL_URL` and `ZITADEL_CLIENT_ID` environment variables,
-set up the `next.config.ts` as described down below and then add `zitadelPlugin()` without further configuration to the
-plugin list.
+set up the `next.config.ts` as described down below and then add `zitadelPlugin({})` without further configuration to the
+plugin list. If you don't use any options, you can use `defaultZitadelPlugin` as an abbreviation (`defaultZitadelPlugin = zitadelPlugin({})`).
 
 #### payload.config.ts
 

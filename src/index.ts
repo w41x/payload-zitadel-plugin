@@ -219,3 +219,5 @@ export const zitadelPlugin = definePlugin<ZitadelPluginOptions>({
 
     }
 })
+
+export const defaultZitadelPlugin = zitadelPlugin({})

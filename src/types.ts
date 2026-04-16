@@ -126,7 +126,6 @@ type ZitadelAuthorizeRequestConfig = {
     codeChallenge: string
 }
 
-
 type ZitadelRequestState =
     (ZitadelInvokedBy<'authorize'> & ZitadelAuthorizeRequestConfig)
     | (ZitadelInvokedBy<'end_session'> & Partial<ZitadelAuthorizeRequestConfig>)
