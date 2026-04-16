@@ -1,4 +1,4 @@
-import type {AuthStrategy, Config, PayloadHandler, PayloadRequest, ServerProps} from 'payload'
+import type {AuthStrategy, PayloadHandler, PayloadRequest, ServerProps} from 'payload'
 import type {I18nClient, NestedKeysStripped} from '@payloadcms/translations'
 import {translations} from './translations.js'
 
@@ -113,7 +113,7 @@ type ZitadelComponentsConfig = {
     loginButton: ZitadelLoginButtonConfig
 }
 
-type ZitadelPluginConfig =
+export type ZitadelPluginOptions =
     Partial<ZitadelBaseConfig>
     & Partial<ZitadelUserConfig>
     & Partial<ZitadelStrategyConfig>
@@ -121,8 +121,6 @@ type ZitadelPluginConfig =
     callbacks: Partial<ZitadelCallbackConfig>
     components: Partial<ZitadelComponentsConfig>
 }>
-
-export type ZitadelPlugin = (config?: ZitadelPluginConfig) => (config: Config) => Config
 
 type ZitadelAuthorizeRequestConfig = {
     codeChallenge: string
