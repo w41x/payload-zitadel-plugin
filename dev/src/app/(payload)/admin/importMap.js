@@ -4,6 +4,7 @@ import { UserClientInfo as UserClientInfo_07c827ba00c5aee0468fd6a5f617dbac } fro
 import { UserServerInfo as UserServerInfo_c5c74bbfba68ab1f0ee676af939d6080 } from '../../../../src/components/server'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "payload-zitadel-plugin/components/client#Avatar": Avatar_2a2bfbb2f0c03717e0dbd4985fb06fa6,
   "payload-zitadel-plugin/components/server#LoginButton": LoginButton_65e80cc9d775dfeec4e6d78b08bf24ad,
