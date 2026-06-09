@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin",
-  "version": "0.5.30",
+  "version": "0.5.31",
   "description": "plugin for Payload CMS, which enables authentication via Zitadel IdP",
   "type": "module",
   "license": "MIT",
@@ -44,28 +44,28 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@payloadcms/next": "^3.84.0",
-    "@payloadcms/translations": "^3.84.0",
-    "@payloadcms/ui": "^3.84.0",
-    "jose": "^6.2.2",
-    "next": "^16.2.4",
-    "payload": "^3.84.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "@payloadcms/next": "catalog:payload",
+    "@payloadcms/translations": "catalog:payload",
+    "@payloadcms/ui": "catalog:payload",
+    "jose": "catalog:libs",
+    "next": "catalog:framework",
+    "payload": "catalog:payload",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
   },
   "devDependencies": {
-    "@swc/cli": "^0.8.1",
-    "@swc/core": "^1.15.30",
-    "@types/node": "^25.6.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "rimraf": "^6.1.3",
-    "typescript": "^6.0.3"
+    "@swc/cli": "catalog:utils",
+    "@swc/core": "catalog:utils",
+    "@types/node": "catalog:environment",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "rimraf": "catalog:utils",
+    "typescript": "catalog:environment"
   },
   "engines": {
-    "node": "^25.9.0"
+    "node": "^26.3.0"
   },
-  "packageManager": "pnpm@10.33.1",
+  "packageManager": "pnpm@11.5.2",
   "exports": {
     ".": {
       "import": "./dist/index.js",

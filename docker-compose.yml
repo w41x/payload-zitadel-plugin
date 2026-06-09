@@ -1,44 +1,36 @@
+x-payload: &payload
+  depends_on:
+    - db
+  environment:
+    ZITADEL_API_JWT_FILE: /run/secrets/zitadel_api_jwt
+  ports:
+    - target: 3000
+      published: 80
+      protocol: tcp
+      mode: host
+  secrets:
+    - zitadel_api_jwt
+  restart: unless-stopped
+
 services:
 
   #api development build
-  payload:
+  payload-dev:
+    <<: *payload
     build:
       target: payload-dev
     container_name: payload.dev
-    depends_on:
-      - db
-    environment:
-      ZITADEL_API_JWT_FILE: /run/secrets/zitadel_api_jwt
-    ports:
-      - target: 3000
-        published: 80
-        protocol: tcp
-        mode: host
     profiles:
       - development
-    secrets:
-      - zitadel_api_jwt
-    restart: unless-stopped
 
   #api production test build
   payload-prod:
+    <<: *payload
     build:
       target: payload-prod
     container_name: payload.prod
-    depends_on:
-      - db
-    environment:
-      ZITADEL_API_JWT_FILE: /run/secrets/zitadel_api_jwt
-    ports:
-      - target: 3000
-        published: 80
-        protocol: tcp
-        mode: host
     profiles:
       - production
-    secrets:
-      - zitadel_api_jwt
-    restart: unless-stopped
 
   #db development build
   db:

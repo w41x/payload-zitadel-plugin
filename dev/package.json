@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin-dev",
-  "version": "0.5.30",
+  "version": "0.5.31",
   "description": "development environment for payload-zitadel-plugin",
   "license": "MIT",
   "type": "module",
@@ -45,26 +45,26 @@
     "start": "next start"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "^3.84.0",
-    "@payloadcms/next": "^3.84.0",
-    "@payloadcms/richtext-lexical": "^3.84.0",
-    "@payloadcms/ui": "^3.84.0",
-    "next": "^16.2.4",
-    "payload": "^3.84.0",
-    "payload-zitadel-plugin": "file:..",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "@payloadcms/db-mongodb": "catalog:payload",
+    "@payloadcms/next": "catalog:payload",
+    "@payloadcms/richtext-lexical": "catalog:payload",
+    "@payloadcms/ui": "catalog:payload",
+    "next": "catalog:framework",
+    "payload": "catalog:payload",
+    "payload-zitadel-plugin": "workspace:",
+    "react": "catalog:framework",
+    "react-dom": "catalog:framework"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:environment",
+    "@types/react": "catalog:framework",
+    "@types/react-dom": "catalog:framework",
+    "typescript": "catalog:environment"
   },
   "engines": {
-    "node": "^25.9.0"
+    "node": "^26.3.0"
   },
-  "packageManager": "pnpm@10.33.1",
+  "packageManager": "pnpm@11.5.2",
   "private": true
 }
 
