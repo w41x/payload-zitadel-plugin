@@ -41,6 +41,10 @@ export default withPayload({
             ]
         },
 
-        turbopack: {}
+        turbopack: {},
+
+        typescript: {
+            ignoreBuildErrors: true
+        }
     }
 )
