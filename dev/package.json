@@ -1,6 +1,6 @@
 {
   "name": "payload-zitadel-plugin-dev",
-  "version": "0.5.31",
+  "version": "0.5.32",
   "description": "development environment for payload-zitadel-plugin",
   "license": "MIT",
   "type": "module",
@@ -62,9 +62,9 @@
     "typescript": "catalog:environment"
   },
   "engines": {
-    "node": "^26.3.0"
+    "node": "^26.5.0"
   },
-  "packageManager": "pnpm@11.5.2",
+  "packageManager": "pnpm@11.11.0",
   "private": true
 }
 
