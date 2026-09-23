@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1.23.0
 
-FROM node:26.5.0-alpine3.24 AS node-base
+FROM node:26.10.0-alpine3.24 AS node-base
 LABEL name='node base build'
 # install pnpm
 RUN npm install -g pnpm@latest
@@ -44,10 +44,12 @@ LABEL name='plugin test production build'
 ENV NODE_ENV production
 CMD pnpm build && pnpm start
 
-FROM mongo:8.3.4-noble AS db
+FROM mongo:8.3.11-noble AS db
 LABEL name='db build'
 # database admin user
 ENV MONGO_INITDB_ROOT_USERNAME=root
 ENV MONGO_INITDB_ROOT_PASSWORD=secret
+# fix for kernel issues
+ENV GLIBC_TUNABLES='glibc.pthread.rseq=1'
 # set internal port
 EXPOSE 27017
