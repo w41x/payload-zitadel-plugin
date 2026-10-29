@@ -1,5 +1,19 @@
 # payload-zitadel-plugin
 
+# payload-zitadel-plugin
+
+> [!WARNING]
+> **This plugin is no longer maintained.** The repository is archived and receives no further updates, fixes or
+> security patches.
+>
+> **The repository and all npm releases of `payload-zitadel-plugin` will be deleted on 31 October 2027.**
+> If you still depend on it after that date, fork this repository and publish or vendor your own copy before then.
+> 
+> ### Successor
+> For Payload 4 use [**@falkoss/payload-zitadel**](https://github.com/falkoss-labs/payload-zitadel), a rewrite from
+> scratch that works with every Payload framework adapter (TanStack Start, Next.js) - still in development.
+
+
 [![NPM](https://nodei.co/npm/payload-zitadel-plugin.png)](https://npmjs.org/package/payload-zitadel-plugin)
 
 a plugin for [Payload CMS](https://payloadcms.com) (v3), which enables authentication via [Zitadel IdP](https://zitadel.com)
