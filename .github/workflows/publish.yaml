@@ -17,11 +17,11 @@ jobs:
       - uses: pnpm/action-setup@v6.1.0
         name: Install pnpm
         with:
-          version: 12.5.1
+          version: 12.16.1
           run_install: false
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: 26.10.0
+          node-version: 26.13.0
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --no-frozen-lockfile
