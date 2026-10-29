@@ -1,7 +1,5 @@
 # payload-zitadel-plugin
 
-# payload-zitadel-plugin
-
 > [!WARNING]
 > **This plugin is no longer maintained.** The repository is archived and receives no further updates, fixes or
 > security patches.
